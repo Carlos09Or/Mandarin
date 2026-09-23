@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Entrenador HSK 1 con 150 palabras, pronunciación, quiz y práctica de orden de trazos Hanzi.">
+  <meta name="theme-color" content="#5042cf">
+  <title>HSK 1 · Hanzi Stroke Trainer</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7.3/dist/hanzi-writer.min.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+<div class="app">
+ <header class="hero">
+   <h1>HSK 1 · 150 palabras</h1>
+   <p>Vocabulario, pronunciación, escritura guiada y repaso. Tu progreso se guarda automáticamente en este navegador.</p>
+   <div class="stats">
+     <div class="stat">📚 150 palabras</div>
+     <div class="stat" id="knownStat">✓ 0 dominadas</div>
+     <div class="stat" id="writeStat">✍️ 0 practicadas</div>
+   </div>
+ </header>
+
+ <nav class="tabs">
+   <button class="tab active" data-page="vocab">🀄 Vocabulario</button>
+   <button class="tab" data-page="write">✍️ Trazar Hanzi</button>
+   <button class="tab" data-page="quiz">🎯 Quiz</button>
+ </nav>
+
+ <section id="vocab" class="page active">
+   <div class="toolbar">
+     <input id="search" class="search" placeholder="Buscar Hanzi, pinyin o significado…">
+     <select id="filter" class="filter">
+       <option value="all">Todas</option>
+       <option value="todo">Pendientes</option>
+       <option value="known">Dominadas</option>
+       <option value="written">Escritura completada</option>
+     </select>
+   </div>
+   <div id="cards" class="cards"></div>
+ </section>
+
+ <section id="write" class="page">
+   <div class="writeLayout">
+     <div class="panel writer">
+       <div class="writerTop">
+         <div>
+           <div class="wordMeta">
+             <span class="bigWord" id="writeWord"></span>
+             <span class="writerPinyin" id="writePinyin"></span>
+           </div>
+           <div class="writerMeaning" id="writeMeaning"></div>
+         </div>
+         <div class="actions">
+           <button id="prevWord" class="btn">←</button>
+           <button id="speakWrite" class="btn">🔊</button>
+           <button id="nextWord" class="btn">→</button>
+         </div>
+       </div>
+
+       <div id="characterTabs" class="characterTabs"></div>
+
+       <div class="canvasShell">
+         <div id="hanziWriterTarget" class="hanziStage" aria-label="Área de práctica de trazos"></div>
+         <div class="canvasHint">Escribe el Hanzi. Cada trazo se corrige inmediatamente y debes seguir el orden correcto.</div>
+         <div class="strokeStatus">
+           <span id="strokeCounter" class="strokePill">Trazo 1</span>
+           <span id="mistakeCounter" class="strokePill">0 errores</span>
+         </div>
+       </div>
+
+       <div class="writeButtons">
+         <button id="resetQuiz" class="btn danger">↻ Reiniciar</button>
+         <button id="animateChar" class="btn">▶ Ver orden</button>
+         <button id="toggleGuide" class="btn">Ocultar guía</button>
+       </div>
+       <div id="traceResult" class="result">Empieza por el primer trazo. Si te equivocas, la app te lo indicará al instante.</div>
+     </div>
+
+     <aside class="panel side">
+       <h2>Progreso de escritura</h2>
+       <div class="progressbar"><div id="writeProgress"></div></div>
+       <p><b id="writeProgressText">0/150</b> palabras completadas.</p>
+       <p>Para completar una palabra debes aprobar todos sus caracteres principales. Si no sale bien, borra y vuelve a intentarlo.</p>
+       <div id="miniList" class="listMini"></div>
+     </aside>
+   </div>
+ </section>
+
+ <section id="quiz" class="page">
+   <div class="panel quiz">
+     <div id="quizScore" class="meaning">0 correctas · 0 intentos</div>
+     <div id="qHanzi" class="qHanzi"></div>
+     <div id="qPinyin" class="qPinyin"></div>
+     <button id="speakQuiz" class="btn">🔊 Escuchar</button>
+     <div id="options" class="opts"></div>
+   </div>
+ </section>
+
+ <div class="footerNote">Lista base: MandarinBean HSK 1 (150 palabras). La práctica de escritura usa Hanzi Writer para validar el orden y la dirección de los trazos en tiempo real.</div>
+</div>
+</body>
+</html>

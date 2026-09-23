@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HSK 1 · 150 palabras + escritura</title>
+<script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7.3/dist/hanzi-writer.min.js"></script>
+<style>
+:root{
+ --bg:#f6f7fb;--card:#fff;--ink:#171720;--muted:#747482;--line:#e6e7ee;
+ --vio:#5b50e6;--vio2:#7f67f3;--soft:#efefff;--green:#17885a;--red:#c44848;
+ --shadow:0 14px 38px rgba(30,30,55,.08)
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#f1f0ff 0,#f8f8fc 35%,#f6f7fb 100%);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
+button,input,select{font:inherit}
+.app{max-width:1180px;margin:auto;padding:22px}
+.hero{border-radius:28px;padding:27px;background:linear-gradient(135deg,#1f2251,#5042cf 58%,#8a63ef);color:#fff;box-shadow:var(--shadow)}
+.hero h1{font-size:clamp(30px,5vw,50px);margin:0 0 8px;line-height:1}
+.hero p{margin:0;max-width:800px;opacity:.88}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.stat{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.16);border-radius:15px;padding:9px 13px;font-size:13px}
+.tabs{display:flex;gap:9px;overflow:auto;padding:17px 0 13px}
+.tab{border:0;border-radius:14px;padding:11px 15px;background:#eaeaf2;color:#555565;white-space:nowrap;cursor:pointer;font-weight:650}
+.tab.active{background:#22234d;color:#fff}
+.page{display:none}.page.active{display:block}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.search{flex:1;min-width:200px;border:1px solid var(--line);border-radius:15px;padding:12px 14px;background:#fff}
+.filter{border:1px solid var(--line);border-radius:15px;padding:12px;background:#fff}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.card{background:#fff;border:1px solid var(--line);border-radius:19px;padding:16px;box-shadow:0 6px 18px rgba(30,30,50,.04);transition:.16s}
+.card:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(30,30,50,.07)}
+.num{font-size:11px;color:#9999a5}
+.hanzi{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei","Arial Unicode MS",sans-serif;font-size:34px;line-height:1.35;margin:5px 0 2px}
+.pinyin{font-weight:750;color:#5146cd;font-size:14px}
+.meaning{color:var(--muted);font-size:13px;min-height:38px;margin-top:5px}
+.actions{display:flex;gap:7px;margin-top:11px}
+.btn{border:0;border-radius:12px;padding:9px 11px;cursor:pointer;background:var(--soft);color:#433ac2;font-weight:650}
+.btn.dark{background:#23234d;color:#fff}
+.btn.good{background:#eaf8f1;color:#11734b}
+.btn.danger{background:#fff0f0;color:#b13b3b}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.writeLayout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);gap:16px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+.writer{padding:20px}
+.writerTop{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.wordMeta{display:flex;align-items:baseline;gap:13px;flex-wrap:wrap}
+.bigWord{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;font-size:42px}
+.writerPinyin{color:#5146cd;font-weight:800}
+.writerMeaning{color:var(--muted)}
+.characterTabs{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+.charBtn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 12px;font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;font-size:25px;cursor:pointer}
+.charBtn.active{background:#272753;color:#fff;border-color:#272753}
+.charBtn.done{box-shadow:inset 0 0 0 2px #49ad80}
+.canvasShell{max-width:430px;margin:10px auto 0;position:relative}
+.hanziStage{width:100%;aspect-ratio:1/1;border:1px solid #dadbe6;border-radius:24px;background:#fff;overflow:hidden;position:relative;touch-action:none;background-image:linear-gradient(to right,transparent calc(50% - .5px),#ececf2 50%,transparent calc(50% + .5px)),linear-gradient(to bottom,transparent calc(50% - .5px),#ececf2 50%,transparent calc(50% + .5px));}
+#hanziWriterTarget{width:100%;height:100%}
+#hanziWriterTarget svg{width:100%;height:100%;display:block;touch-action:none}
+.strokeStatus{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.strokePill{font-size:12px;padding:6px 9px;border-radius:999px;background:#f0f0f7;color:#656575}
+.strokePill.bad{background:#fff0f0;color:#ad3d3d}.strokePill.good{background:#eaf8f1;color:#11734b}
+.canvasHint{font-size:12px;text-align:center;color:var(--muted);margin:8px 0 0}
+.writeButtons{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:14px 0}
+.result{min-height:55px;padding:12px 14px;border-radius:15px;background:#f6f6fb;text-align:center;color:#555562}
+.result.ok{background:#ebfaf2;color:#11734b}.result.no{background:#fff2f2;color:#a64040}
+.side{padding:19px;height:max-content}
+.side h2{margin:0 0 10px;font-size:18px}
+.side p{color:var(--muted);font-size:14px;line-height:1.55}
+.progressbar{height:10px;background:#ececf2;border-radius:999px;overflow:hidden;margin:10px 0 7px}
+.progressbar>div{height:100%;background:linear-gradient(90deg,#5655df,#8b67ee);width:0}
+.listMini{max-height:480px;overflow:auto;margin-top:12px}
+.mini{display:flex;justify-content:space-between;gap:8px;padding:9px 6px;border-bottom:1px solid #f0f0f4;cursor:pointer}
+.mini:hover{background:#fafaff}
+.mini .c{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;font-size:21px}
+.mini .tick{color:#15915e;font-weight:800}
+.quiz{padding:22px;max-width:760px;margin:auto;text-align:center}
+.qHanzi{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;font-size:64px;margin:18px 0 6px}
+.qPinyin{color:#5146cd;font-size:20px;font-weight:800}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.opt{border:1px solid var(--line);background:#fff;border-radius:15px;padding:13px;cursor:pointer}
+.opt.correct{background:#eaf8f1;border-color:#89c9a9}.opt.wrong{background:#fff0f0;border-color:#e0a1a1}
+.footerNote{text-align:center;color:#94949f;font-size:12px;padding:20px 5px}
+@media(max-width:830px){.writeLayout{grid-template-columns:1fr}.opts{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+ <header class="hero">
+   <h1>HSK 1 · 150 palabras</h1>
+   <p>Vocabulario, pronunciación, escritura guiada y repaso. Tu progreso se guarda automáticamente en este navegador.</p>
+   <div class="stats">
+     <div class="stat">📚 150 palabras</div>
+     <div class="stat" id="knownStat">✓ 0 dominadas</div>
+     <div class="stat" id="writeStat">✍️ 0 practicadas</div>
+   </div>
+ </header>
+
+ <nav class="tabs">
+   <button class="tab active" data-page="vocab">🀄 Vocabulario</button>
+   <button class="tab" data-page="write">✍️ Trazar Hanzi</button>
+   <button class="tab" data-page="quiz">🎯 Quiz</button>
+ </nav>
+
+ <section id="vocab" class="page active">
+   <div class="toolbar">
+     <input id="search" class="search" placeholder="Buscar Hanzi, pinyin o significado…">
+     <select id="filter" class="filter">
+       <option value="all">Todas</option>
+       <option value="todo">Pendientes</option>
+       <option value="known">Dominadas</option>
+       <option value="written">Escritura completada</option>
+     </select>
+   </div>
+   <div id="cards" class="cards"></div>
+ </section>
+
+ <section id="write" class="page">
+   <div class="writeLayout">
+     <div class="panel writer">
+       <div class="writerTop">
+         <div>
+           <div class="wordMeta">
+             <span class="bigWord" id="writeWord"></span>
+             <span class="writerPinyin" id="writePinyin"></span>
+           </div>
+           <div class="writerMeaning" id="writeMeaning"></div>
+         </div>
+         <div class="actions">
+           <button id="prevWord" class="btn">←</button>
+           <button id="speakWrite" class="btn">🔊</button>
+           <button id="nextWord" class="btn">→</button>
+         </div>
+       </div>
+
+       <div id="characterTabs" class="characterTabs"></div>
+
+       <div class="canvasShell">
+         <div id="hanziWriterTarget" class="hanziStage" aria-label="Área de práctica de trazos"></div>
+         <div class="canvasHint">Escribe el Hanzi. Cada trazo se corrige inmediatamente y debes seguir el orden correcto.</div>
+         <div class="strokeStatus">
+           <span id="strokeCounter" class="strokePill">Trazo 1</span>
+           <span id="mistakeCounter" class="strokePill">0 errores</span>
+         </div>
+       </div>
+
+       <div class="writeButtons">
+         <button id="resetQuiz" class="btn danger">↻ Reiniciar</button>
+         <button id="animateChar" class="btn">▶ Ver orden</button>
+         <button id="toggleGuide" class="btn">Ocultar guía</button>
+       </div>
+       <div id="traceResult" class="result">Empieza por el primer trazo. Si te equivocas, la app te lo indicará al instante.</div>
+     </div>
+
+     <aside class="panel side">
+       <h2>Progreso de escritura</h2>
+       <div class="progressbar"><div id="writeProgress"></div></div>
+       <p><b id="writeProgressText">0/150</b> palabras completadas.</p>
+       <p>Para completar una palabra debes aprobar todos sus caracteres principales. Si no sale bien, borra y vuelve a intentarlo.</p>
+       <div id="miniList" class="listMini"></div>
+     </aside>
+   </div>
+ </section>
+
+ <section id="quiz" class="page">
+   <div class="panel quiz">
+     <div id="quizScore" class="meaning">0 correctas · 0 intentos</div>
+     <div id="qHanzi" class="qHanzi"></div>
+     <div id="qPinyin" class="qPinyin"></div>
+     <button id="speakQuiz" class="btn">🔊 Escuchar</button>
+     <div id="options" class="opts"></div>
+   </div>
+ </section>
+
+ <div class="footerNote">Lista base: MandarinBean HSK 1 (150 palabras). La práctica de escritura usa Hanzi Writer para validar el orden y la dirección de los trazos en tiempo real.</div>
+</div>
+
+<script>
+const WORDS = [{"n": 1, "hanzi": "我", "pinyin": "wǒ", "es": "yo / me"}, {"n": 2, "hanzi": "我们", "pinyin": "wǒmen", "es": "nosotros"}, {"n": 3, "hanzi": "你", "pinyin": "nǐ", "es": "tú / usted"}, {"n": 4, "hanzi": "他", "pinyin": "tā", "es": "él"}, {"n": 5, "hanzi": "她", "pinyin": "tā", "es": "ella"}, {"n": 6, "hanzi": "这（这儿）", "pinyin": "zhè (zhèr)", "es": "esto / este (aquí)"}, {"n": 7, "hanzi": "那（那儿）", "pinyin": "nà (nàr)", "es": "eso / aquel (allí)"}, {"n": 8, "hanzi": "哪", "pinyin": "nǎ", "es": "cuál"}, {"n": 9, "hanzi": "哪儿", "pinyin": "nǎr", "es": "dónde"}, {"n": 10, "hanzi": "谁", "pinyin": "shéi", "es": "quién"}, {"n": 11, "hanzi": "什么", "pinyin": "shénme", "es": "qué"}, {"n": 12, "hanzi": "多少", "pinyin": "duōshǎo", "es": "cuánto / cuántos"}, {"n": 13, "hanzi": "几", "pinyin": "jǐ", "es": "cuántos / algunos"}, {"n": 14, "hanzi": "怎么", "pinyin": "zěnme", "es": "cómo"}, {"n": 15, "hanzi": "怎么样", "pinyin": "zěnmeyàng", "es": "qué tal / cómo es"}, {"n": 16, "hanzi": "一", "pinyin": "yī", "es": "uno"}, {"n": 17, "hanzi": "二", "pinyin": "èr", "es": "dos"}, {"n": 18, "hanzi": "三", "pinyin": "sān", "es": "tres"}, {"n": 19, "hanzi": "四", "pinyin": "sì", "es": "cuatro"}, {"n": 20, "hanzi": "五", "pinyin": "wǔ", "es": "cinco"}, {"n": 21, "hanzi": "六", "pinyin": "liù", "es": "seis"}, {"n": 22, "hanzi": "七", "pinyin": "qī", "es": "siete"}, {"n": 23, "hanzi": "八", "pinyin": "bā", "es": "ocho"}, {"n": 24, "hanzi": "九", "pinyin": "jiǔ", "es": "nueve"}, {"n": 25, "hanzi": "十", "pinyin": "shí", "es": "diez"}, {"n": 26, "hanzi": "个", "pinyin": "gè", "es": "clasificador general"}, {"n": 27, "hanzi": "岁", "pinyin": "suì", "es": "años de edad"}, {"n": 28, "hanzi": "本", "pinyin": "běn", "es": "clasificador para libros"}, {"n": 29, "hanzi": "些", "pinyin": "xiē", "es": "algunos / unas"}, {"n": 30, "hanzi": "块", "pinyin": "kuài", "es": "pieza / trozo; yuan coloquial"}, {"n": 31, "hanzi": "不", "pinyin": "bù", "es": "no"}, {"n": 32, "hanzi": "没", "pinyin": "méi", "es": "no / no haber"}, {"n": 33, "hanzi": "很", "pinyin": "hěn", "es": "muy"}, {"n": 34, "hanzi": "太", "pinyin": "tài", "es": "demasiado / muy"}, {"n": 35, "hanzi": "都", "pinyin": "dōu", "es": "todos"}, {"n": 36, "hanzi": "一点儿", "pinyin": "yīdiǎnr", "es": "un poco"}, {"n": 37, "hanzi": "和", "pinyin": "hé", "es": "y"}, {"n": 38, "hanzi": "在", "pinyin": "zài", "es": "estar en / en"}, {"n": 39, "hanzi": "的", "pinyin": "de", "es": "partícula posesiva"}, {"n": 40, "hanzi": "了", "pinyin": "le", "es": "partícula de cambio/completitud"}, {"n": 41, "hanzi": "吗", "pinyin": "ma", "es": "partícula de pregunta"}, {"n": 42, "hanzi": "呢", "pinyin": "ne", "es": "partícula interrogativa"}, {"n": 43, "hanzi": "喂", "pinyin": "wèi", "es": "hola (al teléfono)"}, {"n": 44, "hanzi": "家", "pinyin": "jiā", "es": "casa / hogar"}, {"n": 45, "hanzi": "学校", "pinyin": "xuéxiào", "es": "escuela"}, {"n": 46, "hanzi": "饭店", "pinyin": "fàndiàn", "es": "restaurante"}, {"n": 47, "hanzi": "商店", "pinyin": "shāngdiàn", "es": "tienda"}, {"n": 48, "hanzi": "医院", "pinyin": "yīyuàn", "es": "hospital"}, {"n": 49, "hanzi": "中国", "pinyin": "Zhōngguó", "es": "China"}, {"n": 50, "hanzi": "北京", "pinyin": "Běijīng", "es": "Pekín"}, {"n": 51, "hanzi": "上", "pinyin": "shàng", "es": "arriba / sobre"}, {"n": 52, "hanzi": "下", "pinyin": "xià", "es": "abajo / debajo"}, {"n": 53, "hanzi": "前面", "pinyin": "qiánmiàn", "es": "delante"}, {"n": 54, "hanzi": "后面", "pinyin": "hòumiàn", "es": "detrás"}, {"n": 55, "hanzi": "里面", "pinyin": "lǐmiàn", "es": "dentro / interior"}, {"n": 56, "hanzi": "今天", "pinyin": "jīntiān", "es": "hoy"}, {"n": 57, "hanzi": "明天", "pinyin": "míngtiān", "es": "mañana"}, {"n": 58, "hanzi": "昨天", "pinyin": "zuótiān", "es": "ayer"}, {"n": 59, "hanzi": "上午", "pinyin": "shàngwǔ", "es": "mañana (antes del mediodía)"}, {"n": 60, "hanzi": "中午", "pinyin": "zhōngwǔ", "es": "mediodía"}, {"n": 61, "hanzi": "下午", "pinyin": "xiàwǔ", "es": "tarde"}, {"n": 62, "hanzi": "年", "pinyin": "nián", "es": "año"}, {"n": 63, "hanzi": "月", "pinyin": "yuè", "es": "mes / luna"}, {"n": 64, "hanzi": "号", "pinyin": "hào", "es": "número / día del mes"}, {"n": 65, "hanzi": "星期", "pinyin": "xīngqī", "es": "semana"}, {"n": 66, "hanzi": "点", "pinyin": "diǎn", "es": "en punto / hora"}, {"n": 67, "hanzi": "分钟", "pinyin": "fēnzhōng", "es": "minuto"}, {"n": 68, "hanzi": "现在", "pinyin": "xiànzài", "es": "ahora"}, {"n": 69, "hanzi": "时候", "pinyin": "shíhou", "es": "momento / tiempo"}, {"n": 70, "hanzi": "爸爸", "pinyin": "bàba", "es": "papá"}, {"n": 71, "hanzi": "妈妈", "pinyin": "māma", "es": "mamá"}, {"n": 72, "hanzi": "儿子", "pinyin": "érzi", "es": "hijo"}, {"n": 73, "hanzi": "女儿", "pinyin": "nǚ'ér", "es": "hija"}, {"n": 74, "hanzi": "老师", "pinyin": "lǎoshī", "es": "profesor/a"}, {"n": 75, "hanzi": "学生", "pinyin": "xuéshēng", "es": "estudiante"}, {"n": 76, "hanzi": "同学", "pinyin": "tóngxué", "es": "compañero/a de clase"}, {"n": 77, "hanzi": "朋友", "pinyin": "péngyǒu", "es": "amigo/a"}, {"n": 78, "hanzi": "医生", "pinyin": "yīshēng", "es": "médico/a"}, {"n": 79, "hanzi": "先生", "pinyin": "xiānsheng", "es": "señor"}, {"n": 80, "hanzi": "小姐", "pinyin": "xiǎojiě", "es": "señorita"}, {"n": 81, "hanzi": "衣服", "pinyin": "yīfu", "es": "ropa"}, {"n": 82, "hanzi": "水", "pinyin": "shuǐ", "es": "agua"}, {"n": 83, "hanzi": "菜", "pinyin": "cài", "es": "plato / verdura"}, {"n": 84, "hanzi": "米饭", "pinyin": "mǐfàn", "es": "arroz cocido"}, {"n": 85, "hanzi": "水果", "pinyin": "shuǐguǒ", "es": "fruta"}, {"n": 86, "hanzi": "苹果", "pinyin": "píngguǒ", "es": "manzana"}, {"n": 87, "hanzi": "茶", "pinyin": "chá", "es": "té"}, {"n": 88, "hanzi": "杯子", "pinyin": "bēizi", "es": "taza / vaso"}, {"n": 89, "hanzi": "钱", "pinyin": "qián", "es": "dinero"}, {"n": 90, "hanzi": "飞机", "pinyin": "fēijī", "es": "avión"}, {"n": 91, "hanzi": "出租车", "pinyin": "chūzūchē", "es": "taxi"}, {"n": 92, "hanzi": "电视", "pinyin": "diànshì", "es": "televisión"}, {"n": 93, "hanzi": "电脑", "pinyin": "diànnǎo", "es": "computadora"}, {"n": 94, "hanzi": "电影", "pinyin": "diànyǐng", "es": "película"}, {"n": 95, "hanzi": "天气", "pinyin": "tiānqì", "es": "clima / tiempo"}, {"n": 96, "hanzi": "猫", "pinyin": "māo", "es": "gato"}, {"n": 97, "hanzi": "狗", "pinyin": "gǒu", "es": "perro"}, {"n": 98, "hanzi": "东西", "pinyin": "dōngxi", "es": "cosa / objeto"}, {"n": 99, "hanzi": "人", "pinyin": "rén", "es": "persona"}, {"n": 100, "hanzi": "名字", "pinyin": "míngzi", "es": "nombre"}, {"n": 101, "hanzi": "书", "pinyin": "shū", "es": "libro"}, {"n": 102, "hanzi": "汉语", "pinyin": "hànyǔ", "es": "chino mandarín"}, {"n": 103, "hanzi": "字", "pinyin": "zì", "es": "carácter / letra"}, {"n": 104, "hanzi": "桌子", "pinyin": "zhuōzi", "es": "mesa / escritorio"}, {"n": 105, "hanzi": "椅子", "pinyin": "yǐzi", "es": "silla"}, {"n": 106, "hanzi": "谢谢", "pinyin": "xièxie", "es": "gracias"}, {"n": 107, "hanzi": "不客气", "pinyin": "búkèqì", "es": "de nada"}, {"n": 108, "hanzi": "再见", "pinyin": "zàijiàn", "es": "adiós / hasta luego"}, {"n": 109, "hanzi": "请", "pinyin": "qǐng", "es": "por favor"}, {"n": 110, "hanzi": "对不起", "pinyin": "duìbùqǐ", "es": "lo siento / perdón"}, {"n": 111, "hanzi": "没关系", "pinyin": "méiguānxì", "es": "no importa / no pasa nada"}, {"n": 112, "hanzi": "是", "pinyin": "shì", "es": "ser"}, {"n": 113, "hanzi": "有", "pinyin": "yǒu", "es": "tener / haber"}, {"n": 114, "hanzi": "看", "pinyin": "kàn", "es": "mirar / ver"}, {"n": 115, "hanzi": "听", "pinyin": "tīng", "es": "escuchar"}, {"n": 116, "hanzi": "说", "pinyin": "shuō", "es": "hablar / decir"}, {"n": 117, "hanzi": "读", "pinyin": "dú", "es": "leer"}, {"n": 118, "hanzi": "写", "pinyin": "xiě", "es": "escribir"}, {"n": 119, "hanzi": "看见", "pinyin": "kànjiàn", "es": "ver / alcanzar a ver"}, {"n": 120, "hanzi": "叫", "pinyin": "jiào", "es": "llamarse / llamar"}, {"n": 121, "hanzi": "来", "pinyin": "lái", "es": "venir"}, {"n": 122, "hanzi": "回", "pinyin": "huí", "es": "volver / regresar"}, {"n": 123, "hanzi": "去", "pinyin": "qù", "es": "ir"}, {"n": 124, "hanzi": "吃", "pinyin": "chī", "es": "comer"}, {"n": 125, "hanzi": "喝", "pinyin": "hē", "es": "beber"}, {"n": 126, "hanzi": "睡觉", "pinyin": "shuìjiào", "es": "dormir"}, {"n": 127, "hanzi": "打电话", "pinyin": "dǎ diànhuà", "es": "hacer una llamada"}, {"n": 128, "hanzi": "做", "pinyin": "zuò", "es": "hacer"}, {"n": 129, "hanzi": "买", "pinyin": "mǎi", "es": "comprar"}, {"n": 130, "hanzi": "开", "pinyin": "kāi", "es": "abrir / conducir"}, {"n": 131, "hanzi": "坐", "pinyin": "zuò", "es": "sentarse / ir sentado"}, {"n": 132, "hanzi": "住", "pinyin": "zhù", "es": "vivir / residir"}, {"n": 133, "hanzi": "学习", "pinyin": "xuéxí", "es": "estudiar"}, {"n": 134, "hanzi": "工作", "pinyin": "gōngzuò", "es": "trabajar / trabajo"}, {"n": 135, "hanzi": "下雨", "pinyin": "xiàyǔ", "es": "llover"}, {"n": 136, "hanzi": "爱", "pinyin": "ài", "es": "amar"}, {"n": 137, "hanzi": "喜欢", "pinyin": "xǐhuān", "es": "gustar"}, {"n": 138, "hanzi": "想", "pinyin": "xiǎng", "es": "querer / pensar"}, {"n": 139, "hanzi": "认识", "pinyin": "rènshi", "es": "conocer"}, {"n": 140, "hanzi": "会", "pinyin": "huì", "es": "saber hacer / poder"}, {"n": 141, "hanzi": "能", "pinyin": "néng", "es": "poder / ser capaz"}, {"n": 142, "hanzi": "好", "pinyin": "hǎo", "es": "bueno / bien"}, {"n": 143, "hanzi": "大", "pinyin": "dà", "es": "grande"}, {"n": 144, "hanzi": "小", "pinyin": "xiǎo", "es": "pequeño"}, {"n": 145, "hanzi": "多", "pinyin": "duō", "es": "mucho / muchos"}, {"n": 146, "hanzi": "少", "pinyin": "shǎo", "es": "poco / pocos"}, {"n": 147, "hanzi": "冷", "pinyin": "lěng", "es": "frío"}, {"n": 148, "hanzi": "热", "pinyin": "rè", "es": "caliente / calor"}, {"n": 149, "hanzi": "高兴", "pinyin": "gāoxìng", "es": "feliz / contento"}, {"n": 150, "hanzi": "漂亮", "pinyin": "piàoliang", "es": "bonito/a / hermoso/a"}];
+
+let known = new Set(JSON.parse(localStorage.getItem("hsk1Known150")||"[]"));
+let written = JSON.parse(localStorage.getItem("hsk1Written150")||"{}");
+let writeIndex = +(localStorage.getItem("hsk1WriteIndex")||0);
+if(writeIndex<0 || writeIndex>=WORDS.length) writeIndex=0;
+let charIndex = 0;
+let qAttempts=0, qCorrect=0, currentQ=null;
+
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+function save(){
+  localStorage.setItem("hsk1Known150",JSON.stringify([...known]));
+  localStorage.setItem("hsk1Written150",JSON.stringify(written));
+  localStorage.setItem("hsk1WriteIndex",String(writeIndex));
+  updateStats();
+}
+function speak(text, slow=false){
+  if(!("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text.replace(/[（）]/g," "));
+  u.lang="zh-CN"; u.rate=slow?.62:.78;
+  const zh=speechSynthesis.getVoices().find(v=>v.lang && v.lang.toLowerCase().startsWith("zh"));
+  if(zh) u.voice=zh;
+  speechSynthesis.speak(u);
+}
+function practiceChars(word){
+  const base = word.hanzi.split("（")[0];
+  return [...base].filter(ch=>/\p{Script=Han}/u.test(ch));
+}
+function updateStats(){
+  $("#knownStat").textContent=`✓ ${known.size} dominadas`;
+  const doneCount=WORDS.filter(w=>isWordWritten(w)).length;
+  $("#writeStat").textContent=`✍️ ${doneCount} practicadas`;
+  $("#writeProgressText").textContent=`${doneCount}/150`;
+  $("#writeProgress").style.width=(doneCount/150*100)+"%";
+}
+function isWordWritten(w){
+  const chars=practiceChars(w);
+  return chars.length>0 && chars.every((c,i)=>written[w.n]?.includes(i));
+}
+function renderCards(){
+  const q=$("#search").value.trim().toLowerCase();
+  const f=$("#filter").value;
+  const filtered=WORDS.filter(w=>{
+    const hit=!q || `${w.hanzi} ${w.pinyin} ${w.es}`.toLowerCase().includes(q);
+    const state=f==="all" || (f==="known"&&known.has(w.n)) || (f==="todo"&&!known.has(w.n)) || (f==="written"&&isWordWritten(w));
+    return hit&&state;
+  });
+  $("#cards").innerHTML=filtered.map(w=>`
+    <article class="card">
+      <div class="num">#${w.n}</div>
+      <div class="hanzi">${w.hanzi}</div>
+      <div class="pinyin">${w.pinyin}</div>
+      <div class="meaning">${w.es}</div>
+      <div class="actions">
+        <button class="btn speakCard" data-n="${w.n}">🔊 Pronunciar</button>
+        <button class="btn writeCard" data-n="${w.n}">✍️ Trazar</button>
+        <button class="btn ${known.has(w.n)?'good':''} knowCard" data-n="${w.n}">${known.has(w.n)?'✓':'○'}</button>
+      </div>
+    </article>`).join("");
+  $$(".speakCard").forEach(b=>b.onclick=()=>speak(WORDS[b.dataset.n-1].hanzi));
+  $$(".writeCard").forEach(b=>b.onclick=()=>{
+    writeIndex=+b.dataset.n-1; charIndex=0; save(); switchPage("write"); renderWriter();
+  });
+  $$(".knowCard").forEach(b=>b.onclick=()=>{
+    const n=+b.dataset.n; known.has(n)?known.delete(n):known.add(n); save(); renderCards();
+  });
+}
+$("#search").oninput=renderCards; $("#filter").onchange=renderCards;
+
+function switchPage(id){
+  $$(".tab").forEach(t=>t.classList.toggle("active",t.dataset.page===id));
+  $$(".page").forEach(p=>p.classList.toggle("active",p.id===id));
+  if(id==="write") renderWriter();
+  if(id==="quiz") nextQuiz();
+}
+$$(".tab").forEach(t=>t.onclick=()=>switchPage(t.dataset.page));
+
+let hwWriter=null;
+let hwMistakes=0;
+let hwCurrentStroke=0;
+let guideVisible=true;
+let writerSession=0;
+
+function writerSize(){
+  const el=$("#hanziWriterTarget");
+  const w=Math.max(260,Math.min(430,Math.round(el.getBoundingClientRect().width||360)));
+  return w;
+}
+function resetWriterMessage(text="Empieza por el primer trazo. Si te equivocas, la app te lo indicará al instante."){
+  const box=$("#traceResult");
+  box.className="result"; box.textContent=text;
+  hwMistakes=0; hwCurrentStroke=0;
+  $("#strokeCounter").textContent="Trazo 1";
+  $("#strokeCounter").className="strokePill";
+  $("#mistakeCounter").textContent="0 errores";
+  $("#mistakeCounter").className="strokePill";
+}
+function createHanziWriter(mode="quiz"){
+  const target=$("#hanziWriterTarget");
+  const chars=practiceChars(WORDS[writeIndex]);
+  const ch=chars[charIndex];
+  if(!ch) return;
+  const session=++writerSession;
+  target.innerHTML="";
+  resetWriterMessage(mode==="animation"?"Observa el orden de los trazos. Al terminar volverás a practicar.":undefined);
+  if(typeof HanziWriter==="undefined"){
+    $("#traceResult").className="result no";
+    $("#traceResult").textContent="No se pudo cargar Hanzi Writer. Revisa tu conexión a Internet y recarga la página.";
+    return;
+  }
+  const size=writerSize();
+  hwWriter=HanziWriter.create('hanziWriterTarget', ch, {
+    width:size,height:size,padding:24,
+    showCharacter:false,
+    showOutline:guideVisible,
+    strokeColor:'#26274e',
+    outlineColor:'#d7d7e4',
+    drawingColor:'#5146cd',
+    highlightColor:'#8b67ee',
+    highlightCompleteColor:'#17885a',
+    drawingWidth:12,
+    strokeAnimationSpeed:1,
+    delayBetweenStrokes:260,
+    showHintAfterMisses:2,
+    acceptBackwardsStrokes:false,
+    leniency:0.85
+  });
+  if(mode==="animation"){
+    hwWriter.animateCharacter({onComplete:()=>{
+      if(session!==writerSession)return;
+      setTimeout(()=>createHanziWriter("quiz"),500);
+    }});
+    return;
+  }
+  hwWriter.quiz({
+    showHintAfterMisses:2,
+    acceptBackwardsStrokes:false,
+    leniency:0.85,
+    onMistake:data=>{
+      if(session!==writerSession)return;
+      hwMistakes=data.totalMistakes;
+      hwCurrentStroke=data.strokeNum;
+      const box=$("#traceResult");
+      box.className="result no";
+      box.innerHTML=`❌ Ese trazo no corresponde. Debes hacer el <b>trazo ${data.strokeNum+1}</b> en la dirección correcta.${data.mistakesOnStroke>=2?' Mira la pista morada.':''}`;
+      $("#strokeCounter").textContent=`Trazo ${data.strokeNum+1}`;
+      $("#strokeCounter").className="strokePill bad";
+      $("#mistakeCounter").textContent=`${data.totalMistakes} ${data.totalMistakes===1?'error':'errores'}`;
+      $("#mistakeCounter").className="strokePill bad";
+    },
+    onCorrectStroke:data=>{
+      if(session!==writerSession)return;
+      hwMistakes=data.totalMistakes;
+      hwCurrentStroke=data.strokeNum+1;
+      const box=$("#traceResult");
+      box.className="result ok";
+      box.innerHTML=`✓ Trazo ${data.strokeNum+1} correcto${data.strokesRemaining?` · quedan <b>${data.strokesRemaining}</b>`:''}`;
+      $("#strokeCounter").textContent=data.strokesRemaining?`Siguiente: ${data.strokeNum+2}`:"Último trazo ✓";
+      $("#strokeCounter").className="strokePill good";
+      $("#mistakeCounter").textContent=`${data.totalMistakes} ${data.totalMistakes===1?'error':'errores'}`;
+      $("#mistakeCounter").className=data.totalMistakes?"strokePill bad":"strokePill good";
+    },
+    onComplete:data=>{
+      if(session!==writerSession)return;
+      const w=WORDS[writeIndex], chars=practiceChars(w);
+      if(!written[w.n]) written[w.n]=[];
+      if(!written[w.n].includes(charIndex)) written[w.n].push(charIndex);
+      save(); renderWriterTabsOnly(); renderMini();
+      const box=$("#traceResult");
+      box.className="result ok";
+      box.innerHTML=`✅ <b>${ch}</b> completado en el orden correcto · ${data.totalMistakes} ${data.totalMistakes===1?'error':'errores'}`;
+      $("#strokeCounter").textContent="Completado ✓";
+      $("#strokeCounter").className="strokePill good";
+      if(charIndex<chars.length-1){
+        setTimeout(()=>{if(session!==writerSession)return;charIndex++;renderWriterTabsOnly();createHanziWriter("quiz");},850);
+      }else{
+        setTimeout(()=>{
+          if(session!==writerSession)return;
+          writeIndex=(writeIndex+1)%WORDS.length; charIndex=0; save(); renderWriter();
+        },1100);
+      }
+    }
+  });
+}
+
+function renderWriter(){
+  const w=WORDS[writeIndex], chars=practiceChars(w);
+  if(charIndex>=chars.length) charIndex=0;
+  $("#writeWord").textContent=w.hanzi;$("#writePinyin").textContent=w.pinyin;$("#writeMeaning").textContent=w.es;
+  $("#characterTabs").innerHTML=chars.map((c,i)=>`<button class="charBtn ${i===charIndex?'active':''} ${written[w.n]?.includes(i)?'done':''}" data-i="${i}">${c}${written[w.n]?.includes(i)?' ✓':''}</button>`).join("");
+  $$(".charBtn").forEach(b=>b.onclick=()=>{charIndex=+b.dataset.i;renderWriterTabsOnly();createHanziWriter("quiz");});
+  renderMini(); updateStats();
+  requestAnimationFrame(()=>createHanziWriter("quiz"));
+}
+function renderWriterTabsOnly(){
+  const w=WORDS[writeIndex];
+  $$(".charBtn").forEach((b,i)=>{b.classList.toggle("active",i===charIndex);b.classList.toggle("done",written[w.n]?.includes(i));});
+}
+function renderMini(){
+  $("#miniList").innerHTML=WORDS.map(w=>`<div class="mini" data-n="${w.n}"><span><span class="num">#${w.n}</span> <span class="c">${w.hanzi}</span></span><span class="tick">${isWordWritten(w)?"✓":""}</span></div>`).join("");
+  $$(".mini").forEach(m=>m.onclick=()=>{writeIndex=+m.dataset.n-1;charIndex=0;save();renderWriter();});
+}
+$("#resetQuiz").onclick=()=>createHanziWriter("quiz");
+$("#animateChar").onclick=()=>createHanziWriter("animation");
+$("#toggleGuide").onclick=()=>{
+  guideVisible=!guideVisible;
+  $("#toggleGuide").textContent=guideVisible?"Ocultar guía":"Mostrar guía";
+  createHanziWriter("quiz");
+};
+$("#prevWord").onclick=()=>{writeIndex=(writeIndex-1+WORDS.length)%WORDS.length;charIndex=0;save();renderWriter();};
+$("#nextWord").onclick=()=>{writeIndex=(writeIndex+1)%WORDS.length;charIndex=0;save();renderWriter();};
+$("#speakWrite").onclick=()=>speak(WORDS[writeIndex].hanzi,true);
+
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function nextQuiz(){
+  currentQ=WORDS[Math.floor(Math.random()*WORDS.length)];
+  $("#qHanzi").textContent=currentQ.hanzi;$("#qPinyin").textContent=currentQ.pinyin;
+  const opts=shuffle([currentQ,...shuffle(WORDS.filter(w=>w.n!==currentQ.n)).slice(0,3)]);
+  $("#options").innerHTML=opts.map(o=>`<button class="opt" data-n="${o.n}">${o.es}</button>`).join("");
+  $$(".opt").forEach(b=>b.onclick=()=>answerQuiz(b));
+}
+function answerQuiz(b){
+  if($(".opt.correct"))return;
+  qAttempts++;const ok=+b.dataset.n===currentQ.n;if(ok)qCorrect++;
+  b.classList.add(ok?"correct":"wrong");
+  $$(".opt").forEach(x=>{if(+x.dataset.n===currentQ.n)x.classList.add("correct")});
+  $("#quizScore").textContent=`${qCorrect} correctas · ${qAttempts} intentos`;
+  setTimeout(nextQuiz,850);
+}
+$("#speakQuiz").onclick=()=>speak(currentQ?.hanzi||"");
+
+renderCards();renderWriter();updateStats();
+</script>
+</body>
+</html>

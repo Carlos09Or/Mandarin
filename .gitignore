@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+
+# VS Code local settings (optional)
+.vscode/
+
+# Logs
+*.log
