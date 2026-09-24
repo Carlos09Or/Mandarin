@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="HSK 1 Mandarin cards with searchable card explorer, English explanations, examples, active recall practice, pronunciation and guided Hanzi writing.">
+  <meta name="theme-color" content="#b72d36">
+  <title>Mandarin Cards · HSK 1</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7.3/dist/hanzi-writer.min.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/learning-data.js" defer></script>
+  <script src="js/character-data.js" defer></script>
+  <script src="js/practice-data.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/situations.js" defer></script>
+</head>
+<body>
+<div class="app">
+  <header class="appHeader">
+    <div>
+      <p class="eyebrow">MANDARIN LEARNING HUB</p>
+      <h1>HSK 1 Cards</h1>
+      <p class="headerSub">See the word clearly, hear it, understand it in context, then explore only when you need more.</p>
+    </div>
+    <div class="headerStats" aria-label="Study summary">
+      <span>150 words</span>
+      <span id="writeStat">0 written</span>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Main sections">
+    <button class="tab active" data-page="vocab">Cards</button>
+    <button class="tab" data-page="practice">Practice</button>
+    <button class="tab" data-page="write">Write Hanzi</button>
+    <button class="tab" data-page="situations">Situations</button>
+  </nav>
+
+  <section id="vocab" class="page active">
+    <div id="cardView">
+      <div class="cardToolbar cardToolbarCompact">
+        <div class="cardScopeSummary" aria-live="polite">
+          <span>Browsing</span>
+          <b id="cardScopeName">All words</b>
+        </div>
+        <div class="cardToolbarActions">
+          <button id="openCardExplorer" class="secondaryButton toolbarButton" type="button">☰ Explore cards</button>
+          <button id="randomCard" class="ghostButton" type="button">Shuffle</button>
+        </div>
+      </div>
+
+      <article class="learningCard" aria-live="polite">
+        <div class="cardProgressRow">
+          <button id="cardPrevTop" class="iconButton" type="button" aria-label="Previous word">←</button>
+          <div class="cardProgressMeta">
+            <div class="cardProgressTextLine">
+              <strong id="cardProgressLabel">Word 1 of 150</strong>
+              <span class="cardNumber" id="cardNumber">#1</span>
+            </div>
+            <div class="thinProgress" aria-hidden="true"><div id="cardProgressBar"></div></div>
+          </div>
+          <button id="cardNextTop" class="iconButton" type="button" aria-label="Next word">→</button>
+        </div>
+<div id="cardFlipStage" class="cardFlipStage">
+        <section id="cardFrontFace" class="cardFace cardFrontFace">
+          <div class="focusZone cleanFace">
+            <span class="vocabBadge">HSK 1 VOCABULARY</span>
+            <button id="cardHanziFront" class="hanziTapButton focusHanzi" type="button" aria-label="Open character explorer"></button>
+            <div class="soundLine">
+              <div class="focusPinyin" id="cardPinyinFront"></div>
+              <button id="cardSpeakFront" class="soundButton" type="button" aria-label="Listen to pronunciation">🔊</button>
+            </div>
+          </div>
+          <button id="flipToBack" class="flipButton flipIconOnly" type="button" aria-label="Flip card" title="Flip card">↻</button>
+        </section>
+
+        <section id="cardBackFace" class="cardFace cardBackFace">
+          <div class="focusZone cleanFace">
+            <span class="vocabBadge">HSK 1 VOCABULARY</span>
+            <button id="cardHanziBack" class="hanziTapButton focusHanzi" type="button" aria-label="Open character explorer"></button>
+            <div class="soundLine">
+              <div class="focusPinyin" id="cardPinyinBack"></div>
+              <button id="cardSpeakBack" class="soundButton" type="button" aria-label="Listen to pronunciation">🔊</button>
+            </div>
+            <div class="focusMeaning" id="cardMeaning"></div>
+          </div>
+
+          <section class="exampleBlock compactExample" aria-labelledby="exampleTitle">
+            <div class="sectionHead">
+              <span class="sectionTag" id="exampleTitle">EXAMPLE</span>
+              <button id="exampleSpeak" class="miniSound" type="button" aria-label="Listen to example sentence">🔊</button>
+            </div>
+            <div class="exampleHanzi" id="exampleHanzi"></div>
+            <div class="examplePinyin" id="examplePinyin"></div>
+            <div class="exampleEnglish" id="exampleEnglish"></div>
+          </section>
+
+          <button id="flipToFront" class="flipButton flipIconOnly" type="button" aria-label="Flip card" title="Flip card">↻</button>
+        </section>
+        </div>
+      </article>
+
+      <div id="characterExplorerModal" class="characterExplorerModal" hidden>
+        <div class="characterExplorerSheet" role="dialog" aria-modal="true" aria-labelledby="characterExplorerTitle">
+          <div class="characterExplorerTop">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <button id="closeCharacterExplorerBack" class="iconButton characterExplorerBackButton" type="button" aria-label="Back">←</button>
+              <div>
+                <p class="eyebrow">CHARACTER EXPLORER</p>
+                <h3 id="characterExplorerTitle">Character Explorer</h3>
+                <p id="characterExplorerSubtitle">Explore the characters, radicals and meaning clues in this word.</p>
+              </div>
+            </div>
+            <button id="closeCharacterExplorer" class="iconButton closeExplorerButton" type="button" aria-label="Close character explorer">×</button>
+          </div>
+          <div id="characterExplorerWord" class="characterExplorerWord"></div>
+          <div id="characterExplorerContent" class="characterExplorerContent"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="cardExplorer" class="cardExplorer" hidden>
+      <div class="explorerHeader simpleExplorerHeader">
+        <h2 class="simpleExplorerTitle">HSK 1 Cards</h2>
+      </div>
+
+      <div class="explorerSearchRow compactExplorerSearchRow">
+        <label class="explorerSearch compactExplorerSearch">
+          <input id="cardSearch" type="search" placeholder="Search Hanzi, pinyin, or English…" autocomplete="off" spellcheck="false">
+        </label>
+        <button id="clearCardSearch" class="ghostButton" type="button" hidden>Clear</button>
+      </div>
+
+      <div id="explorerFilters" class="explorerFilters" aria-label="Card groups"></div>
+
+      <div id="explorerWordGrid" class="explorerWordGrid"></div>
+      <div id="explorerEmpty" class="explorerEmpty" hidden></div>
+    </div>
+  </section>
+
+  <section id="write" class="page">
+    <div class="writeLayout">
+      <div class="panel writer">
+        <div class="writerTop">
+          <div>
+            <div class="wordMeta">
+              <span class="bigWord" id="writeWord"></span>
+              <span class="writerPinyin" id="writePinyin"></span>
+            </div>
+            <div class="writerMeaning" id="writeMeaning"></div>
+          </div>
+          <div class="actions">
+            <button id="prevWord" class="btn" type="button">←</button>
+            <button id="speakWrite" class="btn" type="button">🔊</button>
+            <button id="nextWord" class="btn" type="button">→</button>
+          </div>
+        </div>
+
+        <div id="characterTabs" class="characterTabs"></div>
+
+        <div class="canvasShell">
+          <div id="hanziWriterTarget" class="hanziStage" aria-label="Hanzi stroke practice area"></div>
+          <div class="canvasHint">Write the Hanzi. The app checks stroke order and direction as you go.</div>
+          <div class="strokeStatus">
+            <span id="strokeCounter" class="strokePill">Stroke 1</span>
+            <span id="mistakeCounter" class="strokePill">0 mistakes</span>
+          </div>
+        </div>
+
+        <div class="writeButtons">
+          <button id="resetQuiz" class="btn danger" type="button">↻ Restart</button>
+          <button id="animateChar" class="btn" type="button">▶ Show order</button>
+          <button id="toggleGuide" class="btn" type="button">Hide guide</button>
+        </div>
+        <div id="traceResult" class="result">Start with the first stroke. If the stroke is wrong, you will get immediate feedback.</div>
+      </div>
+
+      <aside class="panel side">
+        <h2>Writing progress</h2>
+        <div class="progressbar"><div id="writeProgress"></div></div>
+        <p><b id="writeProgressText">0/150</b> words completed.</p>
+        <p>A word is complete when you successfully write each of its Hanzi characters in order.</p>
+        <div id="miniList" class="listMini"></div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="practice" class="page">
+    <div id="practiceHome" class="practiceHome">
+      <div class="practiceHero">
+        <div>
+          <p class="eyebrow">ACTIVE RECALL · HSK 1</p>
+          <h2>Practice one small block at a time.</h2>
+          <p>Choose 15 related words, then train meaning, Hanzi ↔ pinyin, Chinese keyboard input, listening, context, or a mixed session.</p>
+        </div>
+        <div class="practiceHeroStat">
+          <b id="practiceOverall">0%</b>
+          <span>overall accuracy</span>
+        </div>
+      </div>
+      <div id="blockGrid" class="blockGrid"></div>
+    </div>
+
+    <div id="blockView" class="blockView" hidden>
+      <button id="backToBlocks" class="backLink" type="button">← All blocks</button>
+
+      <div class="practiceBlockHeader">
+        <div class="practiceBlockIntro">
+          <p class="eyebrow" id="blockEyebrow">BLOCK 1 · 15 WORDS</p>
+          <h2 id="blockTitle"></h2>
+          <p id="blockDescription"></p>
+          <div class="blockMetaPills">
+            <span>HSK 1</span>
+            <span>Beginner</span>
+            <span>Core vocabulary</span>
+          </div>
+        </div>
+
+        <div class="practiceProgressCard">
+          <div class="practiceProgressTitle">Your progress</div>
+          <div class="practiceProgressLine">
+            <div class="practiceProgressTrack"><div id="blockProgressBar"></div></div>
+            <b id="blockAccuracy">0%</b>
+          </div>
+          <span id="blockPracticedCount">0 of 15 words practiced.</span>
+        </div>
+      </div>
+
+      <div class="practiceLaunchGrid">
+        <section class="practiceLaunchCard">
+          <div class="practiceLaunchDecor" aria-hidden="true">
+            <span class="practiceSun"></span>
+            <span class="practiceMountain m1"></span>
+            <span class="practiceMountain m2"></span>
+            <span class="practiceMountain m3"></span>
+          </div>
+          <div class="practiceLaunchContent">
+            <p class="practiceRecommendation">Recommended</p>
+            <h3>Start practice</h3>
+            <p class="practiceSubcopy">Adaptive mixed practice for this block.</p>
+            <button id="startSelectedPractice" class="primaryButton startPracticeButton" type="button">
+              ▶ Start practice →
+            </button>
+            <div class="practiceLaunchMeta">10 questions · ~4 minutes</div>
+          </div>
+        </section>
+
+        <div class="practiceQuickActions">
+          <button id="practiceMistakes" class="practiceQuickCard" type="button">
+            <span class="practiceQuickIcon">▥</span>
+            <span><b>Review mistakes</b><small id="mistakeActionText">Focus on the words you've missed.</small></span>
+            <strong>›</strong>
+          </button>
+          <button id="openBlockCards" class="practiceQuickCard" type="button">
+            <span class="practiceQuickIcon jade">▤</span>
+            <span><b>View words</b><small>See all 15 words in this block.</small></span>
+            <strong>›</strong>
+          </button>
+        </div>
+      </div>
+
+      <section class="blockVocabularyPreview">
+        <div class="blockVocabularyHead">
+          <h3>Block vocabulary <span>(preview)</span></h3>
+        </div>
+        <div id="blockWords" class="blockWords blockWordsPreview" aria-label="Words in this block"></div>
+      </section>
+
+      <section class="practiceModePanel">
+        <div class="practiceModeIntro">
+          <div class="practiceModeIcon">☷</div>
+          <div>
+            <h3>Practice mode</h3>
+            <p>Choose one mode, or leave Mixed selected.</p>
+          </div>
+        </div>
+        <div class="skillGrid practiceModeGrid" id="skillGrid"></div>
+      </section>
+    </div>
+
+    <div id="exerciseView" class="exerciseView" hidden>
+      <div class="exerciseTop">
+        <button id="exitExercise" class="backLink" type="button">← Back to block</button>
+        <div class="exerciseProgressWrap">
+          <div class="exerciseProgressMeta"><span id="exerciseLabel">Meaning</span><span id="exerciseCount">1 / 15</span></div>
+          <div class="thinProgress"><div id="exerciseProgress"></div></div>
+        </div>
+      </div>
+
+      <article class="exerciseCard" aria-live="polite">
+        <div id="questionType" class="questionType">MEANING</div>
+        <div id="questionPrompt" class="questionPrompt"></div>
+        <div id="questionSub" class="questionSub"></div>
+        <button id="questionAudio" class="exerciseAudio" type="button" hidden>🔊 Listen</button>
+        <div id="exerciseOptions" class="exerciseOptions"></div>
+
+        <div id="feedbackPanel" class="feedbackPanel" hidden>
+          <div class="feedbackStatus" id="feedbackStatus"></div>
+          <div class="feedbackCompare" id="feedbackCompare" hidden></div>
+          <div class="feedbackSummary">
+            <div class="feedbackTarget">
+              <div>
+                <div id="feedbackHanzi" class="feedbackHanzi"></div>
+                <div id="feedbackPinyin" class="feedbackPinyin"></div>
+                <div id="feedbackEnglish" class="feedbackEnglish"></div>
+              </div>
+              <button id="feedbackAudio" class="miniSound" type="button" aria-label="Listen to the correct word">🔊</button>
+            </div>
+            <div class="feedbackExampleCard">
+              <div class="feedbackExampleHead">
+                <div class="feedbackExampleLabel">Example sentence</div>
+                <button id="feedbackExampleAudio" class="miniSound" type="button" aria-label="Listen to example sentence">🔊</button>
+              </div>
+              <div id="feedbackExampleHanzi" class="feedbackExampleHanzi"></div>
+              <div id="feedbackExamplePinyin" class="feedbackExamplePinyin"></div>
+              <div id="feedbackExampleEnglish" class="feedbackExampleEnglish"></div>
+            </div>
+          </div>
+          <p id="feedbackExplanation" class="feedbackExplanation"></p>
+          <button id="nextExercise" class="primaryButton feedbackNext" type="button">Next →</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+
+  <section id="situations" class="page">
+    <div id="situationsHome" class="situationsHome situationsHomeGame">
+      <div class="situationsHero gameSituationsHero">
+        <div>
+          <p class="eyebrow">REAL-LIFE MANDARIN</p>
+          <h2>Situations</h2>
+          <p>Explore small interactive worlds where Mandarin is how you move the story forward.</p>
+        </div>
+        <div class="situationHeroBadge">Story mode</div>
+      </div>
+
+      <div class="gameSituationCatalog">
+        <article class="gameSituationCard featured">
+          <div class="gameSituationCover restaurantGameCover" aria-hidden="true">
+            <div class="coverRoof"></div>
+            <div class="coverSignGame">餐厅</div>
+            <span class="gameLantern gl1">🏮</span><span class="gameLantern gl2">🏮</span>
+            <div class="coverDoor"></div>
+            <div class="coverWindow cw1"></div><div class="coverWindow cw2"></div>
+            <div class="coverPlant cp1">🪴</div><div class="coverPlant cp2">🪴</div>
+            <div class="coverMenu">今日推荐<br><small>Today's specials</small></div>
+            <div class="coverGlow"></div>
+          </div>
+          <div class="gameSituationBody">
+            <span class="featuredBadge">FEATURED</span>
+            <h3>At a Restaurant</h3>
+            <p>Get a table, order food and drinks, chat with a friend, ask for takeout, pay, and leave naturally.</p>
+            <div class="gameSituationStats"><span>▥ Beginner</span><span>▤ 8 chapters</span><span>◷ ~10 min</span></div>
+            <button id="startRestaurantSituation" class="primaryButton gameStartButton" type="button">Start situation →</button>
+          </div>
+        </article>
+
+        <div class="lockedSituationList">
+          <article class="lockedSituationCard">
+            <div class="lockedThumb marketThumb"><span>市场</span></div>
+            <div><h3>At the Market</h3><p>Shop for food, ask prices, quantities, and preferences.</p><div class="lockedMeta">Beginner · Coming later</div></div>
+            <span class="lockMark">🔒</span>
+          </article>
+          <article class="lockedSituationCard">
+            <div class="lockedThumb hotelThumb"><span>酒店</span></div>
+            <div><h3>At the Hotel</h3><p>Check in, ask for help, and talk about your stay.</p><div class="lockedMeta">Beginner · Coming later</div></div>
+            <span class="lockMark">🔒</span>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div id="situationGame" class="situationGame situationGameV2" hidden>
+      <div class="gameTopbar">
+        <button id="exitSituation" class="gameBackButton" type="button" aria-label="Back to Situations">←</button>
+        <div class="gameTopCenter">
+          <strong>At a Restaurant</strong>
+          <div class="gameProgressTrack"><div id="situationProgressBar"></div></div>
+        </div>
+        <div id="situationProgressText" class="gameProgressCount">1 / 8</div>
+        <span id="situationChapter" class="srOnly">Arrival</span>
+        <button id="restartSituation" class="gameRestartButton" type="button">Restart</button>
+      </div>
+
+      <div class="situationGameShell">
+        <main class="situationMain situationMainV2">
+          <div class="situationStage">
+            <section id="situationScene" class="situationScene situationSceneV2" aria-live="polite"></section>
+            <section id="situationDialogue" class="situationDialogue situationDialogueOverlay"></section>
+          </div>
+
+          <section id="situationInteraction" class="situationInteraction situationInteractionV2"></section>
+          <section id="situationFeedback" class="situationFeedback situationFeedbackV2" hidden></section>
+
+          <div class="situationGameActions">
+            <button id="situationListenCurrent" class="gameActionButton" type="button">🔊 <span>Listen</span></button>
+            <button id="situationHintButton" class="gameActionButton" type="button">💡 <span>Hint</span></button>
+            <button id="situationPhrasebookButton" class="gameActionButton" type="button">▤ <span>Phrase Book</span></button>
+            <button id="situationRouteButton" class="gameActionButton" type="button">⌁ <span>Your Route</span></button>
+          </div>
+          <div id="situationHintBox" class="situationHintBox" hidden></div>
+        </main>
+
+        <aside id="situationDrawer" class="situationDrawer" hidden>
+          <div class="situationDrawerTop">
+            <div>
+              <p class="eyebrow" id="situationDrawerEyebrow">PHRASE BOOK</p>
+              <h3 id="situationDrawerTitle">Phrases you unlocked</h3>
+            </div>
+            <button id="closeSituationDrawer" class="iconButton" type="button" aria-label="Close panel">×</button>
+          </div>
+          <div id="situationPhrasebook" class="situationPhrasebook"></div>
+          <div id="situationRoute" class="situationRoute" hidden></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  
+</div>
+</body>
+</html>

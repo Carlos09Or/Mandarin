@@ -1,0 +1,1887 @@
+:root{
+  --bg:#f8fbf8;
+  --surface:#ffffff;
+  --surface-soft:#f5faf6;
+  --surface-muted:#f0f7f2;
+  --ink:#241b1c;
+  --muted:#716467;
+  --line:#efdcd7;
+  --red:#b72d36;
+  --red-dark:#8f1f28;
+  --red-soft:#f8dddd;
+  --red-faint:#fff0ee;
+  --green:#2f7d59;
+  --jade:#7ea08f;
+  --jade-soft:#eef6f1;
+  --jade-line:#dbe8df;
+  --shadow:0 18px 44px rgba(112,44,48,.08);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 9% 7%,rgba(183,45,54,.055),transparent 18rem),
+    radial-gradient(circle at 92% 14%,rgba(74,132,102,.08),transparent 20rem),
+    radial-gradient(circle at 85% 78%,rgba(126,160,143,.07),transparent 24rem),
+    linear-gradient(180deg,#fcfefd 0%,#f8fbf8 46%,#fffaf8 100%);
+}
+button,input,select{font:inherit}
+button{touch-action:manipulation}
+.app{max-width:1180px;margin:0 auto;padding:22px}
+.appHeader{display:flex;justify-content:space-between;gap:22px;align-items:flex-end;padding:8px 2px 18px;border-bottom:1px solid var(--line)}
+.eyebrow{margin:0 0 5px;color:var(--red);font-size:11px;font-weight:850;letter-spacing:.18em}
+.appHeader h1{margin:0;font-size:clamp(28px,4vw,44px);line-height:1.05;letter-spacing:-.035em}
+.headerSub{margin:8px 0 0;max-width:650px;color:var(--muted);font-size:14px;line-height:1.55}
+.headerStats{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.headerStats span{padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.74);color:#67585b;font-size:12px;font-weight:700}
+.tabs{display:flex;gap:8px;overflow:auto;padding:14px 0 18px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:1px solid var(--line);border-radius:999px;padding:10px 15px;background:#fff;color:#65575a;white-space:nowrap;cursor:pointer;font-weight:750}
+.tab.active{background:var(--red);border-color:var(--red);color:#fff}
+.page{display:none}.page.active{display:block}
+
+/* Cards */
+.cardToolbar{max-width:760px;margin:0 auto 12px;display:flex;align-items:flex-end;gap:10px}
+.jumpField{flex:1;display:grid;gap:6px;color:var(--muted);font-size:12px;font-weight:700}
+.jumpField input{width:100%;border:1px solid var(--line);border-radius:14px;background:#fff;padding:12px 14px;color:var(--ink);outline:none}
+.jumpField input:focus{border-color:#d99aa0;box-shadow:0 0 0 4px rgba(183,45,54,.08)}
+.ghostButton{border:1px solid var(--line);border-radius:14px;background:#fff;padding:12px 14px;color:var(--red-dark);font-weight:760;cursor:pointer;min-height:44px}
+.learningCard{max-width:760px;margin:0 auto;background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(250,253,251,.97));border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);padding:20px;position:relative;overflow:hidden}
+.learningCard::before{content:"";position:absolute;width:230px;height:230px;border-radius:50%;right:-120px;top:-125px;background:radial-gradient(circle,rgba(183,45,54,.055),rgba(183,45,54,0) 68%);pointer-events:none}
+.cardProgressRow{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:12px}
+.iconButton{width:44px;height:44px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--red-dark);font-size:20px;cursor:pointer}
+.cardProgressMeta{min-width:0;text-align:center}
+.cardProgressTextLine{display:flex;align-items:center;justify-content:center;gap:8px;min-width:0}
+.cardProgressMeta strong{font-size:13px;color:#5f5255;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.thinProgress{height:6px;margin-top:8px;border-radius:999px;background:#f2e6e3;overflow:hidden}
+.thinProgress>div{height:100%;width:0;background:linear-gradient(90deg,#d85660,var(--red));border-radius:999px;transition:width .25s ease}
+.cardNumber{flex:0 0 auto;color:#a28e92;font-size:12px;font-weight:750}
+.focusZone{text-align:center;padding:30px 10px 22px}
+.vocabBadge{display:inline-flex;align-items:center;border-radius:999px;padding:7px 11px;background:var(--red-faint);color:var(--red);font-size:11px;font-weight:850;letter-spacing:.13em}
+.focusHanzi{font-family:"Noto Serif SC","Songti SC","STSong","Noto Sans SC","PingFang SC",serif;font-size:clamp(78px,15vw,128px);line-height:1.05;letter-spacing:.02em;margin:24px 0 5px;color:#4e1217;text-wrap:balance}
+.soundLine{display:flex;align-items:center;justify-content:center;gap:11px;min-height:52px}
+.focusPinyin{font-size:clamp(27px,5vw,38px);font-weight:850;color:var(--red);letter-spacing:-.025em}
+.soundButton{width:48px;height:48px;border:1px solid #efbfc1;border-radius:50%;background:#fff7f6;color:var(--red);cursor:pointer;font-size:20px;box-shadow:0 7px 18px rgba(183,45,54,.08)}
+.focusMeaning{margin-top:9px;font-size:clamp(24px,4vw,32px);font-weight:820;letter-spacing:-.025em}
+.exampleBlock{margin-top:5px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(135deg,#fff 0%,#fff8f6 100%);padding:17px 18px}
+.sectionHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px}
+.sectionTag{font-size:11px;letter-spacing:.16em;color:var(--red);font-weight:900}
+.miniSound{width:36px;height:36px;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--red);cursor:pointer}
+.exampleHanzi{font-family:"Noto Serif SC","Songti SC","STSong","Noto Sans SC","PingFang SC",serif;font-size:28px;line-height:1.4;color:#3f2427}
+.examplePinyin{margin-top:3px;color:var(--red);font-size:16px;font-weight:780}
+.exampleEnglish{margin-top:3px;color:#5f5658;font-size:15px}
+.exploreSection{padding-top:18px}
+.exploreHeading{display:flex;align-items:center;gap:8px;margin-bottom:10px;color:#5e5355;font-weight:800}
+.exploreHint{font-size:11px;font-weight:700;color:#aa9699;text-transform:uppercase;letter-spacing:.1em}
+.exploreActions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.toolPill{border:1px solid var(--line);border-radius:14px;background:#fff;padding:11px 10px;color:#6d353a;font-weight:730;cursor:pointer;min-height:46px}
+.toolPill.active{background:var(--red-faint);border-color:#e8b6b9;color:var(--red-dark)}
+.explorePanel{margin-top:10px;border:1px solid var(--line);border-radius:16px;background:#fffaf8;padding:15px}
+.explorePanel h3{margin:0 0 7px;font-size:15px}
+.explorePanel p{margin:5px 0;color:var(--muted);line-height:1.5;font-size:14px}
+.breakdownRow{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;margin-top:10px}
+.breakPiece{min-width:110px;flex:1;border:1px solid #ecd8d4;border-radius:14px;background:#fff;padding:11px;text-align:center}
+.breakPiece .char{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:34px;color:#4e1217}
+.breakPiece .gloss{font-size:12px;color:var(--muted);margin-top:3px}
+.charPracticeList{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:10px}
+.charPracticeButton{border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px;cursor:pointer;text-align:left;color:var(--ink)}
+.charPracticeButton b{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:28px;color:#4e1217;margin-right:8px}
+.memoryCallout{display:flex;gap:11px;align-items:flex-start}
+.memoryIcon{flex:0 0 38px;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--red-faint)}
+.practiceChoices{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+.practiceChoice{border:1px solid var(--line);border-radius:12px;background:#fff;padding:9px 11px;color:var(--red-dark);font-weight:720;cursor:pointer}
+.practiceRow{width:100%;margin-top:10px;border:1px solid var(--line);border-radius:15px;background:#fff;padding:13px 15px;display:flex;justify-content:space-between;align-items:center;color:#6e3035;font-weight:800;cursor:pointer}
+.practiceRow b{color:var(--red);margin-right:6px}
+.secondaryButton,.primaryButton{min-height:48px;border-radius:15px;padding:12px 16px;font-weight:800;cursor:pointer}
+.secondaryButton{border:1px solid var(--line);background:#fff;color:#6e3035}
+.primaryButton{border:1px solid var(--red);background:linear-gradient(135deg,#c64049,var(--red));color:#fff;box-shadow:0 9px 20px rgba(183,45,54,.16)}
+
+/* Writing */
+.writeLayout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);gap:16px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+.writer{padding:20px}
+.writerTop{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.wordMeta{display:flex;align-items:baseline;gap:13px;flex-wrap:wrap}
+.bigWord{font-family:"Noto Serif SC","Songti SC","STSong","Noto Sans SC","PingFang SC",sans-serif;font-size:42px;color:#4e1217}
+.writerPinyin{color:var(--red);font-weight:850}
+.writerMeaning{color:var(--muted)}
+.actions{display:flex;gap:7px;margin-top:11px}
+.btn{border:0;border-radius:12px;padding:9px 11px;cursor:pointer;background:var(--red-faint);color:var(--red-dark);font-weight:700}
+.btn.dark{background:var(--red);color:#fff}
+.btn.good{background:#eaf8f1;color:#11734b}
+.btn.danger{background:#fff0f0;color:#a92f37}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.characterTabs{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+.charBtn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 12px;font-family:"Noto Serif SC","Songti SC","STSong","Noto Sans SC","PingFang SC",sans-serif;font-size:25px;cursor:pointer}
+.charBtn.active{background:var(--red);color:#fff;border-color:var(--red)}
+.charBtn.done{box-shadow:inset 0 0 0 2px #67ad88}
+.canvasShell{max-width:430px;margin:10px auto 0;position:relative}
+.hanziStage{width:100%;aspect-ratio:1/1;border:1px solid #eadbd8;border-radius:24px;background:#fff;overflow:hidden;position:relative;touch-action:none;background-image:linear-gradient(to right,transparent calc(50% - .5px),#f0e6e4 50%,transparent calc(50% + .5px)),linear-gradient(to bottom,transparent calc(50% - .5px),#f0e6e4 50%,transparent calc(50% + .5px))}
+#hanziWriterTarget{width:100%;height:100%}
+#hanziWriterTarget svg{width:100%;height:100%;display:block;touch-action:none}
+.strokeStatus{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.strokePill{font-size:12px;padding:6px 9px;border-radius:999px;background:#f4ecea;color:#6c5f61}
+.strokePill.bad{background:#fff0f0;color:#ad3d3d}.strokePill.good{background:#eaf8f1;color:#11734b}
+.canvasHint{font-size:12px;text-align:center;color:var(--muted);margin:8px 0 0}
+.writeButtons{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:14px 0}
+.result{min-height:55px;padding:12px 14px;border-radius:15px;background:#fbf6f5;text-align:center;color:#5d5557}
+.result.ok{background:#ebfaf2;color:#11734b}.result.no{background:#fff2f2;color:#a64040}
+.side{padding:19px;height:max-content}
+.side h2{margin:0 0 10px;font-size:18px}
+.side p{color:var(--muted);font-size:14px;line-height:1.55}
+.progressbar{height:10px;background:#f1e8e6;border-radius:999px;overflow:hidden;margin:10px 0 7px}
+.progressbar>div{height:100%;background:linear-gradient(90deg,#d85660,var(--red));width:0}
+.listMini{max-height:480px;overflow:auto;margin-top:12px}
+.mini{display:flex;justify-content:space-between;gap:8px;padding:9px 6px;border-bottom:1px solid #f4ecea;cursor:pointer}
+.mini:hover{background:#fff8f6}
+.mini .c{font-family:"Noto Serif SC","Songti SC","STSong","Noto Sans SC","PingFang SC",sans-serif;font-size:21px}
+.mini .tick{color:#15915e;font-weight:800}
+.num{font-size:11px;color:#a19194}
+
+/* Quiz */
+.quiz{padding:22px;max-width:760px;margin:auto;text-align:center}
+.quizIntro{max-width:520px;margin:0 auto 8px;color:var(--muted);font-size:13px;line-height:1.5}
+.meaning{color:var(--muted);font-size:13px;margin-top:5px}
+.qHanzi{font-family:"Noto Serif SC","Songti SC","STSong","Noto Sans SC","PingFang SC",sans-serif;font-size:72px;margin:18px 0 6px;color:#4e1217}
+.qPinyin{color:var(--red);font-size:20px;font-weight:850}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.opt{border:1px solid var(--line);background:#fff;border-radius:15px;padding:13px;cursor:pointer;color:var(--ink)}
+.opt.correct{background:#eaf8f1;border-color:#89c9a9}.opt.wrong{background:#fff0f0;border-color:#e0a1a1}
+.footerNote{text-align:center;color:#a18f92;font-size:12px;padding:20px 5px}
+
+@media(max-width:830px){
+  .app{padding:15px}
+  .appHeader{align-items:flex-start;flex-direction:column}
+  .headerStats{justify-content:flex-start}
+  .writeLayout{grid-template-columns:1fr}
+  .opts{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  .app{padding:12px}
+  .appHeader{padding-top:3px}
+  .headerSub{font-size:13px}
+  .cardToolbar{align-items:stretch;flex-direction:column}
+  .learningCard{border-radius:22px;padding:14px}
+  .cardProgressRow{grid-template-columns:42px 1fr 42px;gap:8px}
+  .focusZone{padding:25px 4px 18px}
+  .focusHanzi{margin-top:20px}
+  .soundButton{width:44px;height:44px}
+  .exampleBlock{padding:15px}
+  .exampleHanzi{font-size:25px}
+  .exploreActions{grid-template-columns:1fr}
+  .toolPill{text-align:left;padding-left:14px}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Practice · active recall */
+.practiceHome,.blockView,.exerciseView{max-width:900px;margin:0 auto}
+.practiceHero{display:flex;justify-content:space-between;align-items:flex-end;gap:22px;padding:18px 2px 22px}
+.practiceHero h2,.blockHeader h2{margin:2px 0 8px;font-size:clamp(27px,4vw,40px);letter-spacing:-.035em;line-height:1.05}
+.practiceHero p:not(.eyebrow),.blockHeader p:not(.eyebrow){margin:0;max-width:650px;color:var(--muted);line-height:1.55}
+.practiceHeroStat,.blockScore{flex:0 0 auto;min-width:118px;border-left:1px solid var(--line);padding-left:20px;display:grid;gap:2px}
+.practiceHeroStat b,.blockScore b{font-size:28px;color:var(--red-dark)}
+.practiceHeroStat span,.blockScore span{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:750}
+.blockGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.blockCard{border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.94);padding:18px;text-align:left;cursor:pointer;color:var(--ink);box-shadow:0 10px 28px rgba(112,44,48,.045);transition:transform .16s ease,border-color .16s ease}
+.blockCard:hover{border-color:#ddb9b5;transform:translateY(-1px)}
+.blockCardTop{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:10px;font-weight:850;letter-spacing:.1em;color:var(--red)}
+.blockCardTop b{color:#9a898c;letter-spacing:0;text-transform:none;font-size:11px}
+.blockCard h3{font-size:20px;margin:9px 0 5px;letter-spacing:-.02em}
+.blockCard p{margin:0;color:var(--muted);font-size:13px;line-height:1.5;min-height:40px}
+.blockPreview{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.blockPreview span{min-width:34px;height:34px;border:1px solid #f0dfdc;border-radius:10px;background:#fff9f7;display:grid;place-items:center;font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:18px;color:#5a2024}
+.blockPreview .moreChip{font-family:inherit;font-size:11px;color:#9a6b6e}
+.blockCardFoot{display:flex;justify-content:space-between;gap:12px;margin-top:14px;padding-top:12px;border-top:1px solid #f4e9e6;color:#806f72;font-size:12px;font-weight:720}
+.backLink{border:0;background:transparent;color:var(--red-dark);font-weight:800;padding:10px 2px;cursor:pointer;min-height:44px}
+.blockHeader{display:flex;justify-content:space-between;gap:22px;align-items:flex-end;padding:10px 2px 18px;border-bottom:1px solid var(--line)}
+.blockWords{display:flex;flex-wrap:wrap;gap:7px;padding:16px 0}
+.wordChip{border:1px solid var(--line);border-radius:13px;background:#fff;padding:8px 10px;display:flex;gap:7px;align-items:baseline;cursor:pointer;color:var(--ink)}
+.wordChip b{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:20px;color:#4e1217}
+.wordChip span{font-size:11px;color:var(--red);font-weight:760}
+.blockActions{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:14px}
+.blockActions .secondaryButton{min-height:42px;padding:9px 13px}
+.blockActions .secondaryButton:disabled{opacity:.45;cursor:not-allowed}
+.skillGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:4px}
+.skillCard{border:1px solid var(--line);border-radius:18px;background:#fff;padding:15px;display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;text-align:left;color:var(--ink);cursor:pointer}
+.skillCard.featured{grid-column:1/-1;background:linear-gradient(135deg,#fff8f6,#fff);border-color:#e9c6c2}
+.skillIcon{width:46px;height:46px;border-radius:14px;background:var(--red-faint);display:grid;place-items:center;color:var(--red-dark);font-weight:900;font-size:15px}
+.skillCopy{display:grid;gap:3px;min-width:0}
+.skillCopy b{font-size:15px}
+.skillCopy small{font-size:12px;line-height:1.4;color:var(--muted)}
+.skillProgress{font-size:11px;color:#927f82;white-space:nowrap}
+.exerciseTop{display:flex;align-items:center;gap:16px;margin-bottom:12px}
+.exerciseProgressWrap{flex:1;min-width:0}
+.exerciseProgressMeta{display:flex;justify-content:space-between;gap:12px;font-size:11px;color:var(--muted);font-weight:750;margin-bottom:5px}
+.exerciseCard{max-width:760px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);padding:30px}
+.questionType{text-align:center;font-size:10px;letter-spacing:.16em;font-weight:900;color:var(--red);text-transform:uppercase}
+.questionPrompt{text-align:center;min-height:154px;display:grid;place-items:center;padding:20px 8px 10px}
+.promptHanzi{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:clamp(94px,20vw,148px);font-weight:700;line-height:1;color:#471015;letter-spacing:.015em}
+.promptEnglish{font-size:clamp(38px,8vw,58px);font-weight:850;letter-spacing:-.035em;color:#332829}
+.promptPinyin{font-size:clamp(42px,9vw,64px);font-weight:850;color:var(--red);letter-spacing:-.025em}
+.promptSentence{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:clamp(36px,7vw,56px);font-weight:650;line-height:1.35;color:#3f2427}
+.listenMark{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;border:1px solid #edc7c3;background:#fff8f6;font-family:"Noto Serif SC","Songti SC",serif;font-size:48px;color:var(--red-dark)}
+.questionSub{text-align:center;color:var(--muted);font-size:14px;line-height:1.5;min-height:25px}
+.exerciseAudio{display:block;margin:14px auto 2px;border:1px solid #ebc0bd;border-radius:999px;background:var(--red-faint);color:var(--red-dark);padding:11px 18px;font-weight:800;cursor:pointer;min-height:44px}
+.exerciseOptions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px}
+.exerciseOption{min-height:70px;border:1px solid var(--line);border-radius:17px;background:#fff;color:var(--ink);padding:14px 16px;cursor:pointer;font-weight:760;font-size:17px;line-height:1.25;transition:border-color .15s ease,background .15s ease,transform .15s ease}
+.exerciseOption.optionHanzi{min-height:92px;font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:clamp(36px,7vw,54px);font-weight:650;line-height:1.05;color:#451116;padding:18px 14px}
+.exerciseOption.optionPinyin{font-size:clamp(22px,4.5vw,30px);font-weight:850;color:#8f2831}
+.exerciseOption.optionEnglish{font-size:18px;font-weight:800}
+.exerciseOption:hover:not(:disabled){border-color:#dca8a4;background:#fffaf8}
+.exerciseOption:disabled{cursor:default}
+.exerciseOption.correct{background:#eaf8f1;border-color:#84c9a7;color:#176c4c}
+.exerciseOption.wrong{background:#fff0f0;border-color:#dea0a0;color:#97373d}
+.feedbackPanel{margin-top:20px;border-top:1px solid var(--line);padding-top:18px}
+.feedbackPanel.isCorrect .feedbackStatus{color:#176c4c}.feedbackPanel.isWrong .feedbackStatus{color:#9c343b}
+.feedbackStatus{font-size:17px;font-weight:900;margin-bottom:12px}
+.feedbackCompare{display:none !important}
+.feedbackSummary{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:12px;align-items:stretch}
+.feedbackTarget,.feedbackExampleCard{background:linear-gradient(180deg,#fff9f7,#f7fbf8);border:1px solid var(--line);border-radius:17px;padding:16px}
+.feedbackTarget{display:flex;justify-content:space-between;align-items:center;gap:15px;min-height:180px}
+.feedbackHanzi{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:clamp(52px,10vw,74px);font-weight:700;color:#4e1217;line-height:1.05}
+.feedbackPinyin{color:var(--red);font-weight:850;margin-top:5px;font-size:18px}.feedbackEnglish{color:#504649;font-weight:730;margin-top:3px;font-size:18px}
+.feedbackExplanation{margin:12px 2px 0;color:var(--muted);font-size:14px;line-height:1.55}
+.feedbackExampleCard{display:flex;flex-direction:column;justify-content:center;min-height:180px}
+.feedbackExampleLabel{text-transform:uppercase;letter-spacing:.08em;color:#a18f92;font-size:10px;font-weight:850;margin-bottom:8px}
+.feedbackExampleHanzi{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:30px;color:#452b2e;line-height:1.35}
+.feedbackExamplePinyin{margin-top:6px;color:var(--red);font-size:16px;font-weight:730}
+.feedbackExampleEnglish{margin-top:4px;font-size:15px;color:var(--muted)}
+.feedbackNext{width:100%;margin-top:17px;min-height:50px}
+.sessionComplete{text-align:center;padding:22px 4px}
+.completeMark{width:64px;height:64px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;background:#eaf8f1;color:#176c4c;font-size:27px;font-weight:900}
+.sessionComplete h2{margin:5px 0 10px;font-size:27px}.sessionScore{font-size:60px;font-weight:900;color:var(--red-dark);letter-spacing:-.05em}
+.sessionComplete>p:not(.eyebrow){max-width:520px;margin:8px auto 18px;color:var(--muted);line-height:1.55}
+.sessionActions{display:grid;grid-template-columns:1fr 1fr;gap:9px;max-width:430px;margin:0 auto}
+
+@media(max-width:700px){
+  .practiceHero,.blockHeader{align-items:flex-start;flex-direction:column}
+  .practiceHeroStat,.blockScore{border-left:0;border-top:1px solid var(--line);padding:10px 0 0;width:100%;display:flex;gap:7px;align-items:baseline}
+  .blockGrid,.skillGrid{grid-template-columns:1fr}
+  .skillCard.featured{grid-column:auto}
+  .skillCard{grid-template-columns:45px 1fr;align-items:start}
+  .skillProgress{grid-column:2;white-space:normal}
+  .exerciseCard{padding:22px 14px;border-radius:22px}
+  .questionPrompt{min-height:142px;padding-top:16px}
+  .promptHanzi{font-size:clamp(88px,27vw,126px)}
+  .exerciseOption.optionHanzi{min-height:86px;font-size:clamp(38px,12vw,52px)}
+  .exerciseTop{align-items:flex-start;flex-direction:column;gap:7px}
+  .exerciseProgressWrap{width:100%}
+  .exerciseOptions{grid-template-columns:1fr}
+  .feedbackSummary{grid-template-columns:1fr}
+  .sessionActions{grid-template-columns:1fr}
+}
+
+
+/* Practice · Chinese Pinyin keyboard production */
+.typingExerciseHost{display:block;margin-top:22px}
+.typeHanziForm{display:grid;gap:10px}
+.typeHanziForm>label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:850}
+.typeInputRow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:stretch}
+.typeHanziInput{width:100%;min-width:0;min-height:58px;border:1.5px solid #dfc5c1;border-radius:15px;background:#fff;color:#3e2326;padding:10px 14px;font-family:"Noto Serif SC","Songti SC","STSong",system-ui,sans-serif;font-size:24px;outline:none;transition:border-color .15s ease,box-shadow .15s ease,background .15s ease}
+.typeHanziInput:focus{border-color:#cf8587;box-shadow:0 0 0 4px rgba(183,45,54,.08)}
+.typeHanziInput.isWrong{border-color:#d78388;background:#fff5f5;box-shadow:0 0 0 4px rgba(183,45,54,.07)}
+.typeHanziInput.isCorrect{border-color:#75ba97;background:#f3fbf7;color:#176c4c}
+.typeCheckButton{min-width:112px;border-radius:15px;padding:10px 18px}
+.typeKeyboardTip{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+.typeKeyboardTip b{color:#5b4548}
+.typeAssistRow{display:flex;gap:7px;flex-wrap:wrap}
+.typeHintButton{min-height:40px;border:1px solid var(--line);border-radius:999px;background:#fff9f7;color:var(--red-dark);padding:8px 12px;font-size:12px;font-weight:800;cursor:pointer}
+.typeHintButton:disabled{opacity:.55;cursor:default}
+.typingHint{border-left:3px solid #efc9c5;padding:7px 10px;background:#fff9f7;border-radius:0 10px 10px 0;color:#6e4d51;font-size:13px}
+.typingStatus{min-height:23px;font-size:13px;line-height:1.5;color:var(--muted)}
+.typingStatus.isWrong{color:#9c343b}.typingStatus.isCorrect{color:#176c4c;font-weight:760}
+.typeMeaning{display:block;margin-top:4px;font-size:12px;color:#9a7f83}
+@media(max-width:560px){
+  .typeInputRow{grid-template-columns:1fr}
+  .typeCheckButton{width:100%;min-height:50px}
+  .typeHanziInput{font-size:22px;min-height:56px}
+}
+
+/* Cards · explorer */
+.cardToolbarCompact{align-items:center;justify-content:space-between}
+.cardScopeSummary{display:grid;gap:2px;min-width:0}
+.cardScopeSummary span{font-size:10px;color:#a18e91;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.cardScopeSummary b{font-size:14px;color:#5c4649;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cardToolbarActions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.toolbarButton{min-height:44px;padding:10px 14px}
+
+.cardExplorer{max-width:980px;margin:0 auto}
+.explorerHeader{display:grid;gap:5px;margin-bottom:16px}
+.explorerHeader .backLink{justify-self:start}
+.explorerIntro h2,.explorerSectionHead h2{margin:2px 0 6px;font-size:clamp(25px,4vw,36px);letter-spacing:-.035em;line-height:1.08}
+.explorerIntro p:not(.eyebrow),.explorerSectionHead p:not(.eyebrow){margin:0;color:var(--muted);line-height:1.5;max-width:690px}
+.explorerSearchRow{display:flex;align-items:flex-end;gap:9px;margin:18px 0 12px}
+.explorerSearch{display:grid;gap:6px;flex:1;min-width:0;color:var(--muted);font-size:12px;font-weight:750}
+.explorerSearch input{width:100%;min-height:48px;border:1px solid var(--line);border-radius:15px;background:#fff;padding:12px 15px;color:var(--ink);outline:none;font-size:16px}
+.explorerSearch input:focus{border-color:#d99aa0;box-shadow:0 0 0 4px rgba(183,45,54,.08)}
+.explorerFilters{display:flex;flex-wrap:wrap;gap:8px;padding:12px;border:1px solid var(--jade-line);border-radius:18px;background:linear-gradient(180deg,#fffaf8,#f3faf5);margin-bottom:12px}
+.explorerFilters::-webkit-scrollbar{display:none}
+.explorerFilter{flex:0 0 auto;min-height:40px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#67575a;padding:8px 11px;cursor:pointer;font-size:12px;font-weight:760;white-space:nowrap}
+.explorerFilter span{margin-left:4px;color:#a58f92;font-size:10px}
+.explorerFilter.active{background:var(--red);border-color:var(--red);color:#fff}
+.explorerFilter.active span{color:#f9d9dc}
+.explorerSectionHead{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;padding:16px 2px 13px;border-top:1px solid var(--line)}
+.explorerCount{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;background:#fff;padding:8px 11px;color:#826f72;font-size:11px;font-weight:800;white-space:nowrap}
+.explorerWordGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.explorerWordCard{position:relative;min-width:0;border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden;transition:border-color .16s ease,transform .16s ease}
+.explorerWordMain{width:100%;min-height:164px;border:0;background:transparent;padding:19px 16px 16px;display:flex;flex-direction:column;align-items:flex-start;text-align:left;cursor:pointer;color:var(--ink)}
+.explorerWordAudio{position:absolute;top:10px;right:10px;z-index:2;width:36px;height:36px;border:1px solid var(--line);border-radius:999px;background:#fff7f5;display:grid;place-items:center;font-size:16px;color:var(--red-dark);cursor:pointer}
+.explorerWordAudio:hover{border-color:#d9a8ad;background:#fff1ef}
+.explorerMiniHanzi{font-family:"Noto Serif SC","Songti SC","STSong","Noto Sans SC","PingFang SC",serif;font-size:42px;line-height:1.1;color:#4e1217;max-width:100%;overflow-wrap:anywhere}
+.explorerMiniPinyin{margin-top:8px;color:var(--red);font-size:14px;font-weight:820;line-height:1.25}
+.explorerMiniMeaning{margin-top:4px;color:#625659;font-size:13px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.explorerEmpty{border:1px dashed #dfc8c4;border-radius:20px;background:#fffaf8;padding:34px 18px;text-align:center;color:var(--muted)}
+.explorerEmpty b{display:block;color:#604f52;font-size:17px;margin-bottom:5px}
+.explorerEmpty span{font-size:13px}
+
+@media(hover:hover) and (pointer:fine){
+  .explorerWordCard:hover{border-color:#dcb1ad;transform:translateY(-1px)}
+}
+
+@media(max-width:850px){
+  .explorerWordGrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:620px){
+  .cardToolbarCompact{align-items:stretch;flex-direction:column}
+  .cardToolbarActions{display:grid;grid-template-columns:1.25fr .75fr}
+  .cardToolbarActions .secondaryButton,.cardToolbarActions .ghostButton{width:100%}
+  .cardProgressRow{grid-template-columns:42px 1fr 42px}
+  .explorerSearchRow{align-items:stretch;flex-direction:column}
+  .explorerSearchRow .ghostButton{align-self:flex-start;min-height:40px;padding:8px 12px}
+  .explorerSectionHead{align-items:flex-start;flex-direction:column;gap:9px}
+  .explorerWordGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .explorerWordMain{min-height:148px;padding:16px 13px 13px}
+  .explorerMiniHanzi{font-size:37px}
+}
+
+/* Situations · branching real-life practice */
+.situationsHome,.situationGame{max-width:1040px;margin:0 auto}
+.situationsHero{display:flex;justify-content:space-between;align-items:flex-end;gap:22px;padding:18px 2px 22px}
+.situationsHero h2{margin:2px 0 8px;font-size:clamp(28px,4vw,42px);letter-spacing:-.035em;line-height:1.05}
+.situationsHero p:not(.eyebrow){margin:0;max-width:700px;color:var(--muted);line-height:1.55}
+.situationHeroBadge{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;background:#fff;padding:9px 12px;color:var(--red-dark);font-size:12px;font-weight:800}
+.situationCatalog{display:grid;grid-template-columns:1.35fr .65fr;gap:16px}
+.situationCatalogCard{background:#fff;border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}
+.situationCatalogCard.locked{opacity:.7}
+.situationCover{min-height:230px;position:relative;display:grid;place-items:center;overflow:hidden}
+.restaurantCover{background:linear-gradient(180deg,#7d2d2d 0 19%,#f7d7b9 19% 58%,#c99569 58% 100%)}
+.restaurantCover::before{content:"";position:absolute;left:12%;right:12%;top:24%;height:46%;background:linear-gradient(90deg,#5e321f 0 4%,#f8eadf 4% 48%,#5e321f 48% 52%,#f8eadf 52% 96%,#5e321f 96%);border:5px solid #5e321f;border-bottom:9px solid #5e321f;border-radius:6px 6px 0 0;box-shadow:0 14px 28px rgba(70,34,21,.16)}
+.coverSign{position:absolute;z-index:2;top:9%;left:50%;transform:translateX(-50%);background:#a83232;color:#ffe8bf;border:2px solid #eab677;border-radius:6px;padding:7px 20px;font-family:"Noto Serif SC","Songti SC",serif;font-size:28px;letter-spacing:.12em;box-shadow:0 6px 16px rgba(57,20,18,.18)}
+.coverLantern{position:absolute;z-index:3;top:28%;font-size:38px;filter:drop-shadow(0 8px 8px rgba(80,34,23,.14))}.coverLantern.left{left:7%}.coverLantern.right{right:7%}
+.coverTable{position:absolute;z-index:3;bottom:9%;left:50%;transform:translateX(-50%);width:42%;min-width:190px;text-align:center;background:#8f5e3d;border-radius:50% 50% 12px 12px;padding:14px 16px 23px;color:#fff;font-size:34px;box-shadow:0 8px 0 #6f452f,0 18px 26px rgba(77,43,28,.18)}
+.marketCover{background:linear-gradient(145deg,#fff2e8,#f1d8c3);font-size:48px}
+.situationCatalogBody{padding:20px}
+.situationMetaLine{display:flex;justify-content:space-between;gap:10px;color:#9a8488;text-transform:uppercase;font-size:10px;font-weight:850;letter-spacing:.12em}
+.situationCatalogBody h3{font-size:24px;margin:7px 0 7px;letter-spacing:-.025em}
+.situationCatalogBody p{margin:0;color:var(--muted);line-height:1.55;font-size:14px}
+.situationTags{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}
+.situationTags span{border:1px solid var(--line);border-radius:999px;background:#fff8f6;padding:7px 9px;color:#7b5e62;font-size:11px;font-weight:720}
+.situationCatalogBody .primaryButton{width:100%;margin-top:2px}
+.situationTopbar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:13px;margin-bottom:14px}
+.situationProgressWrap{min-width:0}
+.situationProgressMeta{display:flex;justify-content:space-between;gap:12px;color:#806f72;font-size:12px;font-weight:750}
+.situationRestart{padding:10px 12px;min-height:42px}
+.situationLayout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:16px;align-items:start}
+.situationMain{min-width:0}
+.situationScene{min-height:350px;border:1px solid #dec8bb;border-radius:26px 26px 0 0;overflow:hidden;position:relative;background:#eed9c5;box-shadow:0 16px 38px rgba(86,43,33,.08)}
+.sceneBackdrop{position:absolute;inset:0;overflow:hidden;background:linear-gradient(180deg,#e7c3a5 0%,#f5e8dc 58%,#b98056 58% 100%)}
+.sceneBackdrop::before{content:"";position:absolute;left:0;right:0;top:0;height:58%;background:repeating-linear-gradient(90deg,rgba(98,54,35,.08) 0 3px,transparent 3px 95px)}
+.sceneLantern{position:absolute;top:18px;font-size:42px;z-index:3;filter:drop-shadow(0 8px 7px rgba(76,29,23,.16))}.sceneLantern.a{left:7%}.sceneLantern.b{right:7%}
+.sceneRestaurantSign{position:absolute;left:50%;top:23px;transform:translateX(-50%);z-index:2;background:#91312e;color:#ffe5b5;border:2px solid #dca56a;border-radius:5px;padding:6px 22px;font-family:"Noto Serif SC","Songti SC",serif;font-size:27px;letter-spacing:.1em}
+.sceneWindow{position:absolute;right:8%;top:82px;width:34%;height:130px;border:7px solid #68452f;background:linear-gradient(180deg,#dbe7e8,#f5dfc6);box-shadow:inset 0 0 0 2px #a77d5d}
+.sceneWindow::before,.sceneWindow::after{content:"";position:absolute;background:#68452f}.sceneWindow::before{width:6px;top:0;bottom:0;left:49%}.sceneWindow::after{height:6px;left:0;right:0;top:48%}
+.sceneTable{position:absolute;left:50%;bottom:52px;transform:translateX(-50%);width:46%;max-width:320px;height:35px;background:#8e5e41;border-radius:50%;box-shadow:0 12px 0 #704631}
+.sceneTable::before{content:"";position:absolute;left:48%;top:28px;width:14px;height:72px;background:#6f4630;border-radius:4px}
+.sceneTable::after{content:"";position:absolute;left:31%;right:31%;top:90px;height:11px;background:#6f4630;border-radius:50%}
+.sceneChair{position:absolute;bottom:33px;width:52px;height:74px;border:7px solid #76523c;border-radius:20px 20px 7px 7px;opacity:.9}.sceneChair.left{left:18%}.sceneChair.right{right:18%}
+.sceneCharacter{position:absolute;z-index:5;display:grid;justify-items:center;gap:5px}
+.sceneCharacter.host,.sceneCharacter.waiter{left:50%;bottom:55px;transform:translateX(-50%)}
+.sceneCharacter.friend{right:18%;bottom:68px}.sceneCharacter.userGhost{left:18%;bottom:68px}
+.avatarCircle{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;font-size:52px;background:#fff5ea;border:4px solid rgba(255,255,255,.82);box-shadow:0 12px 25px rgba(67,34,26,.16)}
+.sceneName{background:rgba(255,255,255,.94);border:1px solid #e1cbbb;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:800;color:#61493f}
+.sceneDish{position:absolute;z-index:6;left:50%;bottom:67px;transform:translateX(-50%);font-size:48px;filter:drop-shadow(0 8px 7px rgba(65,36,28,.18))}
+.sceneMenuBoard{position:absolute;z-index:5;left:50%;top:64px;transform:translateX(-50%) rotate(-1deg);width:min(72%,430px);background:#fff7e8;border:8px solid #744b33;border-radius:10px;padding:16px;box-shadow:0 18px 30px rgba(69,33,21,.18)}
+.sceneMenuBoard h3{font-family:"Noto Serif SC","Songti SC",serif;margin:0 0 10px;text-align:center;color:#7e2f2e}.sceneMenuRows{display:grid;gap:8px}.sceneMenuRow{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px dashed #d8bfa9;padding-bottom:7px}.sceneMenuRow b{font-family:"Noto Serif SC","Songti SC",serif}.sceneMenuRow span{font-size:12px;color:#795e4f}
+.sceneCounter{position:absolute;left:8%;right:8%;bottom:0;height:92px;background:linear-gradient(180deg,#8c5b3f,#69412e);border-top:8px solid #9d6f50}.sceneCounter::before{content:"收银台";position:absolute;left:50%;top:18px;transform:translateX(-50%);font-family:"Noto Serif SC","Songti SC",serif;font-size:23px;color:#ffe1b7}
+.sceneCaption{position:absolute;left:16px;bottom:14px;z-index:9;background:rgba(50,31,26,.72);color:#fff;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:760;backdrop-filter:blur(8px)}
+.situationDialogue{border:1px solid var(--line);border-top:0;background:#fff;border-radius:0 0 22px 22px;padding:18px 19px;margin-bottom:12px}
+.dialogueTop{display:flex;justify-content:space-between;gap:12px;align-items:center}.dialogueSpeaker{font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#8f777b}.dialogueAudio{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--red-faint);color:var(--red);cursor:pointer}
+.dialogueHanzi{margin-top:7px;font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:clamp(29px,5vw,40px);font-weight:700;line-height:1.25;color:#341d1f}.dialoguePinyin{margin-top:5px;color:var(--red);font-weight:800;font-size:17px}.dialogueEnglish{margin-top:4px;color:var(--muted);font-size:14px;line-height:1.5}
+.situationInteraction{border:1px solid var(--line);background:#fff;border-radius:22px;padding:18px 19px;box-shadow:var(--shadow)}
+.interactionEyebrow{color:var(--red);font-size:10px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}.interactionPrompt{margin:4px 0 14px;font-size:18px;font-weight:850;letter-spacing:-.015em}.situationChoices{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.situationChoice{min-height:70px;border:1px solid var(--line);border-radius:15px;background:#fff;padding:11px 13px;text-align:left;cursor:pointer;color:var(--ink)}.situationChoice:hover{background:#fff9f7}.situationChoice b{display:block;font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:20px;color:#3f2528}.situationChoice .choicePinyin{display:block;margin-top:2px;color:var(--red);font-size:13px;font-weight:740}.situationChoice .choiceEnglish{display:block;margin-top:2px;color:var(--muted);font-size:12px;line-height:1.35}.situationChoice.selected{border-color:#d99ba0;box-shadow:0 0 0 3px rgba(183,45,54,.06)}.situationChoice:disabled{cursor:default;opacity:.72}
+.situationChoice.good{border-color:#88c7a4;background:#eef9f3}.situationChoice.bad{border-color:#dfa4a7;background:#fff1f1}
+.situationMenuChoices{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.situationFoodChoice{border:1px solid var(--line);border-radius:17px;background:#fff;padding:13px 10px;text-align:center;cursor:pointer}.situationFoodChoice .foodEmoji{font-size:39px}.situationFoodChoice b{display:block;margin-top:5px;font-family:"Noto Serif SC","Songti SC",serif;font-size:20px}.situationFoodChoice span{display:block;color:var(--red);font-size:12px;font-weight:760;margin-top:2px}.situationFoodChoice small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.situationInputWrap{display:grid;gap:10px}.situationTextInput{width:100%;min-height:54px;border:1px solid var(--line);border-radius:15px;background:#fff;padding:12px 14px;font-size:20px;color:var(--ink);outline:none}.situationTextInput:focus{border-color:#d99aa0;box-shadow:0 0 0 4px rgba(183,45,54,.08)}.situationInputActions{display:flex;gap:8px;flex-wrap:wrap}.situationHint{font-size:12px;color:var(--muted);line-height:1.5}.situationHint b{color:var(--red-dark)}
+.situationFeedback{margin-top:12px;border:1px solid var(--line);border-radius:18px;background:#fff;padding:15px 16px}.situationFeedback.good{background:#eef9f3;border-color:#b6ddc8}.situationFeedback.bad{background:#fff3f2;border-color:#e8b5b7}.situationFeedback h4{margin:0 0 4px;font-size:15px}.situationFeedback p{margin:0;color:#665a5c;font-size:13px;line-height:1.5}.situationFeedback .feedbackPhrase{margin-top:9px;padding-top:9px;border-top:1px solid rgba(0,0,0,.06)}.situationFeedback .feedbackPhrase b{font-family:"Noto Serif SC","Songti SC",serif;font-size:20px}.situationFeedback .feedbackPhrase span{display:block;color:var(--red);font-weight:760;font-size:13px}.situationFeedback .primaryButton{margin-top:12px;width:100%}
+.situationSidebar{display:grid;gap:12px}.situationSideCard{background:#fff;border:1px solid var(--line);border-radius:19px;padding:15px;box-shadow:0 10px 28px rgba(112,44,48,.045)}.situationSideTitle{font-size:13px;font-weight:900;color:#5a4448}.situationSideCard>p{margin:4px 0 10px;color:var(--muted);font-size:12px;line-height:1.45}.situationPhrasebook{display:grid;gap:7px;max-height:390px;overflow:auto}.phrasebookItem{border-top:1px solid #f3e8e6;padding-top:7px}.phrasebookItem:first-child{border-top:0;padding-top:0}.phrasebookItem b{font-family:"Noto Serif SC","Songti SC",serif;color:#43282b}.phrasebookItem span{display:block;color:var(--red);font-size:11px;font-weight:760;margin-top:1px}.phrasebookItem small{display:block;color:var(--muted);font-size:11px;line-height:1.35;margin-top:1px}.situationRoute{display:grid;gap:7px}.routeItem{display:flex;gap:8px;align-items:flex-start;color:#6e5c60;font-size:12px;line-height:1.35}.routeDot{flex:0 0 8px;width:8px;height:8px;border-radius:50%;background:#d8c1c3;margin-top:4px}.routeItem.done .routeDot{background:var(--red)}.routeItem strong{color:#4e3a3e}
+.situationHubNote{border:1px dashed #e1c7c4;border-radius:14px;background:#fff9f7;padding:11px 12px;color:#6c5a5d;font-size:12px;line-height:1.5;margin-bottom:12px}.situationHubNote b{color:var(--red-dark)}
+.situationSummary{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;text-align:center;box-shadow:var(--shadow)}.situationTrophy{font-size:52px}.situationSummary h2{margin:4px 0 7px;font-size:31px}.situationSummary>p{margin:0 auto;color:var(--muted);max-width:600px;line-height:1.55}.summaryRouteGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin:18px 0;text-align:left}.summaryRouteItem{border:1px solid var(--line);border-radius:14px;background:#fff9f7;padding:10px 12px}.summaryRouteItem small{display:block;color:#9a878a;text-transform:uppercase;font-size:9px;font-weight:850;letter-spacing:.1em}.summaryRouteItem b{display:block;margin-top:3px;font-size:13px;color:#5a4044}.summaryActions{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}.summaryActions button{min-width:180px}
+@media(max-width:900px){.situationLayout{grid-template-columns:1fr}.situationSidebar{grid-template-columns:1fr 1fr}.situationCatalog{grid-template-columns:1fr}}
+@media(max-width:620px){.situationsHero{align-items:flex-start;flex-direction:column}.situationHeroBadge{display:none}.situationTopbar{grid-template-columns:auto 1fr}.situationRestart{grid-column:1/-1;justify-self:end;margin-top:-4px}.situationScene{min-height:305px}.situationChoices,.situationMenuChoices{grid-template-columns:1fr}.situationSidebar{grid-template-columns:1fr}.summaryRouteGrid{grid-template-columns:1fr}.sceneWindow{width:39%;right:4%}.avatarCircle{width:78px;height:78px;font-size:44px}.sceneCharacter.friend{right:8%}.sceneCharacter.userGhost{left:8%}}
+
+/* ===== Situations v8 · game-inspired restaurant ===== */
+.srOnly{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.situationsHomeGame{max-width:980px;margin:0 auto}
+.gameSituationsHero{margin-bottom:18px}
+.gameSituationsHero h2{font-size:clamp(34px,5vw,58px);margin:0;color:#5b1118;letter-spacing:-.04em}
+.gameSituationsHero p{max-width:650px}
+.gameSituationCatalog{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);gap:16px;align-items:start}
+.gameSituationCard,.lockedSituationCard{background:#fff;border:1px solid var(--line);box-shadow:0 15px 40px rgba(83,38,38,.07)}
+.gameSituationCard{border-radius:26px;overflow:hidden}
+.gameSituationCover{height:315px;position:relative;overflow:hidden;background:linear-gradient(180deg,#73392f 0 32%,#c47d55 32% 100%)}
+.restaurantGameCover::before{content:"";position:absolute;inset:32% 0 0;background:repeating-linear-gradient(90deg,rgba(86,47,34,.14) 0 2px,transparent 2px 92px),repeating-linear-gradient(0deg,rgba(86,47,34,.12) 0 2px,transparent 2px 72px)}
+.coverRoof{position:absolute;left:-3%;right:-3%;top:-2px;height:78px;background:repeating-linear-gradient(90deg,#38221f 0 34px,#4a2b26 34px 68px);clip-path:polygon(4% 0,96% 0,100% 100%,0 100%);box-shadow:0 8px 16px rgba(0,0,0,.18)}
+.coverSignGame{position:absolute;left:50%;top:42px;transform:translateX(-50%);background:#8f2729;border:3px solid #cf8c50;color:#ffe5b8;padding:9px 34px;border-radius:5px;font-family:"Noto Serif SC","Songti SC",serif;font-size:34px;letter-spacing:.18em;z-index:3;box-shadow:0 8px 18px rgba(39,13,12,.2)}
+.gameLantern{position:absolute;top:86px;font-size:46px;z-index:4;filter:drop-shadow(0 10px 12px rgba(60,15,15,.3))}.gameLantern.gl1{left:10%}.gameLantern.gl2{right:10%}
+.coverDoor{position:absolute;width:210px;height:164px;left:50%;bottom:14px;transform:translateX(-50%);background:linear-gradient(90deg,#6a392b 0 8%,#d0a16d 8% 46%,#6a392b 46% 54%,#d0a16d 54% 92%,#6a392b 92%);border:8px solid #5e3228;border-radius:7px 7px 0 0;box-shadow:inset 0 0 0 2px rgba(255,255,255,.15),0 16px 24px rgba(53,26,20,.18)}
+.coverWindow{position:absolute;bottom:52px;width:140px;height:105px;border:8px solid #5e3328;background:linear-gradient(180deg,#f6c273,#c9784c);box-shadow:inset 0 0 0 3px rgba(255,242,199,.25)}.coverWindow::before,.coverWindow::after{content:"";position:absolute;background:#5e3328}.coverWindow::before{width:7px;top:0;bottom:0;left:49%}.coverWindow::after{height:7px;left:0;right:0;top:49%}.coverWindow.cw1{left:9%}.coverWindow.cw2{right:9%}
+.coverPlant{position:absolute;bottom:12px;font-size:60px;z-index:4}.coverPlant.cp1{left:3%}.coverPlant.cp2{right:3%}
+.coverMenu{position:absolute;right:22%;bottom:18px;background:#3e302a;color:#f6d79c;border:5px solid #754735;border-radius:8px;padding:10px 12px;text-align:center;transform:rotate(-3deg);font-family:"Noto Serif SC","Songti SC",serif;z-index:5}.coverMenu small{font-family:inherit;color:#f7ead4;font-size:9px}
+.coverGlow{position:absolute;inset:0;background:radial-gradient(circle at 50% 74%,rgba(255,213,146,.3),transparent 32%),linear-gradient(180deg,transparent 55%,rgba(66,24,16,.2));pointer-events:none}
+.gameSituationBody{padding:20px 22px 22px;position:relative}
+.featuredBadge{position:absolute;right:20px;top:-16px;background:var(--red);color:#fff;border-radius:999px;padding:7px 12px;font-size:10px;font-weight:900;letter-spacing:.12em;box-shadow:0 7px 16px rgba(163,41,47,.18)}
+.gameSituationBody h3{font-size:28px;margin:0 0 6px;color:#5c1e24}.gameSituationBody>p{margin:0;color:var(--muted);line-height:1.55}
+.gameSituationStats{display:flex;gap:16px;flex-wrap:wrap;margin:16px 0;color:#7a6467;font-size:12px;font-weight:760}.gameSituationStats span:first-child{color:var(--red)}
+.gameStartButton{width:100%;border-radius:16px;min-height:52px;font-size:16px}
+.lockedSituationList{display:grid;gap:12px}.lockedSituationCard{border-radius:20px;padding:12px;display:grid;grid-template-columns:105px 1fr auto;gap:12px;align-items:center}.lockedSituationCard h3{margin:0 0 3px;font-size:16px}.lockedSituationCard p{margin:0;color:var(--muted);font-size:11px;line-height:1.4}.lockedMeta{margin-top:7px;color:#a08d90;font-size:10px;font-weight:760}.lockMark{font-size:18px;opacity:.6}
+.lockedThumb{height:94px;border-radius:14px;display:grid;place-items:end center;padding:8px;overflow:hidden;color:#f9e5bf;font-family:"Noto Serif SC","Songti SC",serif;font-size:22px;font-weight:800;box-shadow:inset 0 -34px 34px rgba(38,23,18,.35)}.marketThumb{background:linear-gradient(135deg,#9d342f,#df9f5c 48%,#48734c)}.hotelThumb{background:linear-gradient(135deg,#61402d,#ba8059 52%,#e8caa6)}
+
+.situationGameV2{max-width:980px;margin:0 auto}
+.gameTopbar{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:12px;margin-bottom:12px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:9px 12px;box-shadow:0 8px 24px rgba(92,43,45,.05)}
+.gameBackButton,.gameRestartButton{border:0;background:transparent;color:var(--red-dark);cursor:pointer;min-height:40px}.gameBackButton{width:40px;border-radius:12px;font-size:22px}.gameBackButton:hover{background:#fff5f2}.gameRestartButton{font-size:11px;font-weight:800}
+.gameTopCenter{min-width:0;text-align:center}.gameTopCenter strong{display:block;font-size:15px;color:#5b2024}.gameProgressTrack{height:7px;background:#f4e7e5;border-radius:999px;overflow:hidden;margin-top:6px}.gameProgressTrack>div{height:100%;width:12.5%;background:linear-gradient(90deg,#d84a4e,#a92d34);border-radius:999px;transition:width .25s ease}.gameProgressCount{font-size:12px;font-weight:900;color:#6d4044;white-space:nowrap}
+.situationGameShell{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;align-items:start}.situationGameShell.drawerOpen{grid-template-columns:minmax(0,1fr) 300px}
+.situationMainV2{min-width:0}.situationStage{position:relative}
+.situationSceneV2{min-height:460px;border-radius:26px;overflow:hidden;background:#b97855;border:1px solid #d4b19a;box-shadow:0 18px 44px rgba(76,43,31,.13)}
+.rpgSceneWrap{position:relative;width:100%;height:100%;min-height:460px;overflow:hidden;background:#c38761}.rpgSceneSvg{position:absolute;inset:0;width:100%;height:100%;display:block}.gameSceneCaption{left:14px;bottom:14px;background:rgba(58,32,26,.74);font-size:10px;padding:6px 9px;z-index:6}
+.sceneTalkBubble{position:absolute;left:50%;top:25%;transform:translate(-50%,-50%);z-index:7;border:1px solid #eddcd2;background:#fff;border-radius:999px;padding:9px 16px;font-size:12px;font-weight:850;color:#6a3436;box-shadow:0 10px 24px rgba(58,29,27,.16);cursor:pointer;animation:talkFloat 2.5s ease-in-out infinite}.sceneTalkBubble::after{content:"";position:absolute;left:50%;bottom:-7px;width:12px;height:12px;background:#fff;border-right:1px solid #eddcd2;border-bottom:1px solid #eddcd2;transform:translateX(-50%) rotate(45deg)}
+@keyframes talkFloat{0%,100%{translate:0 0}50%{translate:0 -4px}}
+.worldHotspot{position:absolute;transform:translate(-50%,-50%);z-index:8;border:1px solid #e8c9c6;background:rgba(255,255,255,.96);color:#702c31;border-radius:999px;padding:7px 11px;font-size:10px;font-weight:900;box-shadow:0 8px 18px rgba(58,29,27,.16);cursor:pointer}.worldHotspot:disabled{opacity:.45;cursor:not-allowed}
+
+.situationDialogueOverlay{position:absolute;left:18px;right:18px;bottom:18px;z-index:10;border:1px solid rgba(230,210,203,.95);background:rgba(255,253,250,.96);backdrop-filter:blur(12px);border-radius:21px;padding:14px 15px;display:grid;grid-template-columns:58px 1fr;gap:12px;box-shadow:0 16px 40px rgba(57,31,26,.18);margin:0;transition:transform .2s ease,box-shadow .2s ease}.situationDialogueOverlay.dialoguePulse{transform:translateY(-2px);box-shadow:0 18px 48px rgba(159,47,51,.24)}
+.gameDialogueAvatar{width:58px;height:58px;border-radius:18px;background:#fff2ed;border:1px solid #edd8d0;display:grid;place-items:center;font-size:33px}.gameDialogueText{min-width:0}.situationDialogueOverlay .dialogueTop{display:flex;align-items:center;justify-content:space-between;gap:8px}.situationDialogueOverlay .dialogueSpeaker{font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:var(--red);font-weight:900}.situationDialogueOverlay .dialogueAudio{width:36px;height:36px;border-radius:50%;border:0;background:#fff0ed;cursor:pointer}.situationDialogueOverlay .dialogueHanzi{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:28px;font-weight:800;color:#3f2528;line-height:1.14;margin-top:1px}.situationDialogueOverlay .dialoguePinyin{color:var(--red);font-size:13px;font-weight:780;margin-top:3px}.situationDialogueOverlay .dialogueEnglish{color:#6e6061;font-size:12px;margin-top:2px;line-height:1.4}
+
+.situationInteractionV2{border-radius:22px;margin-top:12px;padding:18px 18px;background:#fff;border:1px solid var(--line);box-shadow:0 12px 34px rgba(90,42,44,.055)}.situationInteractionV2 .interactionPrompt{font-size:19px;margin-top:5px}.gameChoiceGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.gameChoice{display:flex;align-items:center;gap:11px;min-height:84px;padding:12px 13px}.gameChoice .choiceIcon{flex:0 0 48px;width:48px;height:48px;border-radius:14px;background:#fff3ef;display:grid;place-items:center;font-size:25px}.gameChoice .choiceCopy{min-width:0;flex:1}.gameChoice .choiceCheck,.gameChoice .choiceArrow{flex:0 0 auto;color:#bba7a8;font-size:21px}.gameChoice.good .choiceCheck{color:#2d9a66}.gameChoice.bad .choiceCheck{color:#c6464b}.gameChoice b{font-size:21px}.hubChoice{min-height:76px}.hubChoice .choiceEnglish{font-weight:760;color:#5d4b4d}
+.gameFoodGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.gameFoodChoice{display:grid;grid-template-columns:64px 1fr auto;align-items:center;text-align:left;gap:12px;padding:12px 13px;min-height:92px}.gameFoodChoice .foodEmoji{font-size:39px;width:64px;height:64px;border-radius:18px;background:#fff4ea;display:grid;place-items:center}.gameFoodChoice .foodCopy b{margin:0;font-size:21px}.gameFoodChoice .foodCopy span{font-size:13px}.gameFoodChoice .foodCopy small{font-size:11px}.foodRadio{font-size:20px;color:#b9a8a8}.gameFoodChoice.selected .foodRadio{color:#2d9a66}
+.situationFeedbackV2{border-radius:18px;margin-top:10px;box-shadow:none}.situationFeedbackV2 .primaryButton{border-radius:14px}
+.situationGameActions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.gameActionButton{min-height:50px;border:1px solid var(--line);background:#fff;border-radius:15px;color:#6d4b4e;font-weight:800;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}.gameActionButton:hover{background:#fff7f5}.situationHintBox{margin-top:8px;border:1px solid #ebcfca;border-radius:15px;background:#fff7f3;padding:11px 13px;color:#6d585a;font-size:12px;line-height:1.45}.situationHintBox b{display:block;color:var(--red-dark);margin-bottom:2px}.situationHintBox span{display:block}
+.situationDrawer{position:sticky;top:12px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px;box-shadow:0 14px 38px rgba(78,36,39,.075);max-height:720px;overflow:auto}.situationDrawerTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}.situationDrawerTop h3{margin:2px 0 0;font-size:18px}.gamePhraseItem{padding:9px 0}.gamePhraseItem b{font-size:18px}.gameSummary{border-radius:24px}
+
+@media(min-width:900px){.situationGameShell:has(.situationDrawer:not([hidden])){grid-template-columns:minmax(0,1fr) 300px}}
+@media(max-width:900px){.gameSituationCatalog{grid-template-columns:1fr}.lockedSituationList{grid-template-columns:1fr 1fr}.situationDrawer{position:static;max-height:none}.situationGameShell:has(.situationDrawer:not([hidden])){grid-template-columns:1fr}.situationSceneV2,.rpgSceneWrap{min-height:420px}}
+@media(max-width:660px){.gameSituationCover{height:245px}.lockedSituationList{grid-template-columns:1fr}.lockedSituationCard{grid-template-columns:88px 1fr auto}.lockedThumb{height:80px}.gameTopbar{grid-template-columns:auto 1fr auto}.gameRestartButton{display:none}.situationSceneV2,.rpgSceneWrap{min-height:360px}.situationDialogueOverlay{left:10px;right:10px;bottom:10px;grid-template-columns:48px 1fr;padding:11px 12px}.gameDialogueAvatar{width:48px;height:48px;font-size:27px;border-radius:14px}.situationDialogueOverlay .dialogueHanzi{font-size:22px}.gameChoiceGrid,.gameFoodGrid{grid-template-columns:1fr}.situationGameActions{grid-template-columns:repeat(2,1fr)}.sceneTalkBubble{top:23%}.gameSituationBody h3{font-size:24px}}
+@media(max-width:420px){.gameSituationStats{gap:9px}.situationSceneV2,.rpgSceneWrap{min-height:335px}.situationDialogueOverlay .dialogueEnglish{font-size:11px}.situationInteractionV2{padding:15px 13px}.gameChoice{min-height:76px}.gameTopCenter strong{font-size:13px}}
+
+.cardFace{display:grid;gap:14px}
+.cleanFace{padding-bottom:8px}
+.hanziTapButton{border:0;background:transparent;padding:0;cursor:pointer;display:block;width:100%;text-align:center}
+.hanziTapButton:focus-visible{outline:3px solid rgba(183,45,54,.18);border-radius:18px}
+.faceHint{max-width:420px;margin:14px auto 0;color:#8b7e80;font-size:14px;line-height:1.45}
+.flipButton{width:100%;margin-top:4px}
+.flipBackButton{background:#fff;color:#6e3035}
+.compactExample{margin-top:2px}
+
+.characterExplorerModal{position:fixed;inset:0;background:rgba(46,25,28,.42);z-index:30;display:grid;place-items:end center;padding:16px}
+.characterExplorerSheet{width:min(760px,100%);max-height:min(86vh,940px);overflow:auto;background:#fff;border:1px solid var(--line);border-radius:28px 28px 20px 20px;box-shadow:0 28px 64px rgba(52,17,20,.24);padding:18px}
+.characterExplorerTop{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.characterExplorerTop h3{margin:2px 0 4px;font-size:clamp(26px,4vw,32px);letter-spacing:-.03em}
+.characterExplorerTop p:last-child{margin:0;color:var(--muted);line-height:1.5}
+.closeExplorerButton{flex:0 0 auto}
+.characterExplorerWord{margin:14px 0 16px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(135deg,#fff 0%,#fff7f4 100%);padding:16px 18px}
+.characterExplorerWordMain{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:clamp(54px,10vw,82px);line-height:1.05;color:#4e1217}
+.characterExplorerWordMeta{margin-top:8px;display:flex;gap:9px;align-items:center;flex-wrap:wrap;color:#6a5a5d;font-size:16px;font-weight:700}
+.characterExplorerContent{display:grid;gap:12px}
+.characterEntry{border:1px solid var(--line);border-radius:20px;background:#fff;padding:16px}
+.characterEntryTop{display:grid;grid-template-columns:minmax(96px,120px) 1fr;gap:16px;align-items:center}
+.characterEntryGlyph{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:clamp(54px,9vw,72px);line-height:1;color:#4e1217;text-align:center}
+.characterEntryPinyinRow{display:flex;gap:10px;flex-wrap:wrap;align-items:baseline}
+.characterEntryPinyin{font-size:28px;font-weight:850;color:var(--red);letter-spacing:-.03em}
+.characterEntryMeaning{font-size:20px;font-weight:760;color:#34292b}
+.characterEntryRole{margin-top:6px;color:#907e81;font-size:12px;font-weight:760;text-transform:uppercase;letter-spacing:.08em}
+.componentGroup{margin-top:12px}
+.componentGroupLabel{font-size:12px;font-weight:850;color:#9c4a4f;text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px}
+.componentChips{display:flex;gap:8px;flex-wrap:wrap}
+.componentChip{display:grid;gap:4px;min-width:96px;padding:10px 12px;border:1px solid #ebd8d3;border-radius:14px;background:#fffaf8;text-align:center}
+.componentChip b{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:28px;color:#4e1217;font-weight:700;line-height:1}
+.componentChip small{font-size:12px;color:#786b6d;line-height:1.35}
+.characterEntryClue{margin:12px 0 0;color:#5f5356;line-height:1.55;font-size:14px}
+
+@media (max-width:760px){
+  .characterExplorerSheet{padding:14px;border-radius:24px 24px 18px 18px}
+  .characterEntryTop{grid-template-columns:82px 1fr;gap:12px}
+  .characterEntryMeaning{font-size:18px}
+}
+@media (max-width:560px){
+  .characterExplorerModal{padding:10px}
+  .characterEntryTop{grid-template-columns:1fr;align-items:start}
+  .characterEntryGlyph{text-align:left}
+  .characterExplorerWordMeta{font-size:14px}
+}
+
+
+/* v9.2 richer Character Explorer */
+.characterExplorerSheet{width:min(920px,100%);max-height:min(90vh,980px);padding:20px 22px}
+.characterExplorerTop{align-items:center}
+.characterExplorerTop h3{font-size:clamp(28px,4.4vw,36px)}
+.characterExplorerWord{margin:16px 0 18px;padding:18px 20px;border-radius:22px}
+.characterExplorerContent{display:grid;gap:16px}
+.characterDetailCard{border:1px solid var(--line);border-radius:24px;background:#fff;padding:18px 18px 16px}
+.characterDetailHero{display:grid;grid-template-columns:minmax(130px,160px) 1fr;gap:18px;align-items:center}
+.characterDetailGlyph{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:clamp(82px,12vw,118px);line-height:1;color:#4e1217;text-align:center}
+.characterDetailTopline{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:#9a8b8e;font-weight:850}
+.characterDetailPinyinRow{margin-top:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.characterDetailPinyin{font-size:44px;line-height:1;font-weight:900;color:var(--red);letter-spacing:-.04em}
+.characterDetailMeaning{margin-top:10px;font-size:20px;font-weight:760;color:#34292b}
+.characterTypeBadge{display:inline-flex;margin-top:14px;padding:8px 12px;border-radius:999px;background:#fff1ef;color:#b13d45;font-weight:820;font-size:14px}
+.charSection{margin-top:16px}
+.charSection h4{margin:0 0 10px;font-size:16px;color:#2b2425}
+.charBreakdownGrid{display:grid;grid-template-columns:minmax(150px,180px) 1fr;gap:14px;align-items:start}
+.charPreviewPanel{border:1px solid #ebddd8;border-radius:18px;background:#fffaf8;padding:14px;display:grid;place-items:center;min-height:220px}
+.charVisualParts{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}
+.charPart{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:76px;line-height:1;font-weight:700}
+.charPartPlus{font-size:28px;color:#bda7aa;font-weight:700}
+.charComponentList{display:grid;gap:12px}
+.componentDetail{display:grid;grid-template-columns:78px 1fr;gap:14px;padding:14px;border-radius:18px;border:1px solid #ebe2de}
+.componentDetailGlyph{display:grid;place-items:center;font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:48px;line-height:1;border-radius:16px;background:rgba(255,255,255,.65);min-height:88px}
+.componentDetailHead{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
+.componentDetailTitle{font-size:22px;font-weight:860;letter-spacing:-.02em}
+.componentDetailPinyin{font-size:26px;font-weight:860}
+.componentDetailMeaning,.componentDetailRole{margin-top:4px;font-size:15px;line-height:1.45}
+.componentDetailRole{color:#52646f}
+.role-semantic{color:#db5c61}.componentDetail.role-semantic{background:#fff5f5}.componentDetail.role-semantic .componentDetailGlyph{color:#cc4d52;background:#fff0f1}.componentDetail.role-semantic .componentDetailTitle,.componentDetail.role-semantic .componentDetailPinyin{color:#c2464d}
+.role-phonetic{color:#3f7de1}.componentDetail.role-phonetic{background:#f3f8ff}.componentDetail.role-phonetic .componentDetailGlyph{color:#2f6fdc;background:#eef5ff}.componentDetail.role-phonetic .componentDetailTitle,.componentDetail.role-phonetic .componentDetailPinyin{color:#245fbf}
+.role-structural{color:#51a676}.componentDetail.role-structural{background:#f3fbf6}.componentDetail.role-structural .componentDetailGlyph{color:#3c9162;background:#ecf8f0}.componentDetail.role-structural .componentDetailTitle,.componentDetail.role-structural .componentDetailPinyin{color:#2f7c51}
+.howItCombinesBox{padding:16px 18px;border-radius:18px;background:#f6faf5;border:1px solid #e5eee2;color:#475345;line-height:1.65;font-size:16px}
+.characterExplorerBackButton{margin-right:4px}
+
+@media (max-width:760px){
+  .characterExplorerSheet{padding:16px}
+  .characterDetailHero{grid-template-columns:1fr;gap:10px}
+  .characterDetailGlyph{text-align:left;font-size:92px}
+  .charBreakdownGrid{grid-template-columns:1fr}
+  .charPreviewPanel{min-height:140px}
+}
+@media (max-width:520px){
+  .characterExplorerModal{padding:8px}
+  .characterExplorerSheet{border-radius:22px 22px 16px 16px}
+  .characterExplorerWordMain{font-size:60px}
+  .characterDetailPinyin{font-size:34px}
+  .componentDetail{grid-template-columns:64px 1fr;gap:12px}
+  .componentDetailGlyph{font-size:40px;min-height:76px}
+  .componentDetailTitle{font-size:18px}
+  .componentDetailPinyin{font-size:21px}
+  .charPart{font-size:58px}
+}
+
+
+.simpleExplorerHeader{margin-bottom:10px}
+.simpleExplorerTitle{margin:0 0 6px;font-size:clamp(28px,4vw,42px);letter-spacing:-.035em;line-height:1.05}
+.compactExplorerSearchRow{margin:6px 0 12px;align-items:center}
+.compactExplorerSearch{gap:0}
+.compactExplorerSearch span{display:none}
+.feedbackExampleHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.feedbackExampleCard .miniSound{flex:0 0 auto;background:#fff;border-color:var(--jade-line)}
+.feedbackExampleCard .miniSound:hover{background:var(--jade-soft)}
+
+
+/* v10 · simplified Practice block + mode selector */
+.practiceBlockHeader{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(300px,410px);
+  gap:24px;
+  align-items:end;
+  padding:10px 2px 18px;
+}
+.practiceBlockIntro h2{
+  margin:2px 0 6px;
+  font-size:clamp(34px,5vw,58px);
+  line-height:1;
+  letter-spacing:-.045em;
+}
+.practiceBlockIntro>p:not(.eyebrow){
+  margin:0;
+  color:var(--muted);
+  font-size:17px;
+  line-height:1.5;
+}
+.blockMetaPills{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+.blockMetaPills span{
+  border:1px solid var(--jade-line);
+  background:rgba(255,255,255,.8);
+  border-radius:999px;
+  padding:8px 12px;
+  color:#4f5f58;
+  font-size:12px;
+  font-weight:800;
+}
+
+.practiceProgressCard{
+  border:1px solid var(--jade-line);
+  border-radius:22px;
+  background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(240,248,243,.94));
+  padding:20px;
+  box-shadow:0 13px 32px rgba(64,96,79,.07);
+}
+.practiceProgressTitle{font-size:15px;font-weight:900;color:#35443d}
+.practiceProgressLine{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;margin-top:13px}
+.practiceProgressTrack{height:12px;background:#e7ece8;border-radius:999px;overflow:hidden}
+.practiceProgressTrack>div{
+  height:100%;
+  width:0;
+  border-radius:999px;
+  background:linear-gradient(90deg,#4a9a78,#78b698);
+  transition:width .3s ease;
+}
+.practiceProgressLine>b{font-size:26px;color:#26342e}
+.practiceProgressCard>span{display:block;margin-top:10px;color:#7a8781;font-size:13px}
+
+.practiceLaunchGrid{
+  display:grid;
+  grid-template-columns:minmax(0,1.8fr) minmax(260px,.82fr);
+  gap:14px;
+  margin-top:10px;
+}
+.practiceLaunchCard{
+  min-height:290px;
+  border:1px solid #efc4c1;
+  border-radius:26px;
+  background:
+    radial-gradient(circle at 31% 28%,rgba(220,77,83,.16),transparent 70px),
+    linear-gradient(135deg,#fff4f1 0%,#fffaf8 52%,#f7fbf8 100%);
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+}
+.practiceLaunchDecor{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.practiceSun{
+  position:absolute;width:68px;height:68px;border-radius:50%;
+  left:26%;top:22%;background:rgba(203,62,69,.18);
+}
+.practiceMountain{
+  position:absolute;bottom:-25px;width:300px;height:160px;
+  background:linear-gradient(145deg,rgba(102,137,120,.05),rgba(106,132,117,.18));
+  clip-path:polygon(0 100%,38% 24%,54% 55%,68% 34%,100% 100%);
+}
+.practiceMountain.m1{left:-25px}
+.practiceMountain.m2{left:26%;opacity:.65;transform:scale(.86)}
+.practiceMountain.m3{right:-45px;opacity:.45;transform:scale(.72)}
+.practiceLaunchContent{position:relative;z-index:1;text-align:center;padding:30px;width:min(470px,86%)}
+.practiceLaunchContent h3{
+  margin:0 0 24px;
+  font-size:clamp(30px,4vw,45px);
+  letter-spacing:-.04em;
+}
+.startPracticeButton{
+  width:100%;
+  min-height:60px;
+  font-size:18px;
+  border-radius:999px;
+}
+.practiceQuickActions{display:grid;gap:12px}
+.practiceQuickCard{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:rgba(255,255,255,.94);
+  padding:19px;
+  display:grid;
+  grid-template-columns:50px 1fr auto;
+  gap:13px;
+  align-items:center;
+  text-align:left;
+  cursor:pointer;
+  color:var(--ink);
+}
+.practiceQuickCard:disabled{opacity:.55;cursor:not-allowed}
+.practiceQuickIcon{
+  width:50px;height:50px;border-radius:15px;
+  display:grid;place-items:center;
+  background:var(--red-faint);color:var(--red-dark);
+  font-size:22px;font-weight:900;
+}
+.practiceQuickIcon.jade{background:var(--jade-soft);color:#276548}
+.practiceQuickCard span:nth-child(2){display:grid;gap:3px}
+.practiceQuickCard b{font-size:16px}
+.practiceQuickCard small{color:var(--muted);font-size:12px;line-height:1.4}
+.practiceQuickCard>strong{font-size:27px;color:#927d80;font-weight:500}
+
+.blockVocabularyPreview{margin-top:22px}
+.blockVocabularyHead h3{margin:0 0 10px;font-size:17px}
+.blockVocabularyHead h3 span{font-weight:500;color:#928589}
+.blockWordsPreview{
+  display:grid;
+  grid-template-columns:repeat(9,minmax(0,1fr));
+  gap:8px;
+  padding:0;
+}
+.previewWordChip{
+  min-height:92px;
+  padding:10px 7px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+  text-align:center;
+  border-radius:16px;
+}
+.previewWordChip b{font-size:25px}
+.previewWordChip span{
+  color:#766a6d;
+  font-size:11px;
+  font-weight:650;
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.moreWordsChip b{font-family:inherit;color:#6f7b75}
+
+.practiceModePanel{
+  margin-top:22px;
+  border:1px solid var(--jade-line);
+  border-radius:24px;
+  padding:18px;
+  background:linear-gradient(135deg,#eef7f1,#fbfdfb);
+  display:grid;
+  grid-template-columns:minmax(220px,.75fr) minmax(0,2fr);
+  gap:18px;
+  align-items:center;
+}
+.practiceModeIntro{display:flex;gap:14px;align-items:center}
+.practiceModeIcon{
+  width:64px;height:64px;border-radius:18px;
+  display:grid;place-items:center;
+  background:#dbeadf;color:#355d49;font-size:28px;font-weight:900;
+}
+.practiceModeIntro h3{margin:0;font-size:25px;letter-spacing:-.03em}
+.practiceModeIntro p{margin:5px 0 0;color:#708079;font-size:13px;line-height:1.45}
+.practiceModeGrid{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:8px;
+  margin:0;
+}
+.practiceModeButton{
+  min-height:88px;
+  border:1px solid #dde6e0;
+  border-radius:16px;
+  background:rgba(255,255,255,.92);
+  color:#2e3532;
+  padding:10px 7px;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+  text-align:center;
+  position:relative;
+}
+.practiceModeButton.active{
+  border:2px solid var(--red);
+  background:linear-gradient(180deg,#fff,#fff6f4);
+  box-shadow:0 5px 16px rgba(183,45,54,.08);
+}
+.practiceModeButton.active::after{
+  content:"✓";
+  position:absolute;
+  top:6px;right:7px;
+  width:19px;height:19px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--red);color:#fff;font-size:11px;font-weight:900;
+}
+.practiceModeButtonIcon{font-size:25px;font-weight:900;color:#9d353c}
+.mode-listening .practiceModeButtonIcon{color:#178a60}
+.mode-hanziPinyin .practiceModeButtonIcon{color:#7650b9}
+.mode-typeHanzi .practiceModeButtonIcon{color:#3d6ed7}
+.mode-association .practiceModeButtonIcon{color:#d28a12}
+.practiceModeButtonName{font-size:12px;font-weight:850;line-height:1.2}
+.practiceModeButton small{
+  color:var(--red);
+  background:var(--red-faint);
+  border-radius:999px;
+  padding:3px 6px;
+  font-size:9px;
+  font-weight:850;
+}
+
+/* Result phrase toast: variable Mandarin praise/retry phrases */
+.learningFeedbackToast{
+  position:fixed;
+  top:20px;
+  left:50%;
+  z-index:100;
+  transform:translate(-50%,-130%);
+  opacity:0;
+  min-width:min(320px,calc(100vw - 28px));
+  max-width:430px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:rgba(255,255,255,.97);
+  box-shadow:0 18px 44px rgba(48,27,29,.18);
+  padding:13px 17px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  transition:transform .22s ease,opacity .22s ease;
+  pointer-events:none;
+}
+.learningFeedbackToast.show{transform:translate(-50%,0);opacity:1}
+.learningFeedbackToast.good{border-color:#b8dbc8;background:rgba(246,253,249,.98)}
+.learningFeedbackToast.retry{border-color:#edc7c3;background:rgba(255,249,247,.98)}
+.learningFeedbackHanzi{
+  font-family:"Noto Serif SC","Songti SC","STSong",serif;
+  font-size:27px;font-weight:800;color:#2d6048;white-space:nowrap
+}
+.learningFeedbackToast.retry .learningFeedbackHanzi{color:var(--red-dark)}
+.learningFeedbackMeta{display:grid;gap:2px}
+.learningFeedbackMeta b{font-size:13px;color:#4f4749}
+.learningFeedbackMeta span{font-size:11px;color:var(--muted)}
+
+@media(max-width:900px){
+  .practiceBlockHeader,.practiceLaunchGrid{grid-template-columns:1fr}
+  .blockWordsPreview{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .practiceModePanel{grid-template-columns:1fr}
+  .practiceModeGrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:620px){
+  .practiceBlockIntro h2{font-size:40px}
+  .practiceLaunchCard{min-height:230px}
+  .practiceLaunchContent{padding:22px;width:94%}
+  .practiceQuickActions{grid-template-columns:1fr}
+  .blockWordsPreview{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .practiceModeGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .practiceModePanel{padding:14px}
+  .practiceModeIntro{align-items:flex-start}
+}
+
+
+/* v10.1 visual polish · illustrated practice hero */
+.blockView{
+  position:relative;
+}
+.blockView::before{
+  content:"";
+  position:absolute;
+  top:18px;
+  right:-4px;
+  width:min(840px,64vw);
+  height:265px;
+  background:url("../assets/ui/practice-top-bg-clean.png") no-repeat right top / contain;
+  opacity:.98;
+  pointer-events:none;
+}
+
+.practiceBlockHeader{
+  position:relative;
+  z-index:1;
+}
+
+.practiceLaunchCard{
+  min-height:320px;
+  border:1px solid #f0c5c2;
+  background:
+    linear-gradient(90deg, rgba(255,252,250,.97) 0%, rgba(255,252,250,.94) 20%, rgba(255,252,250,.84) 42%, rgba(255,252,250,.76) 100%),
+    url("../assets/ui/practice-hero.svg") no-repeat center center / cover;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.8),
+    0 18px 36px rgba(166,89,85,.10);
+}
+.practiceLaunchContent{
+  width:min(420px,72%);
+  margin-left:auto;
+  margin-right:28px;
+  text-align:left;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:0;
+}
+.practiceLaunchContent .practiceRecommendation{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin:0 0 14px;
+  color:#b83f46;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.practiceLaunchContent .practiceRecommendation::before{
+  content:"✦";
+  font-size:16px;
+  line-height:1;
+}
+.practiceLaunchContent h3{
+  margin:0 0 10px;
+  font-size:clamp(38px,4.9vw,62px);
+  line-height:.98;
+}
+.practiceLaunchContent .practiceSubcopy{
+  margin:0 0 24px;
+  color:#6e7f87;
+  font-size:16px;
+  line-height:1.5;
+}
+.startPracticeButton{
+  min-height:66px;
+  padding-inline:26px;
+  font-size:18px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#c72b2f,#d84843);
+  box-shadow:0 14px 28px rgba(199,43,47,.18);
+}
+.startPracticeButton:hover{
+  transform:translateY(-1px);
+  box-shadow:0 16px 30px rgba(199,43,47,.22);
+}
+.practiceLaunchMeta{
+  margin-top:16px;
+  color:#7f8a91;
+  font-size:14px;
+  font-weight:650;
+}
+.practiceLaunchDecor{display:none}
+
+.practiceQuickCard{
+  border:1px solid #ece8e4;
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(252,253,252,.94));
+  box-shadow:0 10px 24px rgba(85,72,72,.05);
+}
+.practiceQuickCard b{font-size:17px}
+.practiceQuickIcon{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6);
+}
+.practiceProgressCard{
+  border-color:#e5ece7;
+  box-shadow:0 14px 30px rgba(63,99,81,.08);
+}
+.practiceModePanel{
+  box-shadow:0 14px 28px rgba(62,94,76,.05);
+}
+.blockVocabularyPreview{
+  position:relative;
+  z-index:1;
+}
+
+@media (max-width: 1100px){
+  .blockView::before{
+    width:min(460px,50vw);
+    height:180px;
+  }
+}
+@media (max-width: 900px){
+  .blockView::before{
+    right:0;
+    width:min(420px,60vw);
+    opacity:.58;
+  }
+  .practiceLaunchCard{
+    min-height:280px;
+    background:
+      linear-gradient(180deg, rgba(255,252,250,.94) 0%, rgba(255,252,250,.88) 100%),
+      url("../assets/ui/practice-hero.svg") no-repeat left center / cover;
+  }
+  .practiceLaunchContent{
+    width:min(470px,90%);
+    margin:0 auto;
+    text-align:center;
+    align-items:center;
+  }
+}
+@media (max-width: 620px){
+  .blockView::before{
+    top:82px;
+    width:88%;
+    height:150px;
+    opacity:.35;
+  }
+  .practiceLaunchCard{
+    min-height:250px;
+    background:
+      linear-gradient(180deg, rgba(255,252,250,.95) 0%, rgba(255,252,250,.92) 100%),
+      url("../assets/ui/practice-hero.svg") no-repeat center center / cover;
+  }
+  .practiceLaunchContent{
+    width:92%;
+  }
+  .practiceLaunchContent h3{
+    font-size:42px;
+  }
+}
+
+
+/* v10.2 · use the actual approved mockup artwork */
+.practiceLaunchCard{
+  background:
+    linear-gradient(90deg,
+      rgba(255,252,250,0.04) 0%,
+      rgba(255,252,250,0.06) 33%,
+      rgba(255,252,250,0.74) 56%,
+      rgba(255,252,250,0.96) 78%,
+      rgba(255,252,250,0.99) 100%),
+    url("../assets/ui/practice-hero-mockup.png") no-repeat left center / 58% 100%;
+}
+.practiceLaunchCard::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01)),
+    radial-gradient(circle at 64% 50%,rgba(255,255,255,.12),transparent 38%);
+}
+.practiceLaunchContent{position:relative;z-index:2}
+@media(max-width:900px){
+  .practiceLaunchCard{
+    background:
+      linear-gradient(180deg,rgba(255,252,250,.18) 0%,rgba(255,252,250,.72) 58%,rgba(255,252,250,.97) 100%),
+      url("../assets/ui/practice-hero-mockup.png") no-repeat center top / cover;
+  }
+}
+@media(max-width:620px){
+  .practiceLaunchCard{
+    background:
+      linear-gradient(180deg,rgba(255,252,250,.32) 0%,rgba(255,252,250,.86) 58%,rgba(255,252,250,.99) 100%),
+      url("../assets/ui/practice-hero-mockup.png") no-repeat center top / cover;
+  }
+}
+
+
+/* v10.3 real mockup mountain+bamboo background */
+.practiceBlockIntro,
+.practiceProgressCard,
+.practiceLaunchGrid,
+.blockVocabularyPreview,
+.practiceModePanel{
+  position:relative;
+  z-index:1;
+}
+
+@media (max-width: 1100px){
+  .blockView::before{
+    width:min(640px,58vw);
+    height:220px;
+    right:0;
+    opacity:.92;
+  }
+}
+@media (max-width: 900px){
+  .blockView::before{
+    width:min(520px,65vw);
+    height:190px;
+    top:48px;
+    right:0;
+    opacity:.66;
+  }
+}
+@media (max-width: 620px){
+  .blockView::before{
+    width:94%;
+    height:160px;
+    top:78px;
+    right:-10px;
+    opacity:.38;
+  }
+}
+
+
+/* v10.4 global bamboo + mountain ambience across the whole app */
+html, body { min-height: 100%; }
+body{
+  position:relative;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(183,45,54,.045), transparent 18rem),
+    radial-gradient(circle at 86% 72%, rgba(126,160,143,.06), transparent 24rem),
+    linear-gradient(180deg,#fdfefd 0%,#f7fbf8 44%,#fffaf8 100%);
+}
+body::before,
+body::after{
+  content:"";
+  position:fixed;
+  inset:auto;
+  pointer-events:none;
+  z-index:0;
+  background-repeat:no-repeat;
+  background-size:contain;
+}
+body::before{
+  top:0;
+  right:0;
+  width:min(980px,72vw);
+  height:min(360px,42vw);
+  background-image:url("../assets/ui/practice-top-bg-clean.png");
+  background-position:top right;
+  opacity:.42;
+}
+body::after{
+  left:0;
+  bottom:0;
+  width:min(760px,58vw);
+  height:min(420px,36vw);
+  background-image:url("../assets/ui/practice-hero-mockup.png");
+  background-position:bottom left;
+  opacity:.18;
+  transform:translate(-5%, 8%);
+}
+.app{
+  position:relative;
+  z-index:1;
+}
+
+/* remove the Practice-only mountain overlay; ambience is now global */
+.blockView::before{
+  display:none;
+}
+
+/* glass-paper surfaces above the scenic background */
+.appHeader,
+.learningCard,
+.panel,
+.blockCard,
+.practiceProgressCard,
+.practiceQuickCard,
+.practiceModePanel,
+.exerciseCard,
+.feedbackPanel,
+.feedbackTarget,
+.feedbackExampleCard,
+.explorerWordCard,
+.characterDetailCard,
+.charPreviewPanel,
+.componentDetail,
+.gameSituationsHero,
+.gameSituationCatalog,
+.gameSituationCard,
+.gameSituationBody,
+.gameSituationStats,
+.coverSign,
+.coverMenu,
+.marketCover,
+.hanziStage,
+.canvasShell,
+.blockVocabularyPreview,
+.practiceHome .blockCard,
+.cardExplorer,
+.toolPill,
+.explorePanel{
+  background-color:rgba(255,255,255,.88);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+/* keep controls airy and consistent */
+.appHeader{
+  background:rgba(255,255,255,.58);
+  border:1px solid rgba(239,220,215,.75);
+  border-radius:26px;
+  padding:16px 18px 18px;
+  box-shadow:0 14px 34px rgba(85,61,63,.06);
+}
+.tabs{
+  margin-top:12px;
+}
+.tab,
+.headerStats span,
+.ghostButton,
+.secondaryButton,
+.iconButton,
+.btn,
+.charBtn,
+.charPracticeButton,
+.practiceModeButton,
+.practiceQuickCard,
+.explorerFilter,
+.wordChip,
+.exerciseOption,
+.opt,
+.practiceChoice,
+.toolPill{
+  background-color:rgba(255,255,255,.82);
+}
+.tab.active{
+  background:linear-gradient(135deg,#c64049,var(--red));
+}
+.learningCard,
+.panel,
+.blockCard,
+.exerciseCard,
+.feedbackPanel,
+.gameSituationCard,
+.gameSituationBody,
+.gameSituationCatalog{
+  box-shadow:0 16px 36px rgba(88,60,62,.07);
+}
+
+/* slightly soften page sections so the ambient art can be seen around them */
+.cardExplorer,
+.blockView,
+.practiceHome,
+.writeLayout,
+.gameSituationsHero{
+  position:relative;
+}
+
+.footerNote{
+  background:rgba(255,255,255,.55);
+  border-radius:16px;
+  padding:10px 14px;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+
+/* mobile balance */
+@media (max-width: 900px){
+  body::before{
+    width:min(620px,88vw);
+    height:min(250px,42vw);
+    opacity:.32;
+  }
+  body::after{
+    width:min(500px,88vw);
+    height:min(290px,46vw);
+    opacity:.12;
+  }
+  .appHeader{
+    padding:14px 14px 16px;
+    border-radius:22px;
+  }
+}
+@media (max-width: 620px){
+  body::before{
+    width:95vw;
+    height:150px;
+    opacity:.22;
+  }
+  body::after{
+    width:85vw;
+    height:180px;
+    opacity:.10;
+    transform:translate(-15%, 14%);
+  }
+  .app{
+    padding:14px;
+  }
+  .appHeader{
+    border-radius:18px;
+  }
+}
+
+
+/* v10.5 polish: cleaner global art + stronger Hanzi in Practice */
+body::before{
+  top:-6px;
+  right:-8px;
+  width:min(1080px,74vw);
+  height:min(340px,38vw);
+  background-image:url("../assets/ui/practice-top-bg-clean.png");
+  background-position:top right;
+  opacity:.56;
+}
+body::after{
+  left:-10px;
+  bottom:-10px;
+  width:min(820px,60vw);
+  height:min(450px,38vw);
+  background-image:url("../assets/ui/practice-hero-mockup.png");
+  background-position:bottom left;
+  opacity:.15;
+  transform:translate(-2%, 6%);
+}
+body{
+  background:
+    radial-gradient(circle at 9% 8%, rgba(209,78,82,.07), transparent 16rem),
+    radial-gradient(circle at 78% 14%, rgba(126,160,143,.09), transparent 19rem),
+    radial-gradient(circle at 16% 78%, rgba(219,95,91,.05), transparent 22rem),
+    linear-gradient(180deg,#fffefd 0%,#f7fbf8 47%,#fffaf8 100%);
+}
+.appHeader,
+.learningCard,
+.panel,
+.blockCard,
+.practiceProgressCard,
+.practiceQuickCard,
+.practiceModePanel,
+.exerciseCard,
+.feedbackPanel,
+.feedbackTarget,
+.feedbackExampleCard,
+.explorerWordCard,
+.characterDetailCard,
+.charPreviewPanel,
+.componentDetail,
+.gameSituationsHero,
+.gameSituationCatalog,
+.gameSituationCard,
+.gameSituationBody,
+.gameSituationStats,
+.coverSign,
+.coverMenu,
+.marketCover,
+.hanziStage,
+.canvasShell,
+.blockVocabularyPreview,
+.practiceHome .blockCard,
+.cardExplorer,
+.toolPill,
+.explorePanel{
+  background-color:rgba(255,255,255,.90);
+}
+
+/* Practice previews and chips should privilege Hanzi more */
+.blockPreview{gap:8px}
+.blockPreview span{
+  min-width:46px;
+  height:46px;
+  border-radius:12px;
+  font-size:27px;
+  font-weight:700;
+  box-shadow:0 3px 10px rgba(143,31,40,.03);
+}
+.blockPreview .moreChip{
+  min-width:52px;
+  font-size:12px;
+  font-weight:800;
+}
+.wordChip{
+  min-height:60px;
+  padding:9px 12px;
+  border-radius:15px;
+}
+.wordChip b{font-size:28px;line-height:1.05}
+.wordChip span{font-size:12px}
+.previewWordChip{min-height:102px}
+.previewWordChip b{font-size:32px}
+.previewWordChip span{font-size:12px}
+
+.exerciseOption.optionHanzi{
+  min-height:104px;
+  font-size:clamp(44px,8vw,64px);
+  font-weight:680;
+}
+.feedbackHanzi{font-size:clamp(62px,11vw,88px)}
+.feedbackExampleHanzi{font-size:31px;line-height:1.35;color:#3f2427}
+
+@media(max-width:900px){
+  body::before{
+    width:min(720px,86vw);
+    height:230px;
+    opacity:.42;
+  }
+  body::after{
+    width:min(540px,90vw);
+    height:300px;
+    opacity:.10;
+  }
+  .blockPreview span{min-width:42px;height:42px;font-size:24px}
+  .wordChip b{font-size:25px}
+  .previewWordChip b{font-size:29px}
+}
+@media(max-width:620px){
+  body::before{
+    width:96vw;
+    height:150px;
+    opacity:.26;
+  }
+  body::after{
+    width:88vw;
+    height:190px;
+    opacity:.08;
+  }
+  .blockPreview span{min-width:38px;height:38px;font-size:22px}
+  .wordChip b{font-size:23px}
+  .previewWordChip b{font-size:26px}
+  .exerciseOption.optionHanzi{font-size:clamp(42px,13vw,56px)}
+}
+
+
+/* v10.6 — remove global bamboo/mountain background */
+body::before,
+body::after{
+  display:none !important;
+  content:none !important;
+}
+body{
+  background:
+    radial-gradient(circle at 9% 7%,rgba(183,45,54,.045),transparent 18rem),
+    radial-gradient(circle at 92% 14%,rgba(74,132,102,.055),transparent 20rem),
+    linear-gradient(180deg,#fcfefd 0%,#f8fbf8 48%,#fffaf8 100%) !important;
+}
+
+/* Cards — physical front/back flip animation */
+.cardFlipStage{
+  display:grid;
+  perspective:1500px;
+  position:relative;
+  transform-style:preserve-3d;
+}
+.cardFlipStage > .cardFace{
+  grid-area:1 / 1;
+  width:100%;
+  min-width:0;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  transform-style:preserve-3d;
+  transition:
+    transform .58s cubic-bezier(.2,.72,.25,1),
+    opacity .32s ease;
+  will-change:transform;
+}
+.cardFlipStage > .cardFrontFace{
+  transform:rotateY(0deg);
+  opacity:1;
+  z-index:2;
+  pointer-events:auto;
+}
+.cardFlipStage > .cardBackFace{
+  transform:rotateY(180deg);
+  opacity:0;
+  z-index:1;
+  pointer-events:none;
+}
+.cardFlipStage.isFlipped > .cardFrontFace{
+  transform:rotateY(-180deg);
+  opacity:0;
+  z-index:1;
+  pointer-events:none;
+}
+.cardFlipStage.isFlipped > .cardBackFace{
+  transform:rotateY(0deg);
+  opacity:1;
+  z-index:2;
+  pointer-events:auto;
+}
+.cardFlipStage.noFlipTransition > .cardFace{
+  transition:none !important;
+}
+.flipButton{
+  transform:translateZ(1px);
+}
+@media (prefers-reduced-motion: reduce){
+  .cardFlipStage > .cardFace{
+    transition:opacity .15s ease;
+  }
+  .cardFlipStage > .cardFrontFace,
+  .cardFlipStage > .cardBackFace,
+  .cardFlipStage.isFlipped > .cardFrontFace,
+  .cardFlipStage.isFlipped > .cardBackFace{
+    transform:none;
+  }
+}
+
+
+/* v10.7 — distinct card faces + compact symmetric flip controls */
+.cardFlipStage{
+  border-radius:24px;
+}
+
+/* front = warm paper */
+.cardFlipStage > .cardFrontFace{
+  background:
+    radial-gradient(circle at 78% 18%, rgba(183,45,54,.035), transparent 12rem),
+    linear-gradient(180deg,#fffdfb 0%,#fffaf8 100%);
+  border:1px solid #efd9d4;
+  border-radius:22px;
+  padding:18px;
+}
+
+/* back = soft jade */
+.cardFlipStage > .cardBackFace{
+  background:
+    radial-gradient(circle at 82% 16%, rgba(74,132,102,.06), transparent 12rem),
+    linear-gradient(180deg,#f8fcf9 0%,#eef6f1 100%);
+  border:1px solid #d9e7de;
+  border-radius:22px;
+  padding:18px;
+}
+
+/* keep content visually balanced on both sides */
+.cardFrontFace .focusZone,
+.cardBackFace .focusZone{
+  margin:0;
+}
+.cardBackFace .exampleBlock{
+  background:rgba(255,255,255,.72);
+  border-color:#d7e4dc;
+}
+
+/* compact flip control: same geometry on both faces */
+.flipButton{
+  width:auto !important;
+  min-width:146px;
+  min-height:44px;
+  margin:10px auto 0 !important;
+  padding:10px 18px;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  font-size:14px;
+  font-weight:850;
+  letter-spacing:.01em;
+  cursor:pointer;
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease,
+    background-color .15s ease,
+    border-color .15s ease;
+}
+
+/* front action */
+.flipRevealButton{
+  border:1px solid #d9a9ad;
+  background:linear-gradient(180deg,#fff7f5,#fff0ee);
+  color:var(--red-dark);
+  box-shadow:0 6px 16px rgba(183,45,54,.07);
+}
+
+/* back action */
+.flipFrontButton{
+  border:1px solid #bfcfc6;
+  background:linear-gradient(180deg,#ffffff,#f5faf7);
+  color:#3c6250;
+  box-shadow:0 6px 16px rgba(70,112,91,.07);
+}
+
+.flipButton:hover{
+  transform:translateY(-1px);
+}
+.flipRevealButton:hover{
+  border-color:#cb8d93;
+  box-shadow:0 8px 18px rgba(183,45,54,.10);
+}
+.flipFrontButton:hover{
+  border-color:#a9c0b3;
+  box-shadow:0 8px 18px rgba(70,112,91,.10);
+}
+
+.flipIcon{
+  font-size:17px;
+  line-height:1;
+}
+
+/* Mobile: still compact, never full-width */
+@media(max-width:620px){
+  .cardFlipStage > .cardFrontFace,
+  .cardFlipStage > .cardBackFace{
+    padding:14px;
+    border-radius:18px;
+  }
+  .flipButton{
+    min-width:138px;
+    min-height:42px;
+    padding:9px 16px;
+  }
+}
+
+
+/* v10.8 — edge navigation + refined flashcard flip controls */
+.learningCard{
+  position:relative;
+}
+
+/* Invisible-ish tap zones at the left/right edges.
+   They reveal a subtle chevron on hover/focus, but stay quiet otherwise. */
+.cardEdgeNav{
+  position:absolute;
+  top:78px;
+  bottom:18px;
+  width:48px;
+  border:0;
+  background:transparent;
+  color:rgba(88,48,52,.28);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:6;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+.cardEdgePrev{left:0}
+.cardEdgeNext{right:0}
+.cardEdgeNav span{
+  width:30px;
+  height:54px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  font-size:32px;
+  line-height:1;
+  opacity:.24;
+  transform:scale(.94);
+  transition:opacity .16s ease, transform .16s ease, background .16s ease, color .16s ease;
+}
+.cardEdgeNav:hover span,
+.cardEdgeNav:focus-visible span{
+  opacity:.92;
+  transform:scale(1);
+  background:rgba(255,255,255,.72);
+  color:var(--red-dark);
+  box-shadow:0 5px 16px rgba(87,45,49,.07);
+}
+.cardEdgeNav:focus-visible{
+  outline:none;
+}
+
+/* Keep central content comfortably clear of edge tap zones on desktop. */
+.cardFlipStage{
+  margin-left:34px;
+  margin-right:34px;
+}
+
+/* New flashcard controls: small, neutral and semantically paired. */
+.flipButton{
+  min-width:118px !important;
+  min-height:40px !important;
+  padding:8px 14px !important;
+  margin:12px auto 2px !important;
+  border-radius:999px !important;
+  gap:7px !important;
+  font-size:13px !important;
+  font-weight:820 !important;
+  box-shadow:none !important;
+}
+.flipAnswerButton{
+  border:1px solid #e0b7b8;
+  background:rgba(255,255,255,.72);
+  color:var(--red-dark);
+}
+.flipQuestionButton{
+  border:1px solid #bed0c5;
+  background:rgba(255,255,255,.72);
+  color:#496d5b;
+}
+.flipAnswerButton:hover{
+  background:#fff4f2;
+  border-color:#cf9499;
+}
+.flipQuestionButton:hover{
+  background:#f7fbf8;
+  border-color:#9db8a9;
+}
+.flipIcon{
+  font-size:15px !important;
+  opacity:.78;
+  transition:transform .18s ease;
+}
+.flipButton:hover .flipIcon{
+  transform:rotate(28deg);
+}
+
+/* With the long instructional sentence gone, keep the front airy. */
+.cardFrontFace .focusZone{
+  padding-bottom:12px;
+}
+
+@media(max-width:760px){
+  .cardFlipStage{
+    margin-left:22px;
+    margin-right:22px;
+  }
+  .cardEdgeNav{
+    width:36px;
+    top:74px;
+    bottom:14px;
+  }
+  .cardEdgeNav span{
+    width:26px;
+    height:48px;
+    font-size:28px;
+  }
+}
+@media(max-width:520px){
+  .cardFlipStage{
+    margin-left:14px;
+    margin-right:14px;
+  }
+  .cardEdgeNav{
+    width:30px;
+  }
+  .cardEdgeNav span{
+    width:22px;
+    height:44px;
+    font-size:25px;
+    opacity:.18;
+  }
+  .flipButton{
+    min-width:108px !important;
+    min-height:38px !important;
+    padding:7px 12px !important;
+  }
+}
+
+
+/* v10.9 — invisible edge tap zones + compact active card face */
+.cardEdgeNav{
+  display:none !important;
+}
+
+/* The card itself owns the navigation zones; no visible side controls. */
+.learningCard{
+  cursor:default;
+}
+
+/* Let the active face determine the card height instead of the taller hidden face. */
+.cardFlipStage{
+  position:relative;
+  margin-left:0 !important;
+  margin-right:0 !important;
+  min-height:0;
+  transition:height .32s cubic-bezier(.2,.72,.25,1);
+}
+.cardFlipStage > .cardFace{
+  position:absolute;
+  inset:0 auto auto 0;
+  width:100%;
+}
+.cardFlipStage > .cardFrontFace,
+.cardFlipStage > .cardBackFace{
+  padding:16px;
+}
+
+/* Front/question side: tighter and more intentional. */
+.cardFrontFace .focusZone{
+  padding:20px 10px 10px;
+}
+.cardFrontFace .focusHanzi{
+  margin-top:14px;
+}
+.cardFrontFace .soundLine{
+  min-height:46px;
+}
+.cardFrontFace .flipButton{
+  margin-top:6px !important;
+}
+
+/* One tiny, consistent flip affordance on both faces. */
+.flipButton.flipIconOnly{
+  width:38px !important;
+  height:38px !important;
+  min-width:38px !important;
+  min-height:38px !important;
+  padding:0 !important;
+  margin:8px auto 2px !important;
+  display:grid !important;
+  place-items:center;
+  border-radius:50% !important;
+  border:1px solid rgba(143,31,40,.20) !important;
+  background:rgba(255,255,255,.66) !important;
+  color:var(--red-dark) !important;
+  box-shadow:none !important;
+  font-size:18px !important;
+  line-height:1 !important;
+  font-weight:700 !important;
+  letter-spacing:0 !important;
+  transition:transform .18s ease, background .18s ease, border-color .18s ease !important;
+}
+.cardBackFace .flipButton.flipIconOnly{
+  border-color:rgba(73,109,91,.24) !important;
+  color:#496d5b !important;
+}
+.flipButton.flipIconOnly:hover{
+  transform:rotate(24deg) scale(1.04) !important;
+  background:#fff !important;
+  border-color:rgba(143,31,40,.36) !important;
+}
+.cardBackFace .flipButton.flipIconOnly:hover{
+  border-color:rgba(73,109,91,.40) !important;
+}
+
+/* Keep tap areas useful on touch devices without showing extra UI. */
+@media(max-width:620px){
+  .cardFlipStage > .cardFrontFace,
+  .cardFlipStage > .cardBackFace{
+    padding:12px;
+  }
+  .cardFrontFace .focusZone{
+    padding:14px 6px 8px;
+  }
+  .flipButton.flipIconOnly{
+    width:36px !important;
+    height:36px !important;
+    min-width:36px !important;
+    min-height:36px !important;
+    font-size:17px !important;
+  }
+}
+
+
+/* v11 — balanced front/back card geometry */
+.cardFlipStage{
+  min-height:520px;
+}
+
+/* Both faces occupy the same full stage height. */
+.cardFlipStage > .cardFace{
+  height:100%;
+  min-height:520px;
+  display:flex;
+  flex-direction:column;
+}
+
+/* Keep content vertically balanced instead of making the front look compressed. */
+.cardFrontFace .focusZone{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:28px 10px 20px;
+}
+.cardBackFace{
+  justify-content:flex-start;
+}
+.cardBackFace .focusZone{
+  padding:24px 10px 14px;
+}
+
+/* Put the flip action consistently toward the bottom of both faces. */
+.cardFrontFace .flipButton,
+.cardBackFace .flipButton{
+  margin-top:auto !important;
+}
+
+/* Slightly larger icon button while keeping it visually light. */
+.flipButton.flipIconOnly{
+  width:46px !important;
+  height:46px !important;
+  min-width:46px !important;
+  min-height:46px !important;
+  margin:14px auto 4px !important;
+  font-size:21px !important;
+  border-width:1px !important;
+  box-shadow:0 5px 14px rgba(85,54,57,.06) !important;
+}
+.flipButton.flipIconOnly:hover{
+  transform:rotate(28deg) scale(1.045) !important;
+}
+
+/* Mobile keeps the same balanced front/back concept, just shorter. */
+@media(max-width:620px){
+  .cardFlipStage{
+    min-height:480px;
+  }
+  .cardFlipStage > .cardFace{
+    min-height:480px;
+  }
+  .cardFrontFace .focusZone{
+    padding:22px 8px 16px;
+  }
+  .flipButton.flipIconOnly{
+    width:44px !important;
+    height:44px !important;
+    min-width:44px !important;
+    min-height:44px !important;
+    font-size:20px !important;
+  }
+}
