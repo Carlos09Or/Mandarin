@@ -21,9 +21,9 @@ window.LEARNING_META = {
     "en": "you",
     "explanation": "The everyday second-person pronoun “you”.",
     "example": {
-      "hanzi": "你好吗？",
-      "pinyin": "Nǐ hǎo ma?",
-      "en": "How are you?"
+      "hanzi": "你是中国人吗？",
+      "pinyin": "Nǐ shì Zhōngguó rén ma?",
+      "en": "Are you Chinese?"
     }
   },
   "4": {
@@ -45,8 +45,8 @@ window.LEARNING_META = {
     }
   },
   "6": {
-    "en": "this / here",
-    "explanation": "Points to something close to the speaker: “this”; 这儿 means “here”.",
+    "en": "this",
+    "explanation": "Points to something close to the speaker: “this”. “Here” is 这儿 or 这里.",
     "example": {
       "hanzi": "这是我的书。",
       "pinyin": "Zhè shì wǒ de shū.",
@@ -54,8 +54,8 @@ window.LEARNING_META = {
     }
   },
   "7": {
-    "en": "that / there",
-    "explanation": "Points to something farther away: “that”; 那儿 means “there”.",
+    "en": "that",
+    "explanation": "Points to something farther away: “that”. “There” is 那儿 or 那里.",
     "example": {
       "hanzi": "那是我的学校。",
       "pinyin": "Nà shì wǒ de xuéxiào.",
@@ -67,7 +67,7 @@ window.LEARNING_META = {
     "explanation": "Use 哪 before a noun or measure word to ask “which?”.",
     "example": {
       "hanzi": "你喜欢哪本书？",
-      "pinyin": "Nǐ xǐhuān nǎ běn shū?",
+      "pinyin": "Nǐ xǐhuan nǎ běn shū?",
       "en": "Which book do you like?"
     }
   },
@@ -255,9 +255,9 @@ window.LEARNING_META = {
     "en": "some / a few",
     "explanation": "Means “some” or “a few” and refers to an unspecified small quantity.",
     "example": {
-      "hanzi": "我有一些书。",
-      "pinyin": "Wǒ yǒu yìxiē shū.",
-      "en": "I have some books."
+      "hanzi": "我想买些水果。",
+      "pinyin": "Wǒ xiǎng mǎi xiē shuǐguǒ.",
+      "en": "I want to buy some fruit."
     }
   },
   "30": {
@@ -279,12 +279,12 @@ window.LEARNING_META = {
     }
   },
   "32": {
-    "en": "not; have not",
-    "explanation": "Commonly negates 有 and past/completed actions: “do not have / did not”.",
+    "en": "not have; did not",
+    "explanation": "Negates 有 (“don’t have”) and completed actions (“didn’t”).",
     "example": {
       "hanzi": "我没有钱。",
       "pinyin": "Wǒ méiyǒu qián.",
-      "en": "I do not have money."
+      "en": "I don’t have money."
     }
   },
   "33": {
@@ -441,12 +441,12 @@ window.LEARNING_META = {
     }
   },
   "50": {
-    "en": "Beijing",
-    "explanation": "The everyday word for “Beijing”.",
+    "en": "supermarket",
+    "explanation": "超 “super” + 市 “market”.",
     "example": {
-      "hanzi": "北京在中国。",
-      "pinyin": "Běijīng zài Zhōngguó.",
-      "en": "Beijing is in China."
+      "hanzi": "我去超市买东西。",
+      "pinyin": "Wǒ qù chāoshì mǎi dōngxi.",
+      "en": "I’m going to the supermarket to buy things."
     }
   },
   "51": {
@@ -468,30 +468,30 @@ window.LEARNING_META = {
     }
   },
   "53": {
-    "en": "in front",
-    "explanation": "A basic location word meaning “in front”.",
+    "en": "front; before",
+    "explanation": "“Front”; in time it means “before, ago”: 三天前 = three days ago.",
     "example": {
-      "hanzi": "学校在前面。",
-      "pinyin": "Xuéxiào zài qiánmiàn.",
-      "en": "The school is ahead."
+      "hanzi": "学校前有一个商店。",
+      "pinyin": "Xuéxiào qián yǒu yí ge shāngdiàn.",
+      "en": "There is a shop in front of the school."
     }
   },
   "54": {
-    "en": "behind",
-    "explanation": "A basic location word meaning “behind”.",
+    "en": "behind; after",
+    "explanation": "“Back, behind”; in time it means “after, later”.",
     "example": {
-      "hanzi": "他在我后面。",
-      "pinyin": "Tā zài wǒ hòumiàn.",
-      "en": "He is behind me."
+      "hanzi": "下课后我去饭店。",
+      "pinyin": "Xiàkè hòu wǒ qù fàndiàn.",
+      "en": "After class I go to the restaurant."
     }
   },
   "55": {
-    "en": "inside",
-    "explanation": "A basic location word meaning “inside”.",
+    "en": "inside, in",
+    "explanation": "After a place or object: 家里 = at home, 杯子里 = in the cup.",
     "example": {
-      "hanzi": "苹果在里面。",
-      "pinyin": "Píngguǒ zài lǐmiàn.",
-      "en": "The apple is inside."
+      "hanzi": "杯子里有水。",
+      "pinyin": "Bēizi lǐ yǒu shuǐ.",
+      "en": "There is water in the cup."
     }
   },
   "56": {
@@ -705,18 +705,18 @@ window.LEARNING_META = {
     "en": "Mr. / gentleman",
     "explanation": "The everyday word for “Mr. / gentleman”.",
     "example": {
-      "hanzi": "王先生，你好。",
-      "pinyin": "Wáng xiānsheng, nǐ hǎo.",
-      "en": "Hello, Mr. Wang."
+      "hanzi": "先生，您好！",
+      "pinyin": "Xiānsheng, nín hǎo!",
+      "en": "Hello, sir!"
     }
   },
   "80": {
-    "en": "Miss / young lady",
-    "explanation": "A title meaning “Miss / young lady”; usage can vary by region and context.",
+    "en": "lady, Ms.",
+    "explanation": "A polite word for a woman; 王女士 = Ms. Wang.",
     "example": {
-      "hanzi": "李小姐，你好。",
-      "pinyin": "Lǐ xiǎojiě, nǐ hǎo.",
-      "en": "Hello, Miss Li."
+      "hanzi": "那个女士是我的老师。",
+      "pinyin": "Nàge nǚshì shì wǒ de lǎoshī.",
+      "en": "That lady is my teacher."
     }
   },
   "81": {
@@ -742,7 +742,7 @@ window.LEARNING_META = {
     "explanation": "A common everyday noun meaning “dish / vegetables”.",
     "example": {
       "hanzi": "我喜欢吃中国菜。",
-      "pinyin": "Wǒ xǐhuān chī Zhōngguó cài.",
+      "pinyin": "Wǒ xǐhuan chī Zhōngguó cài.",
       "en": "I like eating Chinese food."
     }
   },
@@ -760,7 +760,7 @@ window.LEARNING_META = {
     "explanation": "A common everyday noun meaning “fruit”.",
     "example": {
       "hanzi": "我喜欢水果。",
-      "pinyin": "Wǒ xǐhuān shuǐguǒ.",
+      "pinyin": "Wǒ xǐhuan shuǐguǒ.",
       "en": "I like fruit."
     }
   },
@@ -804,9 +804,9 @@ window.LEARNING_META = {
     "en": "airplane",
     "explanation": "A common everyday noun meaning “airplane”.",
     "example": {
-      "hanzi": "我坐飞机去北京。",
-      "pinyin": "Wǒ zuò fēijī qù Běijīng.",
-      "en": "I go to Beijing by plane."
+      "hanzi": "我坐飞机去中国。",
+      "pinyin": "Wǒ zuò fēijī qù Zhōngguó.",
+      "en": "I am going to China by plane."
     }
   },
   "91": {
@@ -841,7 +841,7 @@ window.LEARNING_META = {
     "explanation": "A common everyday noun meaning “movie”.",
     "example": {
       "hanzi": "我喜欢看电影。",
-      "pinyin": "Wǒ xǐhuān kàn diànyǐng.",
+      "pinyin": "Wǒ xǐhuan kàn diànyǐng.",
       "en": "I like watching movies."
     }
   },
@@ -939,9 +939,9 @@ window.LEARNING_META = {
     "en": "chair",
     "explanation": "A common everyday noun meaning “chair”.",
     "example": {
-      "hanzi": "椅子在桌子后面。",
-      "pinyin": "Yǐzi zài zhuōzi hòumiàn.",
-      "en": "The chair is behind the table."
+      "hanzi": "我坐在椅子上。",
+      "pinyin": "Wǒ zuò zài yǐzi shang.",
+      "en": "I am sitting on the chair."
     }
   },
   "106": {
@@ -957,9 +957,9 @@ window.LEARNING_META = {
     "en": "you’re welcome",
     "explanation": "A standard response to thanks: “you’re welcome”.",
     "example": {
-      "hanzi": "不客气。",
-      "pinyin": "Bú kèqi.",
-      "en": "You’re welcome."
+      "hanzi": "不客气，我们是朋友。",
+      "pinyin": "Bú kèqi, wǒmen shì péngyou.",
+      "en": "You’re welcome, we are friends."
     }
   },
   "108": {
@@ -984,18 +984,18 @@ window.LEARNING_META = {
     "en": "sorry / excuse me",
     "explanation": "The standard phrase for apologizing: “I’m sorry / excuse me”.",
     "example": {
-      "hanzi": "对不起。",
-      "pinyin": "Duìbuqǐ.",
-      "en": "I’m sorry."
+      "hanzi": "对不起，我来晚了。",
+      "pinyin": "Duìbuqǐ, wǒ lái wǎn le.",
+      "en": "Sorry, I am late."
     }
   },
   "111": {
     "en": "it’s okay / no problem",
     "explanation": "A common response to an apology: “it’s okay / no problem”.",
     "example": {
-      "hanzi": "没关系。",
-      "pinyin": "Méi guānxi.",
-      "en": "It’s okay."
+      "hanzi": "没关系，明天见！",
+      "pinyin": "Méi guānxi, míngtiān jiàn!",
+      "en": "It’s okay, see you tomorrow!"
     }
   },
   "112": {
@@ -1074,9 +1074,9 @@ window.LEARNING_META = {
     "en": "to be called / to call",
     "explanation": "Use 叫 to say what someone is called: 我叫… means “My name is…”.",
     "example": {
-      "hanzi": "我叫大卫。",
-      "pinyin": "Wǒ jiào Dàwèi.",
-      "en": "My name is David."
+      "hanzi": "你叫什么名字？",
+      "pinyin": "Nǐ jiào shénme míngzi?",
+      "en": "What is your name?"
     }
   },
   "121": {
@@ -1182,9 +1182,9 @@ window.LEARNING_META = {
     "en": "to live / reside",
     "explanation": "Use this verb for “to live / reside”.",
     "example": {
-      "hanzi": "我住在北京。",
-      "pinyin": "Wǒ zhù zài Běijīng.",
-      "en": "I live in Beijing."
+      "hanzi": "我住在中国。",
+      "pinyin": "Wǒ zhù zài Zhōngguó.",
+      "en": "I live in China."
     }
   },
   "133": {
@@ -1200,9 +1200,9 @@ window.LEARNING_META = {
     "en": "to work; work",
     "explanation": "Use this verb for “to work; work”.",
     "example": {
-      "hanzi": "我在北京工作。",
-      "pinyin": "Wǒ zài Běijīng gōngzuò.",
-      "en": "I work in Beijing."
+      "hanzi": "我在商店工作。",
+      "pinyin": "Wǒ zài shāngdiàn gōngzuò.",
+      "en": "I work at a shop."
     }
   },
   "135": {
@@ -1210,7 +1210,7 @@ window.LEARNING_META = {
     "explanation": "Use this verb for “to rain”.",
     "example": {
       "hanzi": "今天下雨。",
-      "pinyin": "Jīntiān xiàyǔ.",
+      "pinyin": "Jīntiān xià yǔ.",
       "en": "It is raining today."
     }
   },
@@ -1228,7 +1228,7 @@ window.LEARNING_META = {
     "explanation": "Use this verb for “to like”.",
     "example": {
       "hanzi": "我喜欢看电影。",
-      "pinyin": "Wǒ xǐhuān kàn diànyǐng.",
+      "pinyin": "Wǒ xǐhuan kàn diànyǐng.",
       "en": "I like watching movies."
     }
   },
@@ -1347,6 +1347,1356 @@ window.LEARNING_META = {
       "hanzi": "她很漂亮。",
       "pinyin": "Tā hěn piàoliang.",
       "en": "She is pretty."
+    }
+  },
+  "151": {
+    "en": "you (plural)",
+    "explanation": "“You” for two or more people: 你 + the plural suffix 们.",
+    "example": {
+      "hanzi": "你们是学生吗？",
+      "pinyin": "Nǐmen shì xuéshēng ma?",
+      "en": "Are you students?"
+    }
+  },
+  "152": {
+    "en": "you (polite)",
+    "explanation": "The polite form of 你, used with older people, teachers, or customers.",
+    "example": {
+      "hanzi": "老师，您好！",
+      "pinyin": "Lǎoshī, nín hǎo!",
+      "en": "Hello, teacher!"
+    }
+  },
+  "153": {
+    "en": "they / them",
+    "explanation": "他 + 们: “they” for a group of men or a mixed group.",
+    "example": {
+      "hanzi": "他们是我的同学。",
+      "pinyin": "Tāmen shì wǒ de tóngxué.",
+      "en": "They are my classmates."
+    }
+  },
+  "154": {
+    "en": "they / them (female)",
+    "explanation": "她 + 们: “they” for a group of women or girls.",
+    "example": {
+      "hanzi": "她们都是老师。",
+      "pinyin": "Tāmen dōu shì lǎoshī.",
+      "en": "They are all teachers."
+    }
+  },
+  "155": {
+    "en": "it",
+    "explanation": "The pronoun for animals and things. It sounds the same as 他 and 她.",
+    "example": {
+      "hanzi": "它是我的猫。",
+      "pinyin": "Tā shì wǒ de māo.",
+      "en": "It is my cat."
+    }
+  },
+  "156": {
+    "en": "they (animals / things)",
+    "explanation": "它 + 们: “they” for animals or things.",
+    "example": {
+      "hanzi": "它们是我家的狗。",
+      "pinyin": "Tāmen shì wǒ jiā de gǒu.",
+      "en": "They are my family’s dogs."
+    }
+  },
+  "157": {
+    "en": "younger brother",
+    "explanation": "Your younger brother. An older brother is 哥哥.",
+    "example": {
+      "hanzi": "我弟弟八岁。",
+      "pinyin": "Wǒ dìdi bā suì.",
+      "en": "My younger brother is eight."
+    }
+  },
+  "158": {
+    "en": "older brother",
+    "explanation": "Your older brother. A younger brother is 弟弟.",
+    "example": {
+      "hanzi": "我哥哥是医生。",
+      "pinyin": "Wǒ gēge shì yīshēng.",
+      "en": "My older brother is a doctor."
+    }
+  },
+  "159": {
+    "en": "older sister",
+    "explanation": "Your older sister. A younger sister is 妹妹.",
+    "example": {
+      "hanzi": "我姐姐在医院工作。",
+      "pinyin": "Wǒ jiějie zài yīyuàn gōngzuò.",
+      "en": "My older sister works at a hospital."
+    }
+  },
+  "160": {
+    "en": "younger sister",
+    "explanation": "Your younger sister. An older sister is 姐姐.",
+    "example": {
+      "hanzi": "我妹妹喜欢猫。",
+      "pinyin": "Wǒ mèimei xǐhuan māo.",
+      "en": "My younger sister likes cats."
+    }
+  },
+  "161": {
+    "en": "child",
+    "explanation": "A child, or someone’s son or daughter.",
+    "example": {
+      "hanzi": "你有孩子吗？",
+      "pinyin": "Nǐ yǒu háizi ma?",
+      "en": "Do you have children?"
+    }
+  },
+  "162": {
+    "en": "family member",
+    "explanation": "家 “home, family” + 人 “person”: the people in your family.",
+    "example": {
+      "hanzi": "我的家人都在中国。",
+      "pinyin": "Wǒ de jiārén dōu zài Zhōngguó.",
+      "en": "My family is all in China."
+    }
+  },
+  "163": {
+    "en": "everyone",
+    "explanation": "Everyone in the group you are talking to or about.",
+    "example": {
+      "hanzi": "大家都喜欢喝茶。",
+      "pinyin": "Dàjiā dōu xǐhuan hē chá.",
+      "en": "Everyone likes drinking tea."
+    }
+  },
+  "164": {
+    "en": "boyfriend",
+    "explanation": "男 “male” + 朋友 “friend”: boyfriend.",
+    "example": {
+      "hanzi": "她有男朋友吗？",
+      "pinyin": "Tā yǒu nánpéngyou ma?",
+      "en": "Does she have a boyfriend?"
+    }
+  },
+  "165": {
+    "en": "girlfriend",
+    "explanation": "女 “female” + 朋友 “friend”: girlfriend.",
+    "example": {
+      "hanzi": "我女朋友是老师。",
+      "pinyin": "Wǒ nǚpéngyou shì lǎoshī.",
+      "en": "My girlfriend is a teacher."
+    }
+  },
+  "166": {
+    "en": "which one",
+    "explanation": "哪 + the measure word 个: asks “which one?”.",
+    "example": {
+      "hanzi": "你要哪个？",
+      "pinyin": "Nǐ yào nǎge?",
+      "en": "Which one do you want?"
+    }
+  },
+  "167": {
+    "en": "where",
+    "explanation": "Another way to ask “where?”, with the same meaning as 哪儿.",
+    "example": {
+      "hanzi": "你家在哪里？",
+      "pinyin": "Nǐ jiā zài nǎlǐ?",
+      "en": "Where is your home?"
+    }
+  },
+  "168": {
+    "en": "which ones",
+    "explanation": "哪 + 些: asks “which ones?” about more than one thing.",
+    "example": {
+      "hanzi": "你喜欢哪些水果？",
+      "pinyin": "Nǐ xǐhuan nǎxiē shuǐguǒ?",
+      "en": "Which fruits do you like?"
+    }
+  },
+  "169": {
+    "en": "over there",
+    "explanation": "那 “that” + 边 “side”: over there, that side.",
+    "example": {
+      "hanzi": "我的车在那边。",
+      "pinyin": "Wǒ de chē zài nàbiān.",
+      "en": "My car is over there."
+    }
+  },
+  "170": {
+    "en": "that one",
+    "explanation": "那 + 个: “that one”, or “that …” before a noun.",
+    "example": {
+      "hanzi": "那个人是谁？",
+      "pinyin": "Nàge rén shì shéi?",
+      "en": "Who is that person?"
+    }
+  },
+  "171": {
+    "en": "there",
+    "explanation": "“There”, with the same meaning as 那儿.",
+    "example": {
+      "hanzi": "那里有一个商店。",
+      "pinyin": "Nàlǐ yǒu yí ge shāngdiàn.",
+      "en": "There is a shop there."
+    }
+  },
+  "172": {
+    "en": "there",
+    "explanation": "“There” in everyday spoken Mandarin; same as 那里.",
+    "example": {
+      "hanzi": "你去那儿做什么？",
+      "pinyin": "Nǐ qù nàr zuò shénme?",
+      "en": "What are you going there to do?"
+    }
+  },
+  "173": {
+    "en": "those",
+    "explanation": "那 + 些: “those”, for several things farther away.",
+    "example": {
+      "hanzi": "那些书是我的。",
+      "pinyin": "Nàxiē shū shì wǒ de.",
+      "en": "Those books are mine."
+    }
+  },
+  "174": {
+    "en": "over here",
+    "explanation": "这 “this” + 边 “side”: over here, this side.",
+    "example": {
+      "hanzi": "请坐这边。",
+      "pinyin": "Qǐng zuò zhèbiān.",
+      "en": "Please sit over here."
+    }
+  },
+  "175": {
+    "en": "this one",
+    "explanation": "这 + 个: “this one”, or “this …” before a noun.",
+    "example": {
+      "hanzi": "这个苹果很大。",
+      "pinyin": "Zhège píngguǒ hěn dà.",
+      "en": "This apple is big."
+    }
+  },
+  "176": {
+    "en": "here",
+    "explanation": "“Here”, with the same meaning as 这儿.",
+    "example": {
+      "hanzi": "这里是我的学校。",
+      "pinyin": "Zhèlǐ shì wǒ de xuéxiào.",
+      "en": "Here is my school."
+    }
+  },
+  "177": {
+    "en": "here",
+    "explanation": "“Here” in everyday spoken Mandarin; same as 这里.",
+    "example": {
+      "hanzi": "我在这儿！",
+      "pinyin": "Wǒ zài zhèr!",
+      "en": "I’m here!"
+    }
+  },
+  "178": {
+    "en": "these",
+    "explanation": "这 + 些: “these”, for several things close by.",
+    "example": {
+      "hanzi": "这些是我的朋友。",
+      "pinyin": "Zhèxiē shì wǒ de péngyou.",
+      "en": "These are my friends."
+    }
+  },
+  "179": {
+    "en": "excuse me, may I ask",
+    "explanation": "请 “please” + 问 “ask”: a polite way to begin a question.",
+    "example": {
+      "hanzi": "请问，医院在哪儿？",
+      "pinyin": "Qǐngwèn, yīyuàn zài nǎr?",
+      "en": "Excuse me, where is the hospital?"
+    }
+  },
+  "180": {
+    "en": "hello",
+    "explanation": "你 “you” + 好 “good”: the standard greeting.",
+    "example": {
+      "hanzi": "你好，我是你的老师。",
+      "pinyin": "Nǐ hǎo, wǒ shì nǐ de lǎoshī.",
+      "en": "Hello, I am your teacher."
+    }
+  },
+  "181": {
+    "en": "hundred",
+    "explanation": "The number 100: 一百 = 100, 两百 = 200.",
+    "example": {
+      "hanzi": "这本书一百块钱。",
+      "pinyin": "Zhè běn shū yìbǎi kuài qián.",
+      "en": "This book costs 100 kuai."
+    }
+  },
+  "182": {
+    "en": "thousand",
+    "explanation": "The number 1,000: 一千 = 1,000.",
+    "example": {
+      "hanzi": "这个电脑三千块。",
+      "pinyin": "Zhège diànnǎo sānqiān kuài.",
+      "en": "This computer costs 3,000 kuai."
+    }
+  },
+  "183": {
+    "en": "zero",
+    "explanation": "Zero; it also marks an empty place inside a number: 一百零五 = 105.",
+    "example": {
+      "hanzi": "他家有一百零五本书。",
+      "pinyin": "Tā jiā yǒu yìbǎi líng wǔ běn shū.",
+      "en": "His family has 105 books."
+    }
+  },
+  "184": {
+    "en": "two (an amount)",
+    "explanation": "“Two” when counting things, before a measure word: 两个, not 二个.",
+    "example": {
+      "hanzi": "我有两个哥哥。",
+      "pinyin": "Wǒ yǒu liǎng ge gēge.",
+      "en": "I have two older brothers."
+    }
+  },
+  "185": {
+    "en": "half",
+    "explanation": "Half; after a clock time it means “half past”: 三点半 = 3:30.",
+    "example": {
+      "hanzi": "现在三点半。",
+      "pinyin": "Xiànzài sān diǎn bàn.",
+      "en": "It is 3:30 now."
+    }
+  },
+  "186": {
+    "en": "half (of something)",
+    "explanation": "一 + 半: one half of something.",
+    "example": {
+      "hanzi": "我吃了一半。",
+      "pinyin": "Wǒ chī le yíbàn.",
+      "en": "I ate half."
+    }
+  },
+  "187": {
+    "en": "ordinal prefix (first, second…)",
+    "explanation": "Put 第 before a number to make an ordinal: 第一 = first, 第二 = second.",
+    "example": {
+      "hanzi": "今天是第一天。",
+      "pinyin": "Jīntiān shì dì yī tiān.",
+      "en": "Today is the first day."
+    }
+  },
+  "188": {
+    "en": "measure word for clothes, matters",
+    "explanation": "Measure word for clothes and for matters: 一件衣服 = a piece of clothing.",
+    "example": {
+      "hanzi": "这件衣服很漂亮。",
+      "pinyin": "Zhè jiàn yīfu hěn piàoliang.",
+      "en": "This piece of clothing is pretty."
+    }
+  },
+  "189": {
+    "en": "mouth; measure word for family members",
+    "explanation": "Means “mouth”, and counts the people in a family: 三口人.",
+    "example": {
+      "hanzi": "我家有三口人。",
+      "pinyin": "Wǒ jiā yǒu sān kǒu rén.",
+      "en": "There are three people in my family."
+    }
+  },
+  "190": {
+    "en": "measure word for animals",
+    "explanation": "Measure word for many animals: 一只猫, 两只狗.",
+    "example": {
+      "hanzi": "我家有两只猫。",
+      "pinyin": "Wǒ jiā yǒu liǎng zhī māo.",
+      "en": "My family has two cats."
+    }
+  },
+  "191": {
+    "en": "yuan (money unit)",
+    "explanation": "The formal name of China’s money unit; in speech people usually say 块.",
+    "example": {
+      "hanzi": "这个杯子十元。",
+      "pinyin": "Zhège bēizi shí yuán.",
+      "en": "This cup is ten yuan."
+    }
+  },
+  "192": {
+    "en": "some, a few",
+    "explanation": "An unspecified amount: “some” or “a few”.",
+    "example": {
+      "hanzi": "我想买一些水果。",
+      "pinyin": "Wǒ xiǎng mǎi yìxiē shuǐguǒ.",
+      "en": "I want to buy some fruit."
+    }
+  },
+  "193": {
+    "en": "some (of them)",
+    "explanation": "Picks out part of a group: 有的人… = some people….",
+    "example": {
+      "hanzi": "有的人喜欢猫，有的人喜欢狗。",
+      "pinyin": "Yǒude rén xǐhuan māo, yǒude rén xǐhuan gǒu.",
+      "en": "Some people like cats, some like dogs."
+    }
+  },
+  "194": {
+    "en": "some; somewhat",
+    "explanation": "“Some” (like 有的); before an adjective it means “a bit”.",
+    "example": {
+      "hanzi": "有些学生没有来。",
+      "pinyin": "Yǒuxiē xuéshēng méiyǒu lái.",
+      "en": "Some students didn’t come."
+    }
+  },
+  "195": {
+    "en": "minute; cent; to divide",
+    "explanation": "In clock times it means “minute”: 八点十分 = 8:10. It is also a small money unit and the verb “to divide”.",
+    "example": {
+      "hanzi": "现在八点十分。",
+      "pinyin": "Xiànzài bā diǎn shí fēn.",
+      "en": "It is 8:10 now."
+    }
+  },
+  "196": {
+    "en": "also, too",
+    "explanation": "Goes before the verb: 我也是 = me too.",
+    "example": {
+      "hanzi": "我也是学生。",
+      "pinyin": "Wǒ yě shì xuéshēng.",
+      "en": "I am a student too."
+    }
+  },
+  "197": {
+    "en": "still; also",
+    "explanation": "“Still” or “also, in addition”, placed before the verb.",
+    "example": {
+      "hanzi": "他还在睡觉。",
+      "pinyin": "Tā hái zài shuìjiào.",
+      "en": "He is still sleeping."
+    }
+  },
+  "198": {
+    "en": "again",
+    "explanation": "“Again”, for something that will happen again; 再见 = see you again.",
+    "example": {
+      "hanzi": "明天再来吧。",
+      "pinyin": "Míngtiān zài lái ba.",
+      "en": "Come again tomorrow."
+    }
+  },
+  "199": {
+    "en": "really; true",
+    "explanation": "“Really, truly”, placed before adjectives: 真好 = really good.",
+    "example": {
+      "hanzi": "今天天气真好！",
+      "pinyin": "Jīntiān tiānqì zhēn hǎo!",
+      "en": "The weather is really nice today!"
+    }
+  },
+  "200": {
+    "en": "very, extremely",
+    "explanation": "A stronger “very” than 很.",
+    "example": {
+      "hanzi": "这个菜非常好吃。",
+      "pinyin": "Zhège cài fēicháng hǎochī.",
+      "en": "This dish is extremely tasty."
+    }
+  },
+  "201": {
+    "en": "a little, slightly",
+    "explanation": "Before an adjective, usually for something unwelcome: 有点儿冷 = a bit cold.",
+    "example": {
+      "hanzi": "今天有点儿冷。",
+      "pinyin": "Jīntiān yǒudiǎnr lěng.",
+      "en": "It’s a bit cold today."
+    }
+  },
+  "202": {
+    "en": "in the middle of (doing)",
+    "explanation": "Shows that an action is happening right now.",
+    "example": {
+      "hanzi": "妈妈正在做饭。",
+      "pinyin": "Māma zhèngzài zuò fàn.",
+      "en": "Mom is cooking right now."
+    }
+  },
+  "203": {
+    "en": "to want; to need; will",
+    "explanation": "“Want” (before a noun or verb), “need”, or “going to”.",
+    "example": {
+      "hanzi": "我要一杯茶。",
+      "pinyin": "Wǒ yào yì bēi chá.",
+      "en": "I want a cup of tea."
+    }
+  },
+  "204": {
+    "en": "can, may",
+    "explanation": "Permission or possibility: “can, may”. On its own, 可以 means “OK”.",
+    "example": {
+      "hanzi": "我可以坐这儿吗？",
+      "pinyin": "Wǒ kěyǐ zuò zhèr ma?",
+      "en": "May I sit here?"
+    }
+  },
+  "205": {
+    "en": "to give; to, for",
+    "explanation": "As a verb, “to give”; before a person, “to, for”: 给妈妈打电话.",
+    "example": {
+      "hanzi": "我给你打电话。",
+      "pinyin": "Wǒ gěi nǐ dǎ diànhuà.",
+      "en": "I’ll call you."
+    }
+  },
+  "206": {
+    "en": "a bit, briefly",
+    "explanation": "After a verb it softens the action: 看一下 = take a quick look.",
+    "example": {
+      "hanzi": "请你看一下。",
+      "pinyin": "Qǐng nǐ kàn yíxià.",
+      "en": "Please take a look."
+    }
+  },
+  "207": {
+    "en": "plural suffix",
+    "explanation": "Added to pronouns and people nouns to make them plural: 我们, 同学们.",
+    "example": {
+      "hanzi": "同学们好！",
+      "pinyin": "Tóngxuémen hǎo!",
+      "en": "Hello, classmates!"
+    }
+  },
+  "208": {
+    "en": "suggestion particle",
+    "explanation": "At the end of a sentence it makes a suggestion (“let’s…”) or asks for confirmation.",
+    "example": {
+      "hanzi": "我们去吃饭吧。",
+      "pinyin": "Wǒmen qù chī fàn ba.",
+      "en": "Let’s go eat."
+    }
+  },
+  "209": {
+    "en": "correct, right; to, toward",
+    "explanation": "“Right, correct” (对！), or “to, toward” someone.",
+    "example": {
+      "hanzi": "对，他是我哥哥。",
+      "pinyin": "Duì, tā shì wǒ gēge.",
+      "en": "Right, he is my older brother."
+    }
+  },
+  "210": {
+    "en": "don’t; not want",
+    "explanation": "“Don’t…!” before a verb, or simply “don’t want”.",
+    "example": {
+      "hanzi": "不要说话！",
+      "pinyin": "Búyào shuōhuà!",
+      "en": "Don’t talk!"
+    }
+  },
+  "211": {
+    "en": "shop, store",
+    "explanation": "A shop; it appears in 商店, 饭店, and 书店.",
+    "example": {
+      "hanzi": "这个店的菜很好吃。",
+      "pinyin": "Zhège diàn de cài hěn hǎochī.",
+      "en": "The food at this place is tasty."
+    }
+  },
+  "212": {
+    "en": "bookstore",
+    "explanation": "书 “book” + 店 “shop”.",
+    "example": {
+      "hanzi": "我在书店买书。",
+      "pinyin": "Wǒ zài shūdiàn mǎi shū.",
+      "en": "I buy books at the bookstore."
+    }
+  },
+  "213": {
+    "en": "cinema",
+    "explanation": "电影 “movie” + 院 “building, courtyard”.",
+    "example": {
+      "hanzi": "我们去电影院看电影吧。",
+      "pinyin": "Wǒmen qù diànyǐngyuàn kàn diànyǐng ba.",
+      "en": "Let’s go to the cinema to watch a movie."
+    }
+  },
+  "214": {
+    "en": "room",
+    "explanation": "A room in a home or a hotel.",
+    "example": {
+      "hanzi": "我的房间很小。",
+      "pinyin": "Wǒ de fángjiān hěn xiǎo.",
+      "en": "My room is small."
+    }
+  },
+  "215": {
+    "en": "company",
+    "explanation": "A company or business; 在公司工作 = to work at a company.",
+    "example": {
+      "hanzi": "我爸爸在公司工作。",
+      "pinyin": "Wǒ bàba zài gōngsī gōngzuò.",
+      "en": "My dad works at a company."
+    }
+  },
+  "216": {
+    "en": "university",
+    "explanation": "大 “big” + 学 “study”: university.",
+    "example": {
+      "hanzi": "我哥哥在大学学习汉语。",
+      "pinyin": "Wǒ gēge zài dàxué xuéxí Hànyǔ.",
+      "en": "My older brother studies Chinese at university."
+    }
+  },
+  "217": {
+    "en": "primary school",
+    "explanation": "小 “small” + 学 “study”: primary school.",
+    "example": {
+      "hanzi": "我妹妹上小学。",
+      "pinyin": "Wǒ mèimei shàng xiǎoxué.",
+      "en": "My younger sister is in primary school."
+    }
+  },
+  "218": {
+    "en": "middle school",
+    "explanation": "中 “middle” + 学 “study”: middle or high school.",
+    "example": {
+      "hanzi": "这个中学很大。",
+      "pinyin": "Zhège zhōngxué hěn dà.",
+      "en": "This middle school is big."
+    }
+  },
+  "219": {
+    "en": "country",
+    "explanation": "A country; it is the 国 in 中国.",
+    "example": {
+      "hanzi": "你是哪国人？",
+      "pinyin": "Nǐ shì nǎ guó rén?",
+      "en": "Which country are you from?"
+    }
+  },
+  "220": {
+    "en": "outside",
+    "explanation": "“Outside, outer”; 外国 = foreign country.",
+    "example": {
+      "hanzi": "他是外国人。",
+      "pinyin": "Tā shì wàiguó rén.",
+      "en": "He is a foreigner."
+    }
+  },
+  "221": {
+    "en": "outside",
+    "explanation": "外 + 边 “side”: outside.",
+    "example": {
+      "hanzi": "外边下雨了。",
+      "pinyin": "Wàibian xià yǔ le.",
+      "en": "It’s raining outside."
+    }
+  },
+  "222": {
+    "en": "side",
+    "explanation": "A side or edge; it forms direction words: 这边, 那边, 外边.",
+    "example": {
+      "hanzi": "桌子边有一个椅子。",
+      "pinyin": "Zhuōzi biān yǒu yí ge yǐzi.",
+      "en": "There is a chair by the table."
+    }
+  },
+  "223": {
+    "en": "car, vehicle",
+    "explanation": "A car or any vehicle; it is part of 出租车 and 火车.",
+    "example": {
+      "hanzi": "你有车吗？",
+      "pinyin": "Nǐ yǒu chē ma?",
+      "en": "Do you have a car?"
+    }
+  },
+  "224": {
+    "en": "train",
+    "explanation": "火 “fire” + 车 “vehicle”: train.",
+    "example": {
+      "hanzi": "我们坐火车去吧。",
+      "pinyin": "Wǒmen zuò huǒchē qù ba.",
+      "en": "Let’s go by train."
+    }
+  },
+  "225": {
+    "en": "to arrive, to reach",
+    "explanation": "To arrive at or reach a place.",
+    "example": {
+      "hanzi": "我到家了。",
+      "pinyin": "Wǒ dào jiā le.",
+      "en": "I’ve arrived home."
+    }
+  },
+  "226": {
+    "en": "daytime",
+    "explanation": "白 “white, bright” + 天 “day”: daytime.",
+    "example": {
+      "hanzi": "我白天工作，晚上学习。",
+      "pinyin": "Wǒ báitiān gōngzuò, wǎnshang xuéxí.",
+      "en": "I work during the day and study in the evening."
+    }
+  },
+  "227": {
+    "en": "early morning",
+    "explanation": "Early morning, from waking up until about nine o’clock.",
+    "example": {
+      "hanzi": "我早上七点起床。",
+      "pinyin": "Wǒ zǎoshang qī diǎn qǐchuáng.",
+      "en": "I get up at seven in the morning."
+    }
+  },
+  "228": {
+    "en": "evening, night",
+    "explanation": "Evening or night.",
+    "example": {
+      "hanzi": "晚上我看电视。",
+      "pinyin": "Wǎnshang wǒ kàn diànshì.",
+      "en": "In the evening I watch TV."
+    }
+  },
+  "229": {
+    "en": "early",
+    "explanation": "“Early”; 早！ on its own is a quick “good morning”.",
+    "example": {
+      "hanzi": "现在还早。",
+      "pinyin": "Xiànzài hái zǎo.",
+      "en": "It’s still early."
+    }
+  },
+  "230": {
+    "en": "this year",
+    "explanation": "今 “now, this” + 年 “year”.",
+    "example": {
+      "hanzi": "我今年二十岁。",
+      "pinyin": "Wǒ jīnnián èrshí suì.",
+      "en": "I am twenty this year."
+    }
+  },
+  "231": {
+    "en": "next year",
+    "explanation": "明 “next” + 年 “year”.",
+    "example": {
+      "hanzi": "明年我想去中国。",
+      "pinyin": "Míngnián wǒ xiǎng qù Zhōngguó.",
+      "en": "Next year I want to go to China."
+    }
+  },
+  "232": {
+    "en": "last year",
+    "explanation": "去 “gone” + 年 “year”: last year.",
+    "example": {
+      "hanzi": "去年我在中国学习。",
+      "pinyin": "Qùnián wǒ zài Zhōngguó xuéxí.",
+      "en": "Last year I studied in China."
+    }
+  },
+  "233": {
+    "en": "day (in dates); sun",
+    "explanation": "The day of the month in written dates: 五月一日 = May 1. In speech, 号 is more common.",
+    "example": {
+      "hanzi": "今天是五月一日。",
+      "pinyin": "Jīntiān shì wǔ yuè yī rì.",
+      "en": "Today is May 1st."
+    }
+  },
+  "234": {
+    "en": "day; sky",
+    "explanation": "“Day” when counting days (三天 = three days), and “sky”.",
+    "example": {
+      "hanzi": "我想在这儿住三天。",
+      "pinyin": "Wǒ xiǎng zài zhèr zhù sān tiān.",
+      "en": "I want to stay here for three days."
+    }
+  },
+  "235": {
+    "en": "time",
+    "explanation": "Time as an amount: 有时间 = to have time.",
+    "example": {
+      "hanzi": "你明天有时间吗？",
+      "pinyin": "Nǐ míngtiān yǒu shíjiān ma?",
+      "en": "Do you have time tomorrow?"
+    }
+  },
+  "236": {
+    "en": "hour",
+    "explanation": "A period of one hour. Clock time uses 点.",
+    "example": {
+      "hanzi": "我学习了两个小时。",
+      "pinyin": "Wǒ xuéxí le liǎng ge xiǎoshí.",
+      "en": "I studied for two hours."
+    }
+  },
+  "237": {
+    "en": "Sunday",
+    "explanation": "星期 “week” + 日 “day”: Sunday, the more formal written form.",
+    "example": {
+      "hanzi": "星期日我不工作。",
+      "pinyin": "Xīngqīrì wǒ bù gōngzuò.",
+      "en": "I don’t work on Sunday."
+    }
+  },
+  "238": {
+    "en": "Sunday",
+    "explanation": "星期 “week” + 天 “day”: Sunday, the everyday spoken form.",
+    "example": {
+      "hanzi": "星期天我们去商店吧。",
+      "pinyin": "Xīngqītiān wǒmen qù shāngdiàn ba.",
+      "en": "Let’s go to the shop on Sunday."
+    }
+  },
+  "239": {
+    "en": "snow",
+    "explanation": "Snow; 下雪 = to snow.",
+    "example": {
+      "hanzi": "明天会下雪吗？",
+      "pinyin": "Míngtiān huì xià xuě ma?",
+      "en": "Will it snow tomorrow?"
+    }
+  },
+  "240": {
+    "en": "rain",
+    "explanation": "Rain; 下雨 = to rain.",
+    "example": {
+      "hanzi": "今天的雨很大。",
+      "pinyin": "Jīntiān de yǔ hěn dà.",
+      "en": "The rain is heavy today."
+    }
+  },
+  "241": {
+    "en": "steamed stuffed bun",
+    "explanation": "A soft steamed bun with a filling, a classic breakfast food.",
+    "example": {
+      "hanzi": "我早上吃包子。",
+      "pinyin": "Wǒ zǎoshang chī bāozi.",
+      "en": "I eat steamed buns in the morning."
+    }
+  },
+  "242": {
+    "en": "dumplings",
+    "explanation": "Chinese dumplings, popular at home and at festivals.",
+    "example": {
+      "hanzi": "妈妈做的饺子很好吃。",
+      "pinyin": "Māma zuò de jiǎozi hěn hǎochī.",
+      "en": "The dumplings Mom makes are delicious."
+    }
+  },
+  "243": {
+    "en": "bread",
+    "explanation": "面 “flour” + 包 “bun”: bread.",
+    "example": {
+      "hanzi": "我想买面包。",
+      "pinyin": "Wǒ xiǎng mǎi miànbāo.",
+      "en": "I want to buy bread."
+    }
+  },
+  "244": {
+    "en": "noodles",
+    "explanation": "Noodles; the 儿 ending gives it a casual, northern sound.",
+    "example": {
+      "hanzi": "我喜欢吃面条儿。",
+      "pinyin": "Wǒ xǐhuan chī miàntiáor.",
+      "en": "I like eating noodles."
+    }
+  },
+  "245": {
+    "en": "egg",
+    "explanation": "鸡 “chicken” + 蛋 “egg”: a chicken egg.",
+    "example": {
+      "hanzi": "我早饭吃了两个鸡蛋。",
+      "pinyin": "Wǒ zǎofàn chī le liǎng ge jīdàn.",
+      "en": "I ate two eggs for breakfast."
+    }
+  },
+  "246": {
+    "en": "milk",
+    "explanation": "牛 “cow” + 奶 “milk”.",
+    "example": {
+      "hanzi": "你喝牛奶吗？",
+      "pinyin": "Nǐ hē niúnǎi ma?",
+      "en": "Do you drink milk?"
+    }
+  },
+  "247": {
+    "en": "meal; cooked rice",
+    "explanation": "A meal, or cooked rice; 吃饭 = to have a meal.",
+    "example": {
+      "hanzi": "你吃饭了吗？",
+      "pinyin": "Nǐ chī fàn le ma?",
+      "en": "Have you eaten?"
+    }
+  },
+  "248": {
+    "en": "breakfast",
+    "explanation": "早 “early” + 饭 “meal”.",
+    "example": {
+      "hanzi": "你吃早饭了吗？",
+      "pinyin": "Nǐ chī zǎofàn le ma?",
+      "en": "Have you had breakfast?"
+    }
+  },
+  "249": {
+    "en": "lunch",
+    "explanation": "午 “noon” + 饭 “meal”.",
+    "example": {
+      "hanzi": "我们中午十二点吃午饭。",
+      "pinyin": "Wǒmen zhōngwǔ shí’èr diǎn chī wǔfàn.",
+      "en": "We have lunch at twelve noon."
+    }
+  },
+  "250": {
+    "en": "dinner",
+    "explanation": "晚 “evening” + 饭 “meal”.",
+    "example": {
+      "hanzi": "晚饭我想吃饺子。",
+      "pinyin": "Wǎnfàn wǒ xiǎng chī jiǎozi.",
+      "en": "I want dumplings for dinner."
+    }
+  },
+  "251": {
+    "en": "to cook",
+    "explanation": "做 “make” + 饭 “meal”: to cook.",
+    "example": {
+      "hanzi": "我爸爸很会做饭。",
+      "pinyin": "Wǒ bàba hěn huì zuò fàn.",
+      "en": "My dad is good at cooking."
+    }
+  },
+  "252": {
+    "en": "delicious, tasty",
+    "explanation": "好 “good” + 吃 “eat”: tasty.",
+    "example": {
+      "hanzi": "这个包子很好吃。",
+      "pinyin": "Zhège bāozi hěn hǎochī.",
+      "en": "This bun is delicious."
+    }
+  },
+  "253": {
+    "en": "to sell",
+    "explanation": "“To sell”, the opposite of 买 mǎi “to buy”; only the tone is different.",
+    "example": {
+      "hanzi": "这个商店卖水果。",
+      "pinyin": "Zhège shāngdiàn mài shuǐguǒ.",
+      "en": "This shop sells fruit."
+    }
+  },
+  "254": {
+    "en": "expensive",
+    "explanation": "Expensive; 太贵了 = too expensive.",
+    "example": {
+      "hanzi": "这件衣服太贵了！",
+      "pinyin": "Zhè jiàn yīfu tài guì le!",
+      "en": "This piece of clothing is too expensive!"
+    }
+  },
+  "255": {
+    "en": "cheap",
+    "explanation": "Cheap, inexpensive; the opposite of 贵.",
+    "example": {
+      "hanzi": "这里的水果很便宜。",
+      "pinyin": "Zhèlǐ de shuǐguǒ hěn piányi.",
+      "en": "The fruit here is cheap."
+    }
+  },
+  "256": {
+    "en": "Chinese character",
+    "explanation": "汉 “Chinese” + 字 “character”: the characters you write in this app.",
+    "example": {
+      "hanzi": "这个汉字怎么写？",
+      "pinyin": "Zhège Hànzì zěnme xiě?",
+      "en": "How do you write this character?"
+    }
+  },
+  "257": {
+    "en": "Chinese (language)",
+    "explanation": "The Chinese language, especially written; close in meaning to 汉语.",
+    "example": {
+      "hanzi": "你会说中文吗？",
+      "pinyin": "Nǐ huì shuō Zhōngwén ma?",
+      "en": "Can you speak Chinese?"
+    }
+  },
+  "258": {
+    "en": "to read; to study",
+    "explanation": "读 “read” + 书 “book”: to read, or to be in school.",
+    "example": {
+      "hanzi": "我喜欢读书。",
+      "pinyin": "Wǒ xǐhuan dúshū.",
+      "en": "I like reading."
+    }
+  },
+  "259": {
+    "en": "to talk, to speak",
+    "explanation": "说 “say” + 话 “words”: to talk.",
+    "example": {
+      "hanzi": "我想和你说话。",
+      "pinyin": "Wǒ xiǎng hé nǐ shuōhuà.",
+      "en": "I want to talk with you."
+    }
+  },
+  "260": {
+    "en": "to hear",
+    "explanation": "听 “listen” + 见 “perceive”: to actually hear something.",
+    "example": {
+      "hanzi": "你听见了吗？",
+      "pinyin": "Nǐ tīngjiàn le ma?",
+      "en": "Did you hear it?"
+    }
+  },
+  "261": {
+    "en": "class, lesson",
+    "explanation": "A class or lesson; 上课 = to go to class.",
+    "example": {
+      "hanzi": "今天我们有汉语课。",
+      "pinyin": "Jīntiān wǒmen yǒu Hànyǔ kè.",
+      "en": "Today we have Chinese class."
+    }
+  },
+  "262": {
+    "en": "to attend class",
+    "explanation": "上 + 课: to have class, or class begins.",
+    "example": {
+      "hanzi": "我们八点上课。",
+      "pinyin": "Wǒmen bā diǎn shàngkè.",
+      "en": "Our class starts at eight."
+    }
+  },
+  "263": {
+    "en": "to finish class",
+    "explanation": "下 + 课: class is over.",
+    "example": {
+      "hanzi": "下课了，我们去吃饭吧。",
+      "pinyin": "Xiàkè le, wǒmen qù chī fàn ba.",
+      "en": "Class is over, let’s go eat."
+    }
+  },
+  "264": {
+    "en": "song",
+    "explanation": "A song; 唱歌 = to sing.",
+    "example": {
+      "hanzi": "这个歌很好听。",
+      "pinyin": "Zhège gē hěn hǎotīng.",
+      "en": "This song sounds nice."
+    }
+  },
+  "265": {
+    "en": "to sing",
+    "explanation": "To sing; 唱歌 = to sing songs.",
+    "example": {
+      "hanzi": "你会唱中文歌吗？",
+      "pinyin": "Nǐ huì chàng Zhōngwén gē ma?",
+      "en": "Can you sing Chinese songs?"
+    }
+  },
+  "266": {
+    "en": "telephone, phone call",
+    "explanation": "电 “electric” + 话 “speech”: a phone or a phone call.",
+    "example": {
+      "hanzi": "你的电话是多少？",
+      "pinyin": "Nǐ de diànhuà shì duōshao?",
+      "en": "What is your phone number?"
+    }
+  },
+  "267": {
+    "en": "cell phone",
+    "explanation": "手 “hand” + 机 “machine”: mobile phone.",
+    "example": {
+      "hanzi": "我的手机在哪儿？",
+      "pinyin": "Wǒ de shǒujī zài nǎr?",
+      "en": "Where is my phone?"
+    }
+  },
+  "268": {
+    "en": "to ask",
+    "explanation": "To ask a question.",
+    "example": {
+      "hanzi": "我想问老师。",
+      "pinyin": "Wǒ xiǎng wèn lǎoshī.",
+      "en": "I want to ask the teacher."
+    }
+  },
+  "269": {
+    "en": "question; problem",
+    "explanation": "问 “ask” + 题 “topic”: a question or a problem.",
+    "example": {
+      "hanzi": "我有一个问题。",
+      "pinyin": "Wǒ yǒu yí ge wèntí.",
+      "en": "I have a question."
+    }
+  },
+  "270": {
+    "en": "it’s nothing, I’m fine",
+    "explanation": "“No problem, it’s nothing”; it can also mean “to be free”.",
+    "example": {
+      "hanzi": "没事，你坐吧。",
+      "pinyin": "Méishì, nǐ zuò ba.",
+      "en": "It’s fine, have a seat."
+    }
+  },
+  "271": {
+    "en": "to get up",
+    "explanation": "起 “rise” + 床 “bed”: to get out of bed.",
+    "example": {
+      "hanzi": "你几点起床？",
+      "pinyin": "Nǐ jǐ diǎn qǐchuáng?",
+      "en": "What time do you get up?"
+    }
+  },
+  "272": {
+    "en": "to go to work",
+    "explanation": "上 + 班 “shift”: to go to work, to be at work.",
+    "example": {
+      "hanzi": "我妈妈八点上班。",
+      "pinyin": "Wǒ māma bā diǎn shàngbān.",
+      "en": "My mom starts work at eight."
+    }
+  },
+  "273": {
+    "en": "to get off work",
+    "explanation": "下 + 班 “shift”: to finish work for the day.",
+    "example": {
+      "hanzi": "你几点下班？",
+      "pinyin": "Nǐ jǐ diǎn xiàbān?",
+      "en": "What time do you get off work?"
+    }
+  },
+  "274": {
+    "en": "to go to school",
+    "explanation": "上 + 学: to go to school, to attend school.",
+    "example": {
+      "hanzi": "我弟弟七点去上学。",
+      "pinyin": "Wǒ dìdi qī diǎn qù shàngxué.",
+      "en": "My younger brother goes to school at seven."
+    }
+  },
+  "275": {
+    "en": "to sleep",
+    "explanation": "To sleep; 睡觉 is the full everyday verb.",
+    "example": {
+      "hanzi": "你睡了吗？",
+      "pinyin": "Nǐ shuì le ma?",
+      "en": "Are you asleep?"
+    }
+  },
+  "276": {
+    "en": "to learn, to study",
+    "explanation": "To learn: 学汉语 = to learn Chinese.",
+    "example": {
+      "hanzi": "我在学汉语。",
+      "pinyin": "Wǒ zài xué Hànyǔ.",
+      "en": "I am learning Chinese."
+    }
+  },
+  "277": {
+    "en": "to play, to have fun",
+    "explanation": "To play or hang out for fun.",
+    "example": {
+      "hanzi": "孩子们在外边玩。",
+      "pinyin": "Háizimen zài wàibian wán.",
+      "en": "The children are playing outside."
+    }
+  },
+  "278": {
+    "en": "to look for",
+    "explanation": "To look for someone or something.",
+    "example": {
+      "hanzi": "你找什么？",
+      "pinyin": "Nǐ zhǎo shénme?",
+      "en": "What are you looking for?"
+    }
+  },
+  "279": {
+    "en": "to see, to meet",
+    "explanation": "To see or meet someone; 再见 = see you again.",
+    "example": {
+      "hanzi": "明天见！",
+      "pinyin": "Míngtiān jiàn!",
+      "en": "See you tomorrow!"
+    }
+  },
+  "280": {
+    "en": "to wear",
+    "explanation": "To wear or put on clothes.",
+    "example": {
+      "hanzi": "今天很冷，你多穿一点儿。",
+      "pinyin": "Jīntiān hěn lěng, nǐ duō chuān yìdiǎnr.",
+      "en": "It’s cold today, wear a bit more."
+    }
+  },
+  "281": {
+    "en": "to rest",
+    "explanation": "To rest or take a break.",
+    "example": {
+      "hanzi": "你休息一下吧。",
+      "pinyin": "Nǐ xiūxi yíxià ba.",
+      "en": "Take a little rest."
+    }
+  },
+  "282": {
+    "en": "to feel, to think",
+    "explanation": "To feel or think (an opinion): 我觉得… = I think….",
+    "example": {
+      "hanzi": "我觉得这个很好。",
+      "pinyin": "Wǒ juéde zhège hěn hǎo.",
+      "en": "I think this one is good."
+    }
+  },
+  "283": {
+    "en": "to know",
+    "explanation": "To know a fact or a piece of information.",
+    "example": {
+      "hanzi": "你知道他是谁吗？",
+      "pinyin": "Nǐ zhīdào tā shì shéi ma?",
+      "en": "Do you know who he is?"
+    }
+  },
+  "284": {
+    "en": "to drive",
+    "explanation": "开 “operate” + 车 “car”: to drive.",
+    "example": {
+      "hanzi": "我爸爸开车去上班。",
+      "pinyin": "Wǒ bàba kāichē qù shàngbān.",
+      "en": "My dad drives to work."
+    }
+  },
+  "285": {
+    "en": "matter, thing to do",
+    "explanation": "A matter or something to deal with: 有事 = to have something to do.",
+    "example": {
+      "hanzi": "我明天有事。",
+      "pinyin": "Wǒ míngtiān yǒu shì.",
+      "en": "I have something to do tomorrow."
+    }
+  },
+  "286": {
+    "en": "new",
+    "explanation": "New: 新衣服 = new clothes.",
+    "example": {
+      "hanzi": "这是我的新手机。",
+      "pinyin": "Zhè shì wǒ de xīn shǒujī.",
+      "en": "This is my new phone."
+    }
+  },
+  "287": {
+    "en": "busy",
+    "explanation": "Busy: 很忙 = very busy.",
+    "example": {
+      "hanzi": "我今天很忙。",
+      "pinyin": "Wǒ jīntiān hěn máng.",
+      "en": "I am very busy today."
+    }
+  },
+  "288": {
+    "en": "good-looking; good (to watch)",
+    "explanation": "好 + 看 “look”: nice to look at; for a movie or book, “good”.",
+    "example": {
+      "hanzi": "这个电影很好看。",
+      "pinyin": "Zhège diànyǐng hěn hǎokàn.",
+      "en": "This movie is good."
+    }
+  },
+  "289": {
+    "en": "pleasant to hear",
+    "explanation": "好 + 听 “listen”: sounds nice.",
+    "example": {
+      "hanzi": "你的名字很好听。",
+      "pinyin": "Nǐ de míngzi hěn hǎotīng.",
+      "en": "Your name sounds nice."
+    }
+  },
+  "290": {
+    "en": "fun",
+    "explanation": "好 + 玩儿 “play”: fun, amusing.",
+    "example": {
+      "hanzi": "我的猫很好玩儿。",
+      "pinyin": "Wǒ de māo hěn hǎowánr.",
+      "en": "My cat is fun."
+    }
+  },
+  "291": {
+    "en": "late",
+    "explanation": "Late: 太晚了 = it’s too late.",
+    "example": {
+      "hanzi": "现在太晚了。",
+      "pinyin": "Xiànzài tài wǎn le.",
+      "en": "It’s too late now."
+    }
+  },
+  "292": {
+    "en": "illness; ill",
+    "explanation": "An illness; 病了 = got sick.",
+    "example": {
+      "hanzi": "他的病好了。",
+      "pinyin": "Tā de bìng hǎo le.",
+      "en": "He has recovered from his illness."
+    }
+  },
+  "293": {
+    "en": "to get sick",
+    "explanation": "生 “produce” + 病 “illness”: to fall ill.",
+    "example": {
+      "hanzi": "我妈妈生病了。",
+      "pinyin": "Wǒ māma shēngbìng le.",
+      "en": "My mom is sick."
+    }
+  },
+  "294": {
+    "en": "to see a doctor",
+    "explanation": "看 + 病: to see a doctor (for a doctor, to treat a patient).",
+    "example": {
+      "hanzi": "我明天去医院看病。",
+      "pinyin": "Wǒ míngtiān qù yīyuàn kànbìng.",
+      "en": "Tomorrow I’m going to the hospital to see a doctor."
+    }
+  },
+  "295": {
+    "en": "male",
+    "explanation": "Male; 男的 = a man.",
+    "example": {
+      "hanzi": "我们老师是男的。",
+      "pinyin": "Wǒmen lǎoshī shì nán de.",
+      "en": "Our teacher is a man."
+    }
+  },
+  "296": {
+    "en": "female",
+    "explanation": "Female; 女的 = a woman.",
+    "example": {
+      "hanzi": "那个医生是女的。",
+      "pinyin": "Nàge yīshēng shì nǚ de.",
+      "en": "That doctor is a woman."
+    }
+  },
+  "297": {
+    "en": "kid, child",
+    "explanation": "小 “little” + 朋友 “friend”: a friendly word for a child.",
+    "example": {
+      "hanzi": "小朋友，你几岁了？",
+      "pinyin": "Xiǎopéngyǒu, nǐ jǐ suì le?",
+      "en": "How old are you, kid?"
+    }
+  },
+  "298": {
+    "en": "university student",
+    "explanation": "大学 “university” + 生 “student”.",
+    "example": {
+      "hanzi": "我姐姐是大学生。",
+      "pinyin": "Wǒ jiějie shì dàxuéshēng.",
+      "en": "My older sister is a university student."
+    }
+  },
+  "299": {
+    "en": "middle school student",
+    "explanation": "中学 “middle school” + 生 “student”.",
+    "example": {
+      "hanzi": "我弟弟是中学生。",
+      "pinyin": "Wǒ dìdi shì zhōngxuéshēng.",
+      "en": "My younger brother is a middle school student."
+    }
+  },
+  "300": {
+    "en": "primary school student",
+    "explanation": "小学 “primary school” + 生 “student”.",
+    "example": {
+      "hanzi": "那些小学生很高兴。",
+      "pinyin": "Nàxiē xiǎoxuéshēng hěn gāoxìng.",
+      "en": "Those schoolchildren are very happy."
     }
   }
 };
@@ -1523,5 +2873,84 @@ window.CHAR_GLOSSES = {
   "号": "number / date",
   "是": "to be",
   "有": "to have",
-  "漂亮": "pretty"
+  "漂亮": "pretty",
+  "吧": "suggestion particle",
+  "白": "white / bright",
+  "百": "hundred",
+  "半": "half",
+  "包": "wrap / bun",
+  "子": "child / noun suffix",
+  "边": "side",
+  "病": "illness",
+  "要": "want / need",
+  "唱": "sing",
+  "超": "super / exceed",
+  "市": "market / city",
+  "穿": "wear",
+  "到": "arrive",
+  "第": "ordinal prefix",
+  "弟": "younger brother",
+  "房": "house / room",
+  "间": "room / between",
+  "非": "not / non-",
+  "常": "often / usual",
+  "歌": "song",
+  "哥": "older brother",
+  "给": "give",
+  "公": "public",
+  "司": "manage",
+  "贵": "expensive",
+  "还": "still / also",
+  "孩": "child",
+  "语": "language",
+  "玩": "play",
+  "火": "fire",
+  "鸡": "chicken",
+  "蛋": "egg",
+  "件": "item (measure word)",
+  "饺": "dumpling",
+  "得": "get / obtain",
+  "可": "can / may",
+  "以": "by means of",
+  "课": "class / lesson",
+  "口": "mouth",
+  "两": "two",
+  "零": "zero",
+  "卖": "sell",
+  "忙": "busy",
+  "事": "matter / thing",
+  "妹": "younger sister",
+  "条": "strip",
+  "男": "male",
+  "您": "you (polite)",
+  "牛": "cow / ox",
+  "奶": "milk",
+  "士": "scholar / person",
+  "便": "convenient",
+  "宜": "suitable",
+  "床": "bed",
+  "千": "thousand",
+  "问": "ask",
+  "日": "day / sun",
+  "班": "shift / class",
+  "手": "hand",
+  "它": "it",
+  "外": "outside",
+  "晚": "late / evening",
+  "题": "topic / question",
+  "新": "new",
+  "休": "rest",
+  "息": "breath / rest",
+  "雪": "snow",
+  "也": "also",
+  "元": "yuan",
+  "再": "again",
+  "早": "early",
+  "找": "look for",
+  "真": "really / true",
+  "正": "right now / upright",
+  "只": "measure word for animals",
+  "知": "know",
+  "道": "road / way",
+  "文": "writing / language"
 };

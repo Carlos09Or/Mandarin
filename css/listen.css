@@ -1,0 +1,70 @@
+/* Listen — hands-free audio review of a block (word → guess → English meaning). */
+.lsLayout{max-width:760px;margin:0 auto}
+.lsPanel{padding:0;border-radius:28px;overflow:hidden}
+.lsHead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:16px 20px;border-bottom:1px solid var(--line)}
+.lsHead .eyebrow{margin:0 0 2px}
+.lsHead h2{margin:0;font-size:20px}
+.lsBlockSelect{max-width:260px}
+
+/* Fixed heights everywhere on the stage: nothing moves while words change. */
+.lsStage{display:grid;justify-items:center;gap:8px;padding:18px 18px 22px;text-align:center}
+.lsPhases{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.lsPhases span{padding:5px 11px;border-radius:99px;border:1px solid var(--line);background:#fff;color:#9a6b6e;font-size:12px;font-weight:800;transition:background .2s,color .2s}
+.lsPhases span.active{background:var(--red-faint);border-color:#e3a8ab;color:var(--red-dark)}
+.lsPhases span[data-phase="meaning"].active{background:var(--jade-soft);border-color:var(--jade-line);color:var(--green)}
+.lsHanzi{height:110px;line-height:110px;font-family:"Noto Serif SC","Songti SC","STSong","Noto Sans SC","PingFang SC",serif;font-size:84px;color:#4e1217;white-space:nowrap;overflow:hidden;max-width:100%}
+.lsPinyin{height:30px;line-height:30px;font-size:24px;font-weight:700;color:var(--red)}
+.lsMeaning{height:30px;line-height:30px;font-size:20px;font-weight:700;color:var(--green);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.lsMeaning.hidden{color:#d9c3c0}
+.lsTimer{position:relative;width:min(100%,320px);height:22px;border-radius:99px;background:var(--surface-soft);border:1px solid var(--jade-line);overflow:hidden}
+.lsTimer span{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,#f6b8b2,#e9636a)}
+.lsTimer b{position:relative;font-size:12px;line-height:20px;color:#5a3a3d}
+.lsTrack{width:min(100%,320px);height:4px;border-radius:99px;background:#f3e4e1;overflow:hidden;margin-top:6px}
+.lsTrack span{display:block;height:100%;width:0;background:var(--red);transition:width .3s ease}
+.lsCount{height:18px;font-size:13px;font-weight:700;color:var(--muted)}
+.lsControls{display:flex;align-items:center;gap:18px;margin-top:4px}
+.lsRound{width:54px;height:54px;border-radius:99px;border:1.5px solid #ead7d4;background:#fff;color:#9d2731;font-size:18px;cursor:pointer}
+.lsRound.lsPlay{width:78px;height:78px;font-size:26px;border-color:transparent;color:#fff;background:linear-gradient(135deg,#f36d67,#e13f46);box-shadow:0 12px 24px rgba(213,66,72,.22)}
+
+.lsOptions{display:flex;flex-wrap:wrap;gap:12px 20px;padding:14px 20px;border-top:1px solid var(--line);background:var(--surface-soft)}
+.lsOption{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lsOption .wsSizes{flex-wrap:wrap}
+.lsOption .wsSizes button{padding:0 12px}
+.lsOption .wsSizes button:disabled{opacity:.45;cursor:not-allowed}
+span.lsLiveOnly{display:contents}
+.lsVoiceSelect{min-height:38px;max-width:230px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);padding:0 8px;font-weight:650}
+.lsTest{min-height:38px;padding:0 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:#9d2731;font-weight:750;cursor:pointer}
+.lsVoiceSelect:disabled,.lsTest:disabled{opacity:.45;cursor:not-allowed}
+.lsNote{margin:0;padding:10px 20px 0;font-size:13px;color:var(--muted);line-height:1.5;background:var(--surface-soft)}
+
+.lsList{list-style:none;margin:0;padding:12px 14px 16px;display:grid;gap:4px;max-height:340px;overflow-y:auto;background:var(--surface-soft)}
+.lsList li{display:grid;grid-template-columns:minmax(64px,auto) minmax(80px,auto) 1fr;gap:10px;align-items:baseline;padding:8px 10px;border-radius:12px;cursor:pointer}
+.lsList li:hover{background:#fff}
+.lsList li.current{background:#fff;box-shadow:inset 0 0 0 1.5px #e3a8ab}
+.lsList b{font-family:"Noto Serif SC","Songti SC",serif;font-size:20px;font-weight:600;color:#4e1217}
+.lsList span{color:var(--red);font-weight:650}
+.lsList em{font-style:normal;color:var(--muted);font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+@media (max-width:720px){
+  .lsHead{padding:14px}
+  .lsBlockSelect{max-width:none;width:100%}
+  .lsStage{padding:14px 12px 18px}
+  .lsHanzi{height:96px;line-height:96px;font-size:72px}
+  .lsOptions{padding:12px 14px}
+  .lsNote{padding:10px 14px 0}
+}
+
+/* Home: Worksheets and Listen share a row. */
+.moduleWorksheets{grid-column:auto}
+.moduleListen{background:linear-gradient(180deg,#fff8f8,#fff3f1)}
+.lsHomeArt{display:grid;place-items:center;align-content:center;gap:8px;min-height:170px;padding:16px;background:#fffdfb}
+.lsHomeHanzi{font-family:"Noto Serif SC","Songti SC",serif;font-size:44px;color:#4e1217;line-height:1}
+.lsHomePinyin{font-weight:700;color:var(--red)}
+.lsHomePinyin em{font-style:normal;color:var(--green)}
+.lsHomeWave{display:flex;align-items:center;gap:4px;height:34px}
+.lsHomeWave i{display:block;width:5px;border-radius:9px;background:#e9636a}
+.lsHomeWave i:nth-child(1),.lsHomeWave i:nth-child(9){height:8px}
+.lsHomeWave i:nth-child(2),.lsHomeWave i:nth-child(8){height:16px}
+.lsHomeWave i:nth-child(3),.lsHomeWave i:nth-child(7){height:26px}
+.lsHomeWave i:nth-child(4),.lsHomeWave i:nth-child(6){height:18px}
+.lsHomeWave i:nth-child(5){height:32px}

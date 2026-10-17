@@ -7,16 +7,19 @@
   <meta name="theme-color" content="#b72d36">
   <title>Mandarin Cards · HSK 1</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles-v13-19.css">
-  <link rel="stylesheet" href="css/worksheets.css">
+  <link rel="stylesheet" href="css/styles-v13-19.css?v=304">
+  <link rel="stylesheet" href="css/worksheets.css?v=304">
+  <link rel="stylesheet" href="css/listen.css?v=304">
   <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7.3/dist/hanzi-writer.min.js" defer></script>
-  <script src="js/data.js" defer></script>
-  <script src="js/learning-data.js" defer></script>
-  <script src="js/character-data.js" defer></script>
-  <script src="js/practice-data.js" defer></script>
-  <script src="js/app-v13-19.js" defer></script>
-  <script src="js/worksheets.js" defer></script>
-  <script src="js/situations.js" defer></script>
+  <script src="js/data.js?v=304" defer></script>
+  <script src="js/learning-data.js?v=304" defer></script>
+  <script src="js/character-data.js?v=304" defer></script>
+  <script src="js/practice-data.js?v=304" defer></script>
+  <script src="js/app-v13-19.js?v=304" defer></script>
+  <script src="js/free-order-quiz.js?v=304" defer></script>
+  <script src="js/worksheets.js?v=304" defer></script>
+  <script src="js/listen.js?v=304" defer></script>
+  <script src="js/situations.js?v=304" defer></script>
 </head>
 <body data-page="home">
 
@@ -36,6 +39,7 @@
       <button class="tab sideNavItem" data-page="practice" type="button"><span class="sideIcon">▤</span><span>Practice</span></button>
       <button class="tab sideNavItem" data-page="write" type="button"><span class="sideIcon">✎</span><span>Write Hanzi</span></button>
       <button class="tab sideNavItem" data-page="worksheets" type="button"><span class="sideIcon">▦</span><span>Worksheets</span></button>
+      <button class="tab sideNavItem" data-page="listen" type="button"><span class="sideIcon">♪</span><span>Listen</span></button>
       <button class="tab sideNavItem" data-page="situations" type="button"><span class="sideIcon">◔</span><span>Situations</span></button>
 
       <div class="sideDivider"></div>
@@ -163,6 +167,20 @@
           <button id="homeOpenWorksheets" class="homeActionButton" type="button">Open →</button>
         </div>
       </article>
+
+      <article class="homeModuleCard moduleListen">
+        <div class="moduleArtWrap lsHomeArt" aria-hidden="true">
+          <span class="lsHomeHanzi">你好</span>
+          <span class="lsHomeWave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="lsHomePinyin">nǐ hǎo · <em>hello</em></span>
+        </div>
+        <div class="moduleBody">
+          <div class="moduleBadge write">♪</div>
+          <h3>Listen</h3>
+          <p>Hands-free review for walks: hear each word, guess, then hear the English meaning.</p>
+          <button id="homeOpenListen" class="homeActionButton" type="button">Open →</button>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -184,7 +202,7 @@
           <button id="cardPrevTop" class="iconButton" type="button" aria-label="Previous word">←</button>
           <div class="cardProgressMeta">
             <div class="cardProgressTextLine">
-              <strong id="cardProgressLabel">Word 1 of 150</strong>
+              <strong id="cardProgressLabel">Word 1 of 300</strong>
               <span class="cardNumber" id="cardNumber">#1</span>
             </div>
             <div class="thinProgress" aria-hidden="true"><div id="cardProgressBar"></div></div>
@@ -307,7 +325,7 @@
           <span id="mistakeCounter" class="strokePill">0 mistakes</span>
           <div id="miniList" class="listMini"></div>
           <div class="progressbar"><div id="writeProgress"></div></div>
-          <b id="writeProgressText">0/150</b>
+          <b id="writeProgressText">0/300</b>
         </div>
       </div>
     </div>
@@ -347,6 +365,11 @@
         <div class="wsSheet">
           <div class="wsSheetHead">
             <span class="wsSheetTitle">Sheet of <b id="wsSheetChar"></b> · <span id="wsCount"></span></span>
+            <div id="wsOrderMode" class="wsSizes wsOrderMode" role="group" aria-label="Stroke order">
+              <span class="wsGroupLabel">Stroke order</span>
+              <button type="button" data-order="strict" title="Strokes must follow the official order">Strict</button>
+              <button type="button" data-order="free" title="Any order and direction; each stroke is matched to a missing one">Free</button>
+            </div>
             <div id="wsSizes" class="wsSizes" role="group" aria-label="Boxes per sheet">
               <button type="button" data-size="10">10</button>
               <button type="button" data-size="20">20</button>
@@ -357,6 +380,55 @@
           <div id="wsMinis" class="wsMinis"></div>
           <p class="wsLegend">Pink dashed boxes trace the model; the rest are from memory. Green = written, orange = finished with mistakes. Tap a box to write it again.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="listen" class="page">
+    <div class="lsLayout">
+      <div class="panel lsPanel">
+        <div class="lsHead">
+          <div>
+            <p class="eyebrow">Listen</p>
+            <h2>Hear it, guess it, check it</h2>
+          </div>
+          <select id="lsBlock" class="wsBlockSelect lsBlockSelect" aria-label="Practice block"></select>
+        </div>
+
+        <div class="lsStage">
+          <div id="lsPhases" class="lsPhases">
+            <span data-phase="listen">1 · Listen</span><span data-phase="think">2 · Guess</span><span data-phase="meaning">3 · Meaning</span>
+          </div>
+          <div id="lsHanzi" class="lsHanzi"></div>
+          <div id="lsPinyin" class="lsPinyin"></div>
+          <div id="lsMeaning" class="lsMeaning"></div>
+          <div class="lsTimer"><span id="lsTimerBar"></span><b id="lsTimerText"></b></div>
+          <div class="lsTrack"><span id="lsProgress"></span></div>
+          <div id="lsCount" class="lsCount"></div>
+          <div class="lsControls">
+            <button id="lsPrev" class="lsRound" type="button" aria-label="Previous word">⏮</button>
+            <button id="lsPlay" class="lsRound lsPlay" type="button" aria-label="Play">▶</button>
+            <button id="lsNext" class="lsRound" type="button" aria-label="Next word">⏭</button>
+          </div>
+        </div>
+
+        <div class="lsOptions">
+          <div class="lsOption"><span class="wsGroupLabel">Mode</span>
+            <div id="lsMode" class="wsSizes"><button type="button" data-mode="live">Screen on</button><button type="button" data-mode="pocket">Pocket</button></div></div>
+          <div class="lsOption lsLiveOnly"><span class="wsGroupLabel">Guess time</span>
+            <div id="lsPause" class="wsSizes"><button type="button" data-pause="2">2 s</button><button type="button" data-pause="3">3 s</button><button type="button" data-pause="5">5 s</button></div></div>
+          <div class="lsOption lsLiveOnly"><span class="wsGroupLabel">Chinese</span>
+            <div id="lsRepeat" class="wsSizes"><button type="button" data-repeat="1">×1</button><button type="button" data-repeat="2">×2</button></div></div>
+          <div class="lsOption lsLiveOnly"><span class="wsGroupLabel">English voice</span>
+            <select id="lsEnVoice" class="lsVoiceSelect" aria-label="English voice"></select><button id="lsEnTest" class="lsTest" type="button">▶ Test</button></div>
+          <div class="lsOption lsLiveOnly"><span class="wsGroupLabel">Chinese voice</span>
+            <select id="lsZhVoice" class="lsVoiceSelect" aria-label="Chinese voice"></select><button id="lsZhTest" class="lsTest" type="button">▶ Test</button></div>
+          <div class="lsOption"><span class="wsGroupLabel">Play</span>
+            <div class="wsSizes"><span class="lsLiveOnly"><button id="lsSlow" type="button">Slow</button> <button id="lsShuffle" type="button">Shuffle</button></span><button id="lsLoop" type="button">Loop</button></div></div>
+        </div>
+        <p id="lsNote" class="lsNote"></p>
+
+        <ol id="lsList" class="lsList" aria-label="Words in this block"></ol>
       </div>
     </div>
   </section>
@@ -430,7 +502,7 @@
 
       <div class="practiceBlockHeader">
         <div class="practiceBlockIntro">
-          <p class="eyebrow" id="blockEyebrow">BLOCK 1 · 15 WORDS</p>
+          <p class="eyebrow" id="blockEyebrow">BLOCK 1 · 30 WORDS</p>
           <h2 id="blockTitle"></h2>
           <p id="blockDescription"></p>
           <div class="blockMetaPills">
@@ -446,7 +518,7 @@
             <div class="practiceProgressTrack"><div id="blockProgressBar"></div></div>
             <b id="blockAccuracy">0%</b>
           </div>
-          <span id="blockPracticedCount">0 of 15 words practiced.</span>
+          <span id="blockPracticedCount">0 of 30 words practiced.</span>
         </div>
       </div>
 
@@ -477,7 +549,7 @@
           </button>
           <button id="openBlockCards" class="practiceQuickCard" type="button">
             <span class="practiceQuickIcon jade">▤</span>
-            <span><b>View words</b><small>See all 15 words in this block.</small></span>
+            <span><b>View words</b><small>See all the words in this block.</small></span>
             <strong>›</strong>
           </button>
         </div>
@@ -506,7 +578,7 @@
       <div class="exerciseTop lessonExerciseTop">
         <button id="exitExercise" class="backLink lessonBackButton" type="button">← Back to practice</button>
         <div class="exerciseProgressWrap">
-          <div class="exerciseProgressMeta"><span id="exerciseLabel">Practice</span><span id="exerciseCount">1 / 15</span></div>
+          <div class="exerciseProgressMeta"><span id="exerciseLabel">Practice</span><span id="exerciseCount">1 / 30</span></div>
           <div class="thinProgress lessonProgress"><div id="exerciseProgress"></div></div>
         </div>
       </div>
@@ -648,6 +720,7 @@
     <button class="tab bottomDockItem" data-page="practice" type="button"><span class="dockIcon">▤</span><span>Practice</span></button>
     <button class="tab bottomDockItem" data-page="write" type="button"><span class="dockIcon">✎</span><span>Write</span></button>
     <button class="tab bottomDockItem" data-page="worksheets" type="button"><span class="dockIcon">▦</span><span>Sheets</span></button>
+    <button class="tab bottomDockItem" data-page="listen" type="button"><span class="dockIcon">♪</span><span>Listen</span></button>
     <button class="tab bottomDockItem" data-page="situations" type="button"><span class="dockIcon">◔</span><span>Situations</span></button>
   </nav>
 

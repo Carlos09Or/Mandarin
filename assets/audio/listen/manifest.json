@@ -1,0 +1,1879 @@
+{
+ "blocks": {
+  "1": {
+   "file": "block-1.m4a",
+   "title": "People & identity",
+   "duration": 134.42,
+   "cues": [
+    {
+     "n": 1,
+     "start": 0.6,
+     "thinkAt": 1.33,
+     "meaningAt": 3.33
+    },
+    {
+     "n": 2,
+     "start": 5.037,
+     "thinkAt": 5.64,
+     "meaningAt": 7.64
+    },
+    {
+     "n": 3,
+     "start": 9.592,
+     "thinkAt": 10.293,
+     "meaningAt": 12.293
+    },
+    {
+     "n": 4,
+     "start": 13.595,
+     "thinkAt": 14.213,
+     "meaningAt": 16.213
+    },
+    {
+     "n": 5,
+     "start": 17.98,
+     "thinkAt": 18.598,
+     "meaningAt": 20.598
+    },
+    {
+     "n": 70,
+     "start": 22.481,
+     "thinkAt": 23.087,
+     "meaningAt": 25.087
+    },
+    {
+     "n": 71,
+     "start": 27.087,
+     "thinkAt": 27.776,
+     "meaningAt": 29.776
+    },
+    {
+     "n": 72,
+     "start": 31.637,
+     "thinkAt": 32.371,
+     "meaningAt": 34.371
+    },
+    {
+     "n": 73,
+     "start": 35.79,
+     "thinkAt": 36.601,
+     "meaningAt": 38.601
+    },
+    {
+     "n": 74,
+     "start": 40.003,
+     "thinkAt": 40.774,
+     "meaningAt": 42.774
+    },
+    {
+     "n": 75,
+     "start": 44.212,
+     "thinkAt": 45.083,
+     "meaningAt": 47.083
+    },
+    {
+     "n": 76,
+     "start": 48.653,
+     "thinkAt": 49.388,
+     "meaningAt": 51.388
+    },
+    {
+     "n": 77,
+     "start": 53.045,
+     "thinkAt": 53.744,
+     "meaningAt": 55.744
+    },
+    {
+     "n": 78,
+     "start": 57.22,
+     "thinkAt": 57.92,
+     "meaningAt": 59.92
+    },
+    {
+     "n": 100,
+     "start": 61.46,
+     "thinkAt": 62.184,
+     "meaningAt": 64.184
+    },
+    {
+     "n": 151,
+     "start": 65.64,
+     "thinkAt": 66.282,
+     "meaningAt": 68.282
+    },
+    {
+     "n": 152,
+     "start": 70.153,
+     "thinkAt": 70.923,
+     "meaningAt": 72.923
+    },
+    {
+     "n": 153,
+     "start": 74.887,
+     "thinkAt": 75.541,
+     "meaningAt": 77.541
+    },
+    {
+     "n": 154,
+     "start": 79.492,
+     "thinkAt": 80.145,
+     "meaningAt": 82.145
+    },
+    {
+     "n": 155,
+     "start": 84.943,
+     "thinkAt": 85.562,
+     "meaningAt": 87.562
+    },
+    {
+     "n": 156,
+     "start": 88.83,
+     "thinkAt": 89.483,
+     "meaningAt": 91.483
+    },
+    {
+     "n": 157,
+     "start": 94.247,
+     "thinkAt": 94.901,
+     "meaningAt": 96.901
+    },
+    {
+     "n": 158,
+     "start": 98.645,
+     "thinkAt": 99.345,
+     "meaningAt": 101.345
+    },
+    {
+     "n": 159,
+     "start": 103.042,
+     "thinkAt": 103.785,
+     "meaningAt": 105.785
+    },
+    {
+     "n": 160,
+     "start": 107.599,
+     "thinkAt": 108.288,
+     "meaningAt": 110.288
+    },
+    {
+     "n": 161,
+     "start": 112.125,
+     "thinkAt": 112.915,
+     "meaningAt": 114.915
+    },
+    {
+     "n": 162,
+     "start": 116.304,
+     "thinkAt": 117.094,
+     "meaningAt": 119.094
+    },
+    {
+     "n": 163,
+     "start": 120.999,
+     "thinkAt": 121.699,
+     "meaningAt": 123.699
+    },
+    {
+     "n": 164,
+     "start": 125.246,
+     "thinkAt": 126.178,
+     "meaningAt": 128.178
+    },
+    {
+     "n": 165,
+     "start": 129.806,
+     "thinkAt": 130.785,
+     "meaningAt": 132.785
+    }
+   ]
+  },
+  "2": {
+   "file": "block-2.m4a",
+   "title": "Questions & conversation",
+   "duration": 135.58,
+   "cues": [
+    {
+     "n": 6,
+     "start": 0.6,
+     "thinkAt": 1.18,
+     "meaningAt": 3.18
+    },
+    {
+     "n": 7,
+     "start": 4.609,
+     "thinkAt": 5.219,
+     "meaningAt": 7.219
+    },
+    {
+     "n": 8,
+     "start": 8.603,
+     "thinkAt": 9.415,
+     "meaningAt": 11.415
+    },
+    {
+     "n": 9,
+     "start": 12.809,
+     "thinkAt": 13.579,
+     "meaningAt": 15.579
+    },
+    {
+     "n": 10,
+     "start": 16.985,
+     "thinkAt": 17.822,
+     "meaningAt": 19.822
+    },
+    {
+     "n": 11,
+     "start": 21.125,
+     "thinkAt": 21.778,
+     "meaningAt": 23.778
+    },
+    {
+     "n": 12,
+     "start": 25.103,
+     "thinkAt": 25.803,
+     "meaningAt": 27.803
+    },
+    {
+     "n": 13,
+     "start": 30.092,
+     "thinkAt": 30.916,
+     "meaningAt": 32.916
+    },
+    {
+     "n": 14,
+     "start": 35.507,
+     "thinkAt": 36.122,
+     "meaningAt": 38.122
+    },
+    {
+     "n": 15,
+     "start": 39.436,
+     "thinkAt": 40.18,
+     "meaningAt": 42.18
+    },
+    {
+     "n": 41,
+     "start": 44.55,
+     "thinkAt": 45.065,
+     "meaningAt": 47.065
+    },
+    {
+     "n": 42,
+     "start": 49.679,
+     "thinkAt": 50.24,
+     "meaningAt": 52.24
+    },
+    {
+     "n": 43,
+     "start": 55.026,
+     "thinkAt": 55.68,
+     "meaningAt": 57.68
+    },
+    {
+     "n": 109,
+     "start": 59.981,
+     "thinkAt": 60.898,
+     "meaningAt": 62.898
+    },
+    {
+     "n": 111,
+     "start": 65.259,
+     "thinkAt": 66.191,
+     "meaningAt": 68.191
+    },
+    {
+     "n": 166,
+     "start": 70.806,
+     "thinkAt": 71.611,
+     "meaningAt": 73.611
+    },
+    {
+     "n": 167,
+     "start": 75.203,
+     "thinkAt": 75.927,
+     "meaningAt": 77.927
+    },
+    {
+     "n": 168,
+     "start": 79.333,
+     "thinkAt": 80.103,
+     "meaningAt": 82.103
+    },
+    {
+     "n": 169,
+     "start": 83.774,
+     "thinkAt": 84.504,
+     "meaningAt": 86.504
+    },
+    {
+     "n": 170,
+     "start": 88.197,
+     "thinkAt": 88.927,
+     "meaningAt": 90.927
+    },
+    {
+     "n": 171,
+     "start": 92.506,
+     "thinkAt": 93.318,
+     "meaningAt": 95.318
+    },
+    {
+     "n": 172,
+     "start": 96.7,
+     "thinkAt": 97.299,
+     "meaningAt": 99.299
+    },
+    {
+     "n": 173,
+     "start": 100.681,
+     "thinkAt": 101.458,
+     "meaningAt": 103.458
+    },
+    {
+     "n": 174,
+     "start": 105.002,
+     "thinkAt": 105.702,
+     "meaningAt": 107.702
+    },
+    {
+     "n": 175,
+     "start": 109.283,
+     "thinkAt": 109.99,
+     "meaningAt": 111.99
+    },
+    {
+     "n": 176,
+     "start": 113.571,
+     "thinkAt": 114.279,
+     "meaningAt": 116.279
+    },
+    {
+     "n": 177,
+     "start": 117.719,
+     "thinkAt": 118.292,
+     "meaningAt": 120.292
+    },
+    {
+     "n": 178,
+     "start": 121.732,
+     "thinkAt": 122.475,
+     "meaningAt": 124.475
+    },
+    {
+     "n": 179,
+     "start": 125.835,
+     "thinkAt": 126.58,
+     "meaningAt": 128.58
+    },
+    {
+     "n": 180,
+     "start": 131.332,
+     "thinkAt": 132.056,
+     "meaningAt": 134.056
+    }
+   ]
+  },
+  "3": {
+   "file": "block-3.m4a",
+   "title": "Numbers & quantities",
+   "duration": 142.08,
+   "cues": [
+    {
+     "n": 16,
+     "start": 0.6,
+     "thinkAt": 1.253,
+     "meaningAt": 3.253
+    },
+    {
+     "n": 17,
+     "start": 4.614,
+     "thinkAt": 5.139,
+     "meaningAt": 7.139
+    },
+    {
+     "n": 18,
+     "start": 8.424,
+     "thinkAt": 9.215,
+     "meaningAt": 11.215
+    },
+    {
+     "n": 19,
+     "start": 12.603,
+     "thinkAt": 13.312,
+     "meaningAt": 15.312
+    },
+    {
+     "n": 20,
+     "start": 16.821,
+     "thinkAt": 17.47,
+     "meaningAt": 19.47
+    },
+    {
+     "n": 21,
+     "start": 20.981,
+     "thinkAt": 21.578,
+     "meaningAt": 23.578
+    },
+    {
+     "n": 22,
+     "start": 25.008,
+     "thinkAt": 25.799,
+     "meaningAt": 27.799
+    },
+    {
+     "n": 23,
+     "start": 29.287,
+     "thinkAt": 29.87,
+     "meaningAt": 31.87
+    },
+    {
+     "n": 24,
+     "start": 33.161,
+     "thinkAt": 33.944,
+     "meaningAt": 35.944
+    },
+    {
+     "n": 25,
+     "start": 37.421,
+     "thinkAt": 38.236,
+     "meaningAt": 40.236
+    },
+    {
+     "n": 26,
+     "start": 41.638,
+     "thinkAt": 42.164,
+     "meaningAt": 44.164
+    },
+    {
+     "n": 27,
+     "start": 46.454,
+     "thinkAt": 47.197,
+     "meaningAt": 49.197
+    },
+    {
+     "n": 28,
+     "start": 50.871,
+     "thinkAt": 51.571,
+     "meaningAt": 53.571
+    },
+    {
+     "n": 29,
+     "start": 55.883,
+     "thinkAt": 56.673,
+     "meaningAt": 58.673
+    },
+    {
+     "n": 30,
+     "start": 60.741,
+     "thinkAt": 61.394,
+     "meaningAt": 63.394
+    },
+    {
+     "n": 181,
+     "start": 66.982,
+     "thinkAt": 67.681,
+     "meaningAt": 69.681
+    },
+    {
+     "n": 182,
+     "start": 71.251,
+     "thinkAt": 72.041,
+     "meaningAt": 74.041
+    },
+    {
+     "n": 183,
+     "start": 75.573,
+     "thinkAt": 76.299,
+     "meaningAt": 78.299
+    },
+    {
+     "n": 184,
+     "start": 79.787,
+     "thinkAt": 80.685,
+     "meaningAt": 82.685
+    },
+    {
+     "n": 185,
+     "start": 84.728,
+     "thinkAt": 85.3,
+     "meaningAt": 87.3
+    },
+    {
+     "n": 186,
+     "start": 88.715,
+     "thinkAt": 89.406,
+     "meaningAt": 91.406
+    },
+    {
+     "n": 187,
+     "start": 93.537,
+     "thinkAt": 94.064,
+     "meaningAt": 96.064
+    },
+    {
+     "n": 188,
+     "start": 99.63,
+     "thinkAt": 100.237,
+     "meaningAt": 102.237
+    },
+    {
+     "n": 189,
+     "start": 105.292,
+     "thinkAt": 106.108,
+     "meaningAt": 108.108
+    },
+    {
+     "n": 190,
+     "start": 111.82,
+     "thinkAt": 112.609,
+     "meaningAt": 114.609
+    },
+    {
+     "n": 191,
+     "start": 117.13,
+     "thinkAt": 117.902,
+     "meaningAt": 119.902
+    },
+    {
+     "n": 192,
+     "start": 122.215,
+     "thinkAt": 122.914,
+     "meaningAt": 124.914
+    },
+    {
+     "n": 193,
+     "start": 126.983,
+     "thinkAt": 127.585,
+     "meaningAt": 129.585
+    },
+    {
+     "n": 194,
+     "start": 131.538,
+     "thinkAt": 132.233,
+     "meaningAt": 134.233
+    },
+    {
+     "n": 195,
+     "start": 136.487,
+     "thinkAt": 137.193,
+     "meaningAt": 139.193
+    }
+   ]
+  },
+  "4": {
+   "file": "block-4.m4a",
+   "title": "Core sentence building",
+   "duration": 146.04,
+   "cues": [
+    {
+     "n": 31,
+     "start": 0.6,
+     "thinkAt": 1.125,
+     "meaningAt": 3.125
+    },
+    {
+     "n": 32,
+     "start": 5.159,
+     "thinkAt": 5.882,
+     "meaningAt": 7.882
+    },
+    {
+     "n": 33,
+     "start": 10.125,
+     "thinkAt": 10.997,
+     "meaningAt": 12.997
+    },
+    {
+     "n": 34,
+     "start": 14.367,
+     "thinkAt": 15.021,
+     "meaningAt": 17.021
+    },
+    {
+     "n": 35,
+     "start": 19.029,
+     "thinkAt": 19.601,
+     "meaningAt": 21.601
+    },
+    {
+     "n": 36,
+     "start": 23.589,
+     "thinkAt": 24.369,
+     "meaningAt": 26.369
+    },
+    {
+     "n": 37,
+     "start": 27.776,
+     "thinkAt": 28.521,
+     "meaningAt": 30.521
+    },
+    {
+     "n": 38,
+     "start": 32.492,
+     "thinkAt": 33.074,
+     "meaningAt": 35.074
+    },
+    {
+     "n": 39,
+     "start": 37.817,
+     "thinkAt": 38.226,
+     "meaningAt": 40.226
+    },
+    {
+     "n": 40,
+     "start": 43.294,
+     "thinkAt": 43.774,
+     "meaningAt": 45.774
+    },
+    {
+     "n": 69,
+     "start": 48.467,
+     "thinkAt": 49.201,
+     "meaningAt": 51.201
+    },
+    {
+     "n": 112,
+     "start": 53.271,
+     "thinkAt": 53.97,
+     "meaningAt": 55.97
+    },
+    {
+     "n": 113,
+     "start": 57.423,
+     "thinkAt": 58.195,
+     "meaningAt": 60.195
+    },
+    {
+     "n": 140,
+     "start": 62.204,
+     "thinkAt": 62.829,
+     "meaningAt": 64.829
+    },
+    {
+     "n": 141,
+     "start": 67.083,
+     "thinkAt": 67.806,
+     "meaningAt": 69.806
+    },
+    {
+     "n": 196,
+     "start": 72.095,
+     "thinkAt": 72.871,
+     "meaningAt": 74.871
+    },
+    {
+     "n": 197,
+     "start": 76.915,
+     "thinkAt": 77.621,
+     "meaningAt": 79.621
+    },
+    {
+     "n": 198,
+     "start": 81.817,
+     "thinkAt": 82.399,
+     "meaningAt": 84.399
+    },
+    {
+     "n": 199,
+     "start": 85.84,
+     "thinkAt": 86.548,
+     "meaningAt": 88.548
+    },
+    {
+     "n": 200,
+     "start": 90.558,
+     "thinkAt": 91.344,
+     "meaningAt": 93.344
+    },
+    {
+     "n": 201,
+     "start": 95.782,
+     "thinkAt": 96.559,
+     "meaningAt": 98.559
+    },
+    {
+     "n": 202,
+     "start": 100.917,
+     "thinkAt": 101.583,
+     "meaningAt": 103.583
+    },
+    {
+     "n": 203,
+     "start": 105.883,
+     "thinkAt": 106.45,
+     "meaningAt": 108.45
+    },
+    {
+     "n": 204,
+     "start": 111.199,
+     "thinkAt": 112.015,
+     "meaningAt": 114.015
+    },
+    {
+     "n": 205,
+     "start": 116.001,
+     "thinkAt": 116.701,
+     "meaningAt": 118.701
+    },
+    {
+     "n": 206,
+     "start": 121.197,
+     "thinkAt": 121.846,
+     "meaningAt": 123.846
+    },
+    {
+     "n": 207,
+     "start": 125.903,
+     "thinkAt": 126.499,
+     "meaningAt": 128.499
+    },
+    {
+     "n": 208,
+     "start": 130.478,
+     "thinkAt": 130.922,
+     "meaningAt": 132.922
+    },
+    {
+     "n": 209,
+     "start": 135.2,
+     "thinkAt": 135.807,
+     "meaningAt": 137.807
+    },
+    {
+     "n": 210,
+     "start": 141.145,
+     "thinkAt": 141.798,
+     "meaningAt": 143.798
+    }
+   ]
+  },
+  "5": {
+   "file": "block-5.m4a",
+   "title": "Places & getting around",
+   "duration": 137.09,
+   "cues": [
+    {
+     "n": 44,
+     "start": 0.6,
+     "thinkAt": 1.254,
+     "meaningAt": 3.254
+    },
+    {
+     "n": 45,
+     "start": 5.495,
+     "thinkAt": 6.276,
+     "meaningAt": 8.276
+    },
+    {
+     "n": 46,
+     "start": 9.846,
+     "thinkAt": 10.584,
+     "meaningAt": 12.584
+    },
+    {
+     "n": 47,
+     "start": 14.177,
+     "thinkAt": 14.958,
+     "meaningAt": 16.958
+    },
+    {
+     "n": 48,
+     "start": 19.154,
+     "thinkAt": 19.803,
+     "meaningAt": 21.803
+    },
+    {
+     "n": 49,
+     "start": 23.453,
+     "thinkAt": 24.188,
+     "meaningAt": 26.188
+    },
+    {
+     "n": 50,
+     "start": 27.621,
+     "thinkAt": 28.356,
+     "meaningAt": 30.356
+    },
+    {
+     "n": 51,
+     "start": 32.169,
+     "thinkAt": 32.878,
+     "meaningAt": 34.878
+    },
+    {
+     "n": 52,
+     "start": 37.423,
+     "thinkAt": 38.132,
+     "meaningAt": 40.132
+    },
+    {
+     "n": 53,
+     "start": 42.689,
+     "thinkAt": 43.514,
+     "meaningAt": 45.514
+    },
+    {
+     "n": 54,
+     "start": 47.641,
+     "thinkAt": 48.268,
+     "meaningAt": 50.268
+    },
+    {
+     "n": 55,
+     "start": 52.418,
+     "thinkAt": 53.109,
+     "meaningAt": 55.109
+    },
+    {
+     "n": 90,
+     "start": 57.178,
+     "thinkAt": 57.964,
+     "meaningAt": 59.964
+    },
+    {
+     "n": 91,
+     "start": 61.58,
+     "thinkAt": 62.524,
+     "meaningAt": 64.524
+    },
+    {
+     "n": 132,
+     "start": 66.079,
+     "thinkAt": 66.604,
+     "meaningAt": 68.604
+    },
+    {
+     "n": 211,
+     "start": 70.679,
+     "thinkAt": 71.252,
+     "meaningAt": 73.252
+    },
+    {
+     "n": 212,
+     "start": 75.448,
+     "thinkAt": 76.229,
+     "meaningAt": 78.229
+    },
+    {
+     "n": 213,
+     "start": 79.784,
+     "thinkAt": 80.647,
+     "meaningAt": 82.647
+    },
+    {
+     "n": 214,
+     "start": 84.111,
+     "thinkAt": 84.931,
+     "meaningAt": 86.931
+    },
+    {
+     "n": 215,
+     "start": 88.384,
+     "thinkAt": 89.119,
+     "meaningAt": 91.119
+    },
+    {
+     "n": 216,
+     "start": 92.656,
+     "thinkAt": 93.356,
+     "meaningAt": 95.356
+    },
+    {
+     "n": 217,
+     "start": 97.158,
+     "thinkAt": 97.974,
+     "meaningAt": 99.974
+    },
+    {
+     "n": 218,
+     "start": 101.817,
+     "thinkAt": 102.552,
+     "meaningAt": 104.552
+    },
+    {
+     "n": 219,
+     "start": 106.261,
+     "thinkAt": 106.914,
+     "meaningAt": 108.914
+    },
+    {
+     "n": 220,
+     "start": 110.414,
+     "thinkAt": 111.056,
+     "meaningAt": 113.056
+    },
+    {
+     "n": 221,
+     "start": 114.649,
+     "thinkAt": 115.379,
+     "meaningAt": 117.379
+    },
+    {
+     "n": 222,
+     "start": 118.972,
+     "thinkAt": 119.626,
+     "meaningAt": 121.626
+    },
+    {
+     "n": 223,
+     "start": 123.195,
+     "thinkAt": 123.93,
+     "meaningAt": 125.93
+    },
+    {
+     "n": 224,
+     "start": 127.969,
+     "thinkAt": 128.714,
+     "meaningAt": 130.714
+    },
+    {
+     "n": 225,
+     "start": 132.238,
+     "thinkAt": 132.764,
+     "meaningAt": 134.764
+    }
+   ]
+  },
+  "6": {
+   "file": "block-6.m4a",
+   "title": "Time & weather",
+   "duration": 135.32,
+   "cues": [
+    {
+     "n": 56,
+     "start": 0.6,
+     "thinkAt": 1.335,
+     "meaningAt": 3.335
+    },
+    {
+     "n": 57,
+     "start": 4.855,
+     "thinkAt": 5.578,
+     "meaningAt": 7.578
+    },
+    {
+     "n": 58,
+     "start": 9.188,
+     "thinkAt": 9.896,
+     "meaningAt": 11.896
+    },
+    {
+     "n": 59,
+     "start": 13.557,
+     "thinkAt": 14.429,
+     "meaningAt": 16.429
+    },
+    {
+     "n": 60,
+     "start": 18.903,
+     "thinkAt": 19.649,
+     "meaningAt": 21.649
+    },
+    {
+     "n": 61,
+     "start": 23.068,
+     "thinkAt": 23.904,
+     "meaningAt": 25.904
+    },
+    {
+     "n": 62,
+     "start": 27.595,
+     "thinkAt": 28.365,
+     "meaningAt": 30.365
+    },
+    {
+     "n": 63,
+     "start": 31.776,
+     "thinkAt": 32.39,
+     "meaningAt": 34.39
+    },
+    {
+     "n": 64,
+     "start": 36.486,
+     "thinkAt": 37.101,
+     "meaningAt": 39.101
+    },
+    {
+     "n": 65,
+     "start": 41.388,
+     "thinkAt": 42.259,
+     "meaningAt": 44.259
+    },
+    {
+     "n": 66,
+     "start": 45.665,
+     "thinkAt": 46.446,
+     "meaningAt": 48.446
+    },
+    {
+     "n": 67,
+     "start": 50.698,
+     "thinkAt": 51.45,
+     "meaningAt": 53.45
+    },
+    {
+     "n": 68,
+     "start": 54.799,
+     "thinkAt": 55.589,
+     "meaningAt": 57.589
+    },
+    {
+     "n": 95,
+     "start": 58.949,
+     "thinkAt": 59.684,
+     "meaningAt": 61.684
+    },
+    {
+     "n": 135,
+     "start": 63.139,
+     "thinkAt": 64.057,
+     "meaningAt": 66.057
+    },
+    {
+     "n": 226,
+     "start": 67.596,
+     "thinkAt": 68.412,
+     "meaningAt": 70.412
+    },
+    {
+     "n": 227,
+     "start": 72.036,
+     "thinkAt": 72.744,
+     "meaningAt": 74.744
+    },
+    {
+     "n": 228,
+     "start": 76.511,
+     "thinkAt": 77.253,
+     "meaningAt": 79.253
+    },
+    {
+     "n": 229,
+     "start": 81.389,
+     "thinkAt": 82.18,
+     "meaningAt": 84.18
+    },
+    {
+     "n": 230,
+     "start": 85.597,
+     "thinkAt": 86.378,
+     "meaningAt": 88.378
+    },
+    {
+     "n": 231,
+     "start": 89.971,
+     "thinkAt": 90.741,
+     "meaningAt": 92.741
+    },
+    {
+     "n": 232,
+     "start": 94.563,
+     "thinkAt": 95.426,
+     "meaningAt": 97.426
+    },
+    {
+     "n": 233,
+     "start": 99.191,
+     "thinkAt": 99.762,
+     "meaningAt": 101.762
+    },
+    {
+     "n": 234,
+     "start": 104.466,
+     "thinkAt": 105.201,
+     "meaningAt": 107.201
+    },
+    {
+     "n": 235,
+     "start": 109.115,
+     "thinkAt": 109.895,
+     "meaningAt": 111.895
+    },
+    {
+     "n": 236,
+     "start": 113.349,
+     "thinkAt": 114.22,
+     "meaningAt": 116.22
+    },
+    {
+     "n": 237,
+     "start": 117.523,
+     "thinkAt": 118.568,
+     "meaningAt": 120.568
+    },
+    {
+     "n": 238,
+     "start": 122.138,
+     "thinkAt": 123.136,
+     "meaningAt": 125.136
+    },
+    {
+     "n": 239,
+     "start": 126.705,
+     "thinkAt": 127.623,
+     "meaningAt": 129.623
+    },
+    {
+     "n": 240,
+     "start": 131.146,
+     "thinkAt": 131.919,
+     "meaningAt": 133.919
+    }
+   ]
+  },
+  "7": {
+   "file": "block-7.m4a",
+   "title": "Food, shopping & daily things",
+   "duration": 131.38,
+   "cues": [
+    {
+     "n": 81,
+     "start": 0.6,
+     "thinkAt": 1.253,
+     "meaningAt": 3.253
+    },
+    {
+     "n": 82,
+     "start": 4.913,
+     "thinkAt": 5.832,
+     "meaningAt": 7.832
+    },
+    {
+     "n": 83,
+     "start": 9.238,
+     "thinkAt": 9.9,
+     "meaningAt": 11.9
+    },
+    {
+     "n": 84,
+     "start": 14.178,
+     "thinkAt": 14.901,
+     "meaningAt": 16.901
+    },
+    {
+     "n": 85,
+     "start": 18.555,
+     "thinkAt": 19.38,
+     "meaningAt": 21.38
+    },
+    {
+     "n": 86,
+     "start": 22.833,
+     "thinkAt": 23.614,
+     "meaningAt": 25.614
+    },
+    {
+     "n": 87,
+     "start": 26.94,
+     "thinkAt": 27.683,
+     "meaningAt": 29.683
+    },
+    {
+     "n": 88,
+     "start": 31.004,
+     "thinkAt": 31.657,
+     "meaningAt": 33.657
+    },
+    {
+     "n": 89,
+     "start": 35.627,
+     "thinkAt": 36.452,
+     "meaningAt": 38.452
+    },
+    {
+     "n": 98,
+     "start": 39.812,
+     "thinkAt": 40.466,
+     "meaningAt": 42.466
+    },
+    {
+     "n": 104,
+     "start": 44.417,
+     "thinkAt": 45.08,
+     "meaningAt": 47.08
+    },
+    {
+     "n": 105,
+     "start": 49.041,
+     "thinkAt": 49.741,
+     "meaningAt": 51.741
+    },
+    {
+     "n": 124,
+     "start": 53.114,
+     "thinkAt": 53.857,
+     "meaningAt": 55.857
+    },
+    {
+     "n": 125,
+     "start": 57.366,
+     "thinkAt": 58.121,
+     "meaningAt": 60.121
+    },
+    {
+     "n": 129,
+     "start": 61.653,
+     "thinkAt": 62.425,
+     "meaningAt": 64.425
+    },
+    {
+     "n": 241,
+     "start": 65.951,
+     "thinkAt": 66.604,
+     "meaningAt": 68.604
+    },
+    {
+     "n": 242,
+     "start": 70.778,
+     "thinkAt": 71.513,
+     "meaningAt": 73.513
+    },
+    {
+     "n": 243,
+     "start": 75.106,
+     "thinkAt": 75.795,
+     "meaningAt": 77.795
+    },
+    {
+     "n": 244,
+     "start": 79.119,
+     "thinkAt": 79.896,
+     "meaningAt": 81.896
+    },
+    {
+     "n": 245,
+     "start": 83.5,
+     "thinkAt": 84.243,
+     "meaningAt": 86.243
+    },
+    {
+     "n": 246,
+     "start": 87.523,
+     "thinkAt": 88.246,
+     "meaningAt": 90.246
+    },
+    {
+     "n": 247,
+     "start": 91.764,
+     "thinkAt": 92.405,
+     "meaningAt": 94.405
+    },
+    {
+     "n": 248,
+     "start": 96.715,
+     "thinkAt": 97.423,
+     "meaningAt": 99.423
+    },
+    {
+     "n": 249,
+     "start": 101.058,
+     "thinkAt": 101.8,
+     "meaningAt": 103.8
+    },
+    {
+     "n": 250,
+     "start": 105.346,
+     "thinkAt": 106.076,
+     "meaningAt": 108.076
+    },
+    {
+     "n": 251,
+     "start": 109.351,
+     "thinkAt": 110.06,
+     "meaningAt": 112.06
+    },
+    {
+     "n": 252,
+     "start": 113.503,
+     "thinkAt": 114.248,
+     "meaningAt": 116.248
+    },
+    {
+     "n": 253,
+     "start": 118.627,
+     "thinkAt": 119.288,
+     "meaningAt": 121.288
+    },
+    {
+     "n": 254,
+     "start": 122.785,
+     "thinkAt": 123.399,
+     "meaningAt": 125.399
+    },
+    {
+     "n": 255,
+     "start": 127.119,
+     "thinkAt": 127.901,
+     "meaningAt": 129.901
+    }
+   ]
+  },
+  "8": {
+   "file": "block-8.m4a",
+   "title": "Language & communication",
+   "duration": 142.41,
+   "cues": [
+    {
+     "n": 92,
+     "start": 0.6,
+     "thinkAt": 1.301,
+     "meaningAt": 3.301
+    },
+    {
+     "n": 93,
+     "start": 5.685,
+     "thinkAt": 6.339,
+     "meaningAt": 8.339
+    },
+    {
+     "n": 94,
+     "start": 9.914,
+     "thinkAt": 10.649,
+     "meaningAt": 12.649
+    },
+    {
+     "n": 101,
+     "start": 14.021,
+     "thinkAt": 14.756,
+     "meaningAt": 16.756
+    },
+    {
+     "n": 102,
+     "start": 18.069,
+     "thinkAt": 18.953,
+     "meaningAt": 20.953
+    },
+    {
+     "n": 103,
+     "start": 23.35,
+     "thinkAt": 23.931,
+     "meaningAt": 25.931
+    },
+    {
+     "n": 106,
+     "start": 29.222,
+     "thinkAt": 30.046,
+     "meaningAt": 32.046
+    },
+    {
+     "n": 107,
+     "start": 33.546,
+     "thinkAt": 34.454,
+     "meaningAt": 36.454
+    },
+    {
+     "n": 108,
+     "start": 38.163,
+     "thinkAt": 38.872,
+     "meaningAt": 40.872
+    },
+    {
+     "n": 110,
+     "start": 43.089,
+     "thinkAt": 43.882,
+     "meaningAt": 45.882
+    },
+    {
+     "n": 115,
+     "start": 48.437,
+     "thinkAt": 49.137,
+     "meaningAt": 51.137
+    },
+    {
+     "n": 116,
+     "start": 52.701,
+     "thinkAt": 53.492,
+     "meaningAt": 55.492
+    },
+    {
+     "n": 117,
+     "start": 57.757,
+     "thinkAt": 58.329,
+     "meaningAt": 60.329
+    },
+    {
+     "n": 118,
+     "start": 61.822,
+     "thinkAt": 62.739,
+     "meaningAt": 64.739
+    },
+    {
+     "n": 127,
+     "start": 66.258,
+     "thinkAt": 67.121,
+     "meaningAt": 69.121
+    },
+    {
+     "n": 256,
+     "start": 71.165,
+     "thinkAt": 72.002,
+     "meaningAt": 74.002
+    },
+    {
+     "n": 257,
+     "start": 76.19,
+     "thinkAt": 76.971,
+     "meaningAt": 78.971
+    },
+    {
+     "n": 258,
+     "start": 81.426,
+     "thinkAt": 82.126,
+     "meaningAt": 84.126
+    },
+    {
+     "n": 259,
+     "start": 86.246,
+     "thinkAt": 86.98,
+     "meaningAt": 88.98
+    },
+    {
+     "n": 260,
+     "start": 91.182,
+     "thinkAt": 91.917,
+     "meaningAt": 93.917
+    },
+    {
+     "n": 261,
+     "start": 95.404,
+     "thinkAt": 96.057,
+     "meaningAt": 98.057
+    },
+    {
+     "n": 262,
+     "start": 100.182,
+     "thinkAt": 101.053,
+     "meaningAt": 103.053
+    },
+    {
+     "n": 263,
+     "start": 105.043,
+     "thinkAt": 105.868,
+     "meaningAt": 107.868
+    },
+    {
+     "n": 264,
+     "start": 109.872,
+     "thinkAt": 110.525,
+     "meaningAt": 112.525
+    },
+    {
+     "n": 265,
+     "start": 114.037,
+     "thinkAt": 114.745,
+     "meaningAt": 116.745
+    },
+    {
+     "n": 266,
+     "start": 118.207,
+     "thinkAt": 118.861,
+     "meaningAt": 120.861
+    },
+    {
+     "n": 267,
+     "start": 123.35,
+     "thinkAt": 124.166,
+     "meaningAt": 126.166
+    },
+    {
+     "n": 268,
+     "start": 127.804,
+     "thinkAt": 128.412,
+     "meaningAt": 130.412
+    },
+    {
+     "n": 269,
+     "start": 131.993,
+     "thinkAt": 132.798,
+     "meaningAt": 134.798
+    },
+    {
+     "n": 270,
+     "start": 137.154,
+     "thinkAt": 137.878,
+     "meaningAt": 139.878
+    }
+   ]
+  },
+  "9": {
+   "file": "block-9.m4a",
+   "title": "Actions & routines",
+   "duration": 141.22,
+   "cues": [
+    {
+     "n": 114,
+     "start": 0.6,
+     "thinkAt": 1.254,
+     "meaningAt": 3.254
+    },
+    {
+     "n": 119,
+     "start": 5.898,
+     "thinkAt": 6.679,
+     "meaningAt": 8.679
+    },
+    {
+     "n": 120,
+     "start": 11.265,
+     "thinkAt": 11.881,
+     "meaningAt": 13.881
+    },
+    {
+     "n": 121,
+     "start": 16.226,
+     "thinkAt": 16.95,
+     "meaningAt": 18.95
+    },
+    {
+     "n": 122,
+     "start": 20.374,
+     "thinkAt": 21.084,
+     "meaningAt": 23.084
+    },
+    {
+     "n": 123,
+     "start": 25.398,
+     "thinkAt": 26.098,
+     "meaningAt": 28.098
+    },
+    {
+     "n": 126,
+     "start": 29.514,
+     "thinkAt": 30.304,
+     "meaningAt": 32.304
+    },
+    {
+     "n": 128,
+     "start": 33.892,
+     "thinkAt": 34.509,
+     "meaningAt": 36.509
+    },
+    {
+     "n": 130,
+     "start": 38.645,
+     "thinkAt": 39.345,
+     "meaningAt": 41.345
+    },
+    {
+     "n": 131,
+     "start": 43.657,
+     "thinkAt": 44.273,
+     "meaningAt": 46.273
+    },
+    {
+     "n": 133,
+     "start": 49.302,
+     "thinkAt": 50.173,
+     "meaningAt": 52.173
+    },
+    {
+     "n": 134,
+     "start": 54.401,
+     "thinkAt": 55.101,
+     "meaningAt": 57.101
+    },
+    {
+     "n": 136,
+     "start": 59.121,
+     "thinkAt": 59.693,
+     "meaningAt": 61.693
+    },
+    {
+     "n": 137,
+     "start": 63.202,
+     "thinkAt": 63.983,
+     "meaningAt": 65.983
+    },
+    {
+     "n": 138,
+     "start": 67.443,
+     "thinkAt": 68.442,
+     "meaningAt": 70.442
+    },
+    {
+     "n": 271,
+     "start": 72.389,
+     "thinkAt": 73.215,
+     "meaningAt": 75.215
+    },
+    {
+     "n": 272,
+     "start": 76.748,
+     "thinkAt": 77.573,
+     "meaningAt": 79.573
+    },
+    {
+     "n": 273,
+     "start": 81.35,
+     "thinkAt": 82.14,
+     "meaningAt": 84.14
+    },
+    {
+     "n": 274,
+     "start": 86.078,
+     "thinkAt": 86.905,
+     "meaningAt": 88.905
+    },
+    {
+     "n": 275,
+     "start": 90.717,
+     "thinkAt": 91.461,
+     "meaningAt": 93.461
+    },
+    {
+     "n": 276,
+     "start": 95.049,
+     "thinkAt": 95.92,
+     "meaningAt": 97.92
+    },
+    {
+     "n": 277,
+     "start": 100.193,
+     "thinkAt": 100.928,
+     "meaningAt": 102.928
+    },
+    {
+     "n": 278,
+     "start": 105.303,
+     "thinkAt": 106.12,
+     "meaningAt": 108.12
+    },
+    {
+     "n": 279,
+     "start": 109.742,
+     "thinkAt": 110.349,
+     "meaningAt": 112.349
+    },
+    {
+     "n": 280,
+     "start": 114.424,
+     "thinkAt": 115.206,
+     "meaningAt": 117.206
+    },
+    {
+     "n": 281,
+     "start": 118.654,
+     "thinkAt": 119.444,
+     "meaningAt": 121.444
+    },
+    {
+     "n": 282,
+     "start": 122.992,
+     "thinkAt": 123.646,
+     "meaningAt": 125.646
+    },
+    {
+     "n": 283,
+     "start": 127.778,
+     "thinkAt": 128.431,
+     "meaningAt": 130.431
+    },
+    {
+     "n": 284,
+     "start": 131.907,
+     "thinkAt": 132.642,
+     "meaningAt": 134.642
+    },
+    {
+     "n": 285,
+     "start": 136.229,
+     "thinkAt": 136.928,
+     "meaningAt": 138.928
+    }
+   ]
+  },
+  "10": {
+   "file": "block-10.m4a",
+   "title": "Describing people & things",
+   "duration": 138.24,
+   "cues": [
+    {
+     "n": 79,
+     "start": 0.6,
+     "thinkAt": 1.383,
+     "meaningAt": 3.383
+    },
+    {
+     "n": 80,
+     "start": 5.695,
+     "thinkAt": 6.5,
+     "meaningAt": 8.5
+    },
+    {
+     "n": 96,
+     "start": 10.453,
+     "thinkAt": 11.148,
+     "meaningAt": 13.148
+    },
+    {
+     "n": 97,
+     "start": 14.508,
+     "thinkAt": 15.208,
+     "meaningAt": 17.208
+    },
+    {
+     "n": 99,
+     "start": 18.527,
+     "thinkAt": 19.258,
+     "meaningAt": 21.258
+    },
+    {
+     "n": 139,
+     "start": 22.802,
+     "thinkAt": 23.536,
+     "meaningAt": 25.536
+    },
+    {
+     "n": 142,
+     "start": 28.114,
+     "thinkAt": 28.939,
+     "meaningAt": 30.939
+    },
+    {
+     "n": 143,
+     "start": 32.88,
+     "thinkAt": 33.406,
+     "meaningAt": 35.406
+    },
+    {
+     "n": 144,
+     "start": 36.689,
+     "thinkAt": 37.641,
+     "meaningAt": 39.641
+    },
+    {
+     "n": 145,
+     "start": 41.325,
+     "thinkAt": 41.979,
+     "meaningAt": 43.979
+    },
+    {
+     "n": 146,
+     "start": 46.116,
+     "thinkAt": 46.906,
+     "meaningAt": 48.906
+    },
+    {
+     "n": 147,
+     "start": 50.823,
+     "thinkAt": 51.628,
+     "meaningAt": 53.628
+    },
+    {
+     "n": 148,
+     "start": 55.016,
+     "thinkAt": 55.665,
+     "meaningAt": 57.665
+    },
+    {
+     "n": 149,
+     "start": 59.012,
+     "thinkAt": 59.712,
+     "meaningAt": 61.712
+    },
+    {
+     "n": 150,
+     "start": 63.695,
+     "thinkAt": 64.43,
+     "meaningAt": 66.43
+    },
+    {
+     "n": 286,
+     "start": 68.583,
+     "thinkAt": 69.373,
+     "meaningAt": 71.373
+    },
+    {
+     "n": 287,
+     "start": 72.666,
+     "thinkAt": 73.401,
+     "meaningAt": 75.401
+    },
+    {
+     "n": 288,
+     "start": 76.82,
+     "thinkAt": 77.529,
+     "meaningAt": 79.529
+    },
+    {
+     "n": 289,
+     "start": 82.292,
+     "thinkAt": 83.002,
+     "meaningAt": 85.002
+    },
+    {
+     "n": 290,
+     "start": 86.895,
+     "thinkAt": 87.732,
+     "meaningAt": 89.732
+    },
+    {
+     "n": 291,
+     "start": 91.127,
+     "thinkAt": 92.021,
+     "meaningAt": 94.021
+    },
+    {
+     "n": 292,
+     "start": 95.44,
+     "thinkAt": 96.012,
+     "meaningAt": 98.012
+    },
+    {
+     "n": 293,
+     "start": 99.987,
+     "thinkAt": 100.768,
+     "meaningAt": 102.768
+    },
+    {
+     "n": 294,
+     "start": 104.451,
+     "thinkAt": 105.232,
+     "meaningAt": 107.232
+    },
+    {
+     "n": 295,
+     "start": 109.169,
+     "thinkAt": 109.893,
+     "meaningAt": 111.893
+    },
+    {
+     "n": 296,
+     "start": 113.356,
+     "thinkAt": 114.174,
+     "meaningAt": 116.174
+    },
+    {
+     "n": 297,
+     "start": 117.72,
+     "thinkAt": 118.719,
+     "meaningAt": 120.719
+    },
+    {
+     "n": 298,
+     "start": 122.746,
+     "thinkAt": 123.655,
+     "meaningAt": 125.655
+    },
+    {
+     "n": 299,
+     "start": 127.851,
+     "thinkAt": 128.795,
+     "meaningAt": 130.795
+    },
+    {
+     "n": 300,
+     "start": 132.876,
+     "thinkAt": 133.875,
+     "meaningAt": 135.875
+    }
+   ]
+  }
+ },
+ "version": 3,
+ "zhVoice": "Lili (Premium)",
+ "enVoice": "Ava (Premium)",
+ "pause": 2.0,
+ "repeat": 1
+}

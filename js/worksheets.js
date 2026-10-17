@@ -27,9 +27,13 @@
     results: Array.isArray(saved.results) ? saved.results : [],
     extraTrace: Array.isArray(saved.extraTrace) ? saved.extraTrace : [],
     progress: saved.progress || {},
+    // 'strict' = official stroke order (Hanzi Writer quiz); 'free' = any order, any direction.
+    order: saved.order === 'free' ? 'free' : 'strict',
   };
 
   let writer = null;
+  let freeQuiz = null;
+  const charData = new Map();
   let writerChar = null;
   let writerSize = 0;
   let curStroke = 0;
@@ -147,11 +151,58 @@
     const size = Math.round(el('wsBig').getBoundingClientRect().width);
     if (!size) return false;
     if (writer && writerChar === state.char && Math.abs(writerSize - size) < 2) return true;
+    stopFreeQuiz();
     host.replaceChildren();
     writer = HanziWriter.create(host, state.char, writerOptions(size));
     writerChar = state.char;
     writerSize = size;
     return true;
+  }
+
+  function loadCharData(ch) {
+    if (!charData.has(ch)) charData.set(ch, HanziWriter.loadCharacterData(ch));
+    return charData.get(ch);
+  }
+
+  function stopFreeQuiz() {
+    freeQuiz?.destroy();
+    freeQuiz = null;
+  }
+
+  /** Free order: any stroke order and direction, recognized by js/free-order-quiz.js. */
+  async function startFreeBox(s, trace) {
+    writer.cancelQuiz();
+    writer.hideCharacter();
+    writer.hideOutline();
+    setStatus(trace ? 'Trace the model — any stroke order' : 'Write it from memory — any stroke order');
+    let data;
+    try {
+      data = await loadCharData(state.char);
+    } catch {
+      setStatus('Could not load the stroke data. Check your connection.');
+      return;
+    }
+    if (s !== session) return;
+    stopFreeQuiz();
+    freeQuiz = new FreeOrderQuiz(el('wsWriter'), data, {
+      size: writerSize,
+      padding: writerOptions(writerSize).padding,
+      showOutline: trace,
+      leniency: trace ? 1.15 : 1,
+      onMistake: d => {
+        if (s !== session) return;
+        boxMistakes = d.totalMistakes;
+        setStatus('That stroke doesn’t match any missing stroke — try again');
+      },
+      onCorrectStroke: d => {
+        if (s !== session) return;
+        setStatus(d.strokesRemaining ? `Good · ${d.strokesRemaining} stroke${d.strokesRemaining > 1 ? 's' : ''} left` : 'Last stroke ✓');
+      },
+      onComplete: d => {
+        if (s !== session) return;
+        setTimeout(() => s === session && completeBox(d.totalMistakes), 450);
+      },
+    });
   }
 
   function startBox() {
@@ -161,6 +212,11 @@
     const trace = isTrace(box);
     curStroke = 0;
     boxMistakes = 0;
+    stopFreeQuiz();
+    if (state.order === 'free') {
+      startFreeBox(s, trace);
+      return;
+    }
     writer.cancelQuiz();
     writer.hideCharacter();
     if (trace) writer.showOutline();
@@ -246,6 +302,11 @@
       b.classList.toggle('active', on);
       b.setAttribute('aria-pressed', on);
     });
+    el('wsOrderMode').querySelectorAll('button').forEach(b => {
+      const on = b.dataset.order === state.order;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on);
+    });
   }
 
   function renderSummary(chars) {
@@ -287,6 +348,14 @@
     state.size = +b.dataset.size;
     startSheet(state.char);
   });
+  el('wsOrderMode').addEventListener('click', e => {
+    const b = e.target.closest('button[data-order]');
+    if (!b || b.dataset.order === state.order) return;
+    state.order = b.dataset.order;
+    persist();
+    renderSizes();
+    startBox(); // restart the current box in the new mode; finished boxes are kept
+  });
   el('wsMinis').addEventListener('click', e => {
     const b = e.target.closest('.wsMini');
     if (!b) return;
@@ -296,7 +365,7 @@
     render();
   });
   el('wsSpeak').addEventListener('click', () => speak(state.char, true));
-  el('wsHint').addEventListener('click', () => writer && writer.highlightStroke(curStroke));
+  el('wsHint').addEventListener('click', () => (freeQuiz ? freeQuiz.hint() : writer && writer.highlightStroke(curStroke)));
   el('wsSkip').addEventListener('click', () => {
     session++;
     writer?.cancelQuiz();
@@ -305,6 +374,7 @@
   el('wsOrder').addEventListener('click', () => {
     if (!ensureWriter()) return;
     const s = ++session;
+    stopFreeQuiz();
     writer.cancelQuiz();
     writer.showOutline();
     setStatus('Watch the stroke order');

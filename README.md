@@ -1,6 +1,6 @@
 # Mandarin Cards · HSK 1
 
-Static web app for studying the classic HSK 1 set of 150 words.
+Static web app for studying the HSK 1 vocabulary list of 300 words.
 
 ## Current version · Cards + Thematic Practice + Situations
 
@@ -30,7 +30,7 @@ Cards now include a dedicated **Card Explorer** with:
 
 ### Practice
 
-The 150 words are reorganized for practice into **10 thematic blocks of 15 related words**. The original vocabulary data is not removed or replaced; the grouping is only a study layer.
+The 300 words are organized for practice into **10 thematic blocks of 30 related words**. The grouping is only a study layer on top of the vocabulary data.
 
 Each block can be trained independently with:
 
@@ -57,10 +57,23 @@ A sheet is dedicated to **one Hanzi**, repeated 10, 20, 30 or 50 times (20 by de
 - The first 3 boxes **trace** the model (outline + highlighted next stroke); the rest are written **from memory** (hint only after 3 misses).
 - If a memory box finishes with 3+ mistakes, the next box shows the model again.
 - A mini-sheet shows every repetition (green = written, orange = finished with mistakes); tap a box to write it again.
+- **Stroke order: Strict / Free.** *Strict* (default) uses Hanzi Writer’s quiz and requires the official stroke order. *Free* accepts strokes in any order and either direction: each stroke is matched by shape and position to the closest missing stroke (`js/free-order-quiz.js`). Calibrated on the 174 characters of the original 150-word list: ~96% of well-formed strokes accepted (shifted up to ±9% of the box, ±10% size); 100% of scribbles, ~92% of strokes placed far away and ~77% of wrongly shaped strokes rejected. Tracing boxes are 15% more lenient.
 - Characters come from the 10 thematic blocks; a ✓ marks characters with a completed sheet.
 - The current sheet and per-character progress are saved locally (`hsk1WorksheetV1`), so a sheet resumes after reload.
 
 Open it from the **Worksheets** tab (sidebar, “Sheets” on the phone dock, or the Home card), from **Write Hanzi** (“Worksheet” button for the current character), or from a card’s **Character Explorer** (“Worksheet of …” for each character).
+
+## Listen
+
+Hands-free review for walks (**Listen** in the menu, or the Listen card on Home). Pick a block and press play; for every word the app:
+
+1. says the word in Chinese and shows its Hanzi and pinyin,
+2. leaves a pause to guess the meaning (2 s by default; 3 s or 5 s optional),
+3. says the English meaning, then moves to the next word.
+
+- **Screen on** uses the device's voices; the English and Chinese voices can be chosen (with a Test button) from the voices installed on that device. macOS novelty voices (Albert, Bahh, Bubbles…) are hidden. Options: guess time, Chinese said once or twice, slow speed, shuffle, loop. The app asks the phone not to sleep, but browsers stop speaking when the phone locks.
+- **Pocket** plays a recorded track per block (`assets/audio/listen/block-N.m4a`), so it keeps playing with the screen locked and shows play/pause/next on the lock screen. The screen stays in sync with the track. Fixed order and pause.
+- The tracks are built on a Mac with `python3 tools/build-listen-audio.py` (it picks the best installed voices, Premium first — currently Lili (Premium) for Chinese and Ava (Premium) for English; options `--zh-voice`, `--en-voice`, `--pause 3`, `--repeat 2`, `--blocks 1,2`). Run it again after changing the word list or the English meanings.
 
 ## Language
 
@@ -70,12 +83,14 @@ All learner-facing explanations and interface text are in **English**. Mandarin 
 
 - `index.html` — app structure
 - `css/styles.css` — warm white + light Chinese-red visual system
-- `js/data.js` — original 150-word HSK 1 vocabulary source data
+- `js/data.js` — 300-word HSK 1 vocabulary (hanzi and pinyin from `hsk1-300-hanzi-pinyin-english.json`)
 - `js/learning-data.js` — English meanings, explanations, examples and character glosses
 - `js/practice-data.js` — 10 thematic practice blocks
 - `js/app.js` — cards, audio, practice engine, progress, feedback, and writing logic
 - `js/situations.js` — branching real-life scenario engine for the Situations tab
 - `js/worksheets.js` + `css/worksheets.css` — Worksheets section (one Hanzi per sheet); uses globals from `js/app-v13-19.js`
+- `js/listen.js` + `css/listen.css` — Listen section; `tools/build-listen-audio.py` builds the Pocket tracks in `assets/audio/listen/`
+- `js/free-order-quiz.js` — stroke recognizer for the Worksheets *Free* stroke-order mode
 - `assets/favicon.svg` — favicon
 
 ## Run locally
@@ -104,7 +119,7 @@ Stroke validation uses Hanzi Writer from a CDN. The Cards and Practice areas wor
 
 ## Vocabulary source
 
-The 150-word vocabulary base follows the MandarinBean HSK 1 list used in the original project. The English teaching notes, example sentences, thematic practice blocks, and exercise logic are learning layers built on top of that vocabulary list.
+The vocabulary is the 300-word HSK 1 list (hanzi, pinyin, and English from `hsk1-300-hanzi-pinyin-english.json`). The first 150 words came from the MandarinBean HSK 1 list used in the original project; words 1–150 keep their numbers so saved progress carries over, except numbers 32, 50, 53, 54, 55, and 80, which now hold different words and had their progress cleared once. The English teaching notes, example sentences, thematic practice blocks, and exercise logic are learning layers built on top of that vocabulary list.
 
 
 ## v5 — Type Hanzi with your Chinese Pinyin keyboard
@@ -116,7 +131,7 @@ The mode rotates three cues: visible Hanzi (guided input), English meaning → H
 
 ## v6 — Card Explorer
 
-The Cards section now separates **browsing** from **studying a single word**. Tap **Explore cards** to search the complete HSK 1 set, browse by thematic block, or open focused browsing. Opening a word from any of those views creates a browsing scope, so Previous, Next, and Shuffle remain inside the same set instead of unexpectedly jumping through all 150 words. focused browsing and the active card scope are stored locally in the browser.
+The Cards section now separates **browsing** from **studying a single word**. Tap **Explore cards** to search the complete HSK 1 set, browse by thematic block, or open focused browsing. Opening a word from any of those views creates a browsing scope, so Previous, Next, and Shuffle remain inside the same set instead of unexpectedly jumping through all 300 words. focused browsing and the active card scope are stored locally in the browser.
 
 
 ### v6.1 navigation cleanup
@@ -143,7 +158,7 @@ The restaurant story includes:
 - a farewell interaction and a route summary
 - a phrase book that unlocks useful language during the scenario
 
-Wrong answers do not kill the story or auto-advance. They give feedback and allow another attempt. Valid choices are remembered and reused later in the scenario. The official 150-word HSK 1 dataset remains unchanged; restaurant-specific language is treated as situation vocabulary rather than added to the HSK count.
+Wrong answers do not kill the story or auto-advance. They give feedback and allow another attempt. Valid choices are remembered and reused later in the scenario. The HSK 1 word list is not extended by situations; restaurant-specific language is treated as situation vocabulary rather than added to the HSK count.
 
 
 ## v8.1 — Game-style Situations

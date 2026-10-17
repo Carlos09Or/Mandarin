@@ -106,3 +106,9 @@ window.CHAR_DETAILS = {
   "漂": { pinyin: "piào", radical: "氵", components: ["票"], clue: "The water radical 氵 appears in 漂亮, the common word for “pretty”." },
   "亮": { pinyin: "liàng", components: ["亠", "口", "冖", "几"], clue: "亮 means bright; in 漂亮 it helps form the meaning “beautiful / pretty”." }
 };
+
+// Pinyin for characters that only appear inside longer HSK 1 words (300-word list).
+// Characters with a full entry above keep it.
+Object.entries({"爸":"bà","白":"bái","包":"bāo","子":"zǐ","杯":"bēi","客":"kè","气":"qì","超":"chāo","市":"shì","出":"chū","租":"zū","打":"dǎ","弟":"dì","影":"yǐng","院":"yuàn","东":"dōng","西":"xī","起":"qǐ","儿":"ér","房":"fáng","间":"jiān","非":"fēi","常":"cháng","飞":"fēi","机":"jī","钟":"zhōng","哥":"gē","公":"gōng","司":"sī","孩":"hái","火":"huǒ","鸡":"jī","蛋":"dàn","饺":"jiǎo","姐":"jiě","今":"jīn","得":"dé","可":"kě","以":"yǐ","妈":"mā","没":"méi","关":"guān","系":"xì","妹":"mèi","面":"miàn","条":"tiáo","明":"míng","牛":"niú","奶":"nǎi","士":"shì","便":"pián","宜":"yí","床":"chuáng","认":"rèn","识":"shí","商":"shāng","班":"bān","午":"wǔ","什":"shén","么":"me","时":"shí","候":"hòu","手":"shǒu","同":"tóng","题":"tí","先":"xiān","现":"xiàn","谢":"xiè","星":"xīng","期":"qī","休":"xiū","息":"xī","习":"xí","椅":"yǐ","怎":"zěn","样":"yàng","正":"zhèng","知":"zhī","道":"dào","文":"wén","桌":"zhuō","昨":"zuó"}).forEach(([ch, pinyin]) => {
+  window.CHAR_DETAILS[ch] = { pinyin, ...window.CHAR_DETAILS[ch] };
+});

@@ -57,8 +57,8 @@
 .wsStat{min-width:120px;padding:10px 14px;border:1px solid var(--jade-line);border-radius:16px;background:var(--surface-soft);font-size:13px;color:#5a3a3d}
 .wsStat b{display:block;font-size:22px;color:var(--ink)}
 
-/* Bottom navigation on phones: room for the extra Worksheets tab. */
-.bottomDockNav{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+/* Bottom navigation on phones: room for the extra Worksheets and Listen tabs. */
+.bottomDockNav{grid-template-columns:repeat(7,minmax(0,1fr))!important}
 @media (max-width:720px){
   .wsPicker{padding:12px;flex-wrap:wrap}
   .wsBlockSelect{order:-1;max-width:none;width:100%}
@@ -81,3 +81,9 @@
 .wsHomeArt .trace{border-style:dashed;color:#d9b3b0}
 .wsHomeArt .faint{color:#ecd6d3}
 .wsExplorerBtn{margin-top:10px;min-height:40px;font-size:14px}
+
+/* Stroke order mode (Strict / Free) */
+.wsOrderMode{align-items:center}
+.wsOrderMode button{padding:0 12px}
+.wsGroupLabel{font-size:11px;font-weight:850;letter-spacing:.06em;text-transform:uppercase;color:#9a6b6e;margin-right:2px}
+.freeOrderQuiz path{pointer-events:none}

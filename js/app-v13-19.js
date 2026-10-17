@@ -38,6 +38,16 @@ let exerciseAutoAudioTimer = null;
 
 const VALID_PRACTICE_MODES = ['mixed', 'meaning', 'listening', 'hanziPinyin', 'typeHanzi', 'buildSentence', 'mistakes'];
 let selectedPracticeMode = localStorage.getItem('hsk1SelectedPracticeModeV10') || 'mixed';
+
+// One-time move from the 150-word list to the 300-word list: these word numbers now hold
+// different words, so their old progress is cleared.
+if (!localStorage.getItem('hsk1Vocab300')) {
+  [32, 50, 53, 54, 55, 80].forEach(n => { delete written[n]; delete practiceStats[n]; delete practiceMistakes[n]; });
+  localStorage.setItem('hsk1Written150', JSON.stringify(written));
+  localStorage.setItem('hsk1PracticeStatsV5', JSON.stringify(practiceStats));
+  localStorage.setItem('hsk1PracticeMistakesV5', JSON.stringify(practiceMistakes));
+  localStorage.setItem('hsk1Vocab300', '1');
+}
 if (!VALID_PRACTICE_MODES.includes(selectedPracticeMode)) selectedPracticeMode = 'mixed';
 
 
@@ -275,8 +285,8 @@ function isWordWritten(w) {
 function updateStats() {
   const doneCount = WORDS.filter(w => isWordWritten(w)).length;
   if ($('#writeStat')) $('#writeStat').textContent = `${doneCount} written`;
-  if ($('#writeProgressText')) $('#writeProgressText').textContent = `${doneCount}/150`;
-  if ($('#writeProgress')) $('#writeProgress').style.width = `${(doneCount / 150) * 100}%`;
+  if ($('#writeProgressText')) $('#writeProgressText').textContent = `${doneCount}/${WORDS.length}`;
+  if ($('#writeProgress')) $('#writeProgress').style.width = `${(doneCount / WORDS.length) * 100}%`;
   updatePracticeSummary();
   renderHomeDashboard();
 }
@@ -452,7 +462,7 @@ function renderExplorerFilters() {
   const activeType = explorerQuery ? 'search' : explorerMode.type;
   host.innerHTML = `
     <button class="explorerFilter ${activeType === 'all' ? 'active' : ''}" type="button" data-filter="all">All words <span>${WORDS.length}</span></button>
-    ${PRACTICE_BLOCKS.map(block => `<button class="explorerFilter ${activeType === 'block' && explorerMode.id === block.id ? 'active' : ''}" type="button" data-filter="block" data-block-id="${block.id}">${block.id} · ${escapeHtml(block.title)} <span>15</span></button>`).join('')}`;
+    ${PRACTICE_BLOCKS.map(block => `<button class="explorerFilter ${activeType === 'block' && explorerMode.id === block.id ? 'active' : ''}" type="button" data-filter="block" data-block-id="${block.id}">${block.id} · ${escapeHtml(block.title)} <span>${block.words.length}</span></button>`).join('')}`;
 
   $$('.explorerFilter').forEach(btn => btn.addEventListener('click', () => {
     explorerQuery = '';
@@ -1424,7 +1434,7 @@ function renderBlockView() {
   const practiced = practicedWordsForBlock(block);
   const progressPct = Math.round((practiced.length / block.words.length) * 100);
 
-  $('#blockEyebrow').textContent = `BLOCK ${block.id} · 15 WORDS`;
+  $('#blockEyebrow').textContent = `BLOCK ${block.id} · ${block.words.length} WORDS`;
   $('#blockTitle').textContent = block.title;
   $('#blockDescription').textContent = block.description;
   $('#blockAccuracy').textContent = `${progressPct}%`;
@@ -1511,10 +1521,24 @@ function uniqueEnglishInBlock(word, block) {
   return block.words.filter(n => wordByN(n)?.en.trim().toLowerCase() === key).length === 1;
 }
 
+// English meaning split into its core terms: "to see, to meet" → ["see", "meet"].
+function meaningTerms(word) {
+  return String(word.en || '').toLowerCase().replace(/\([^)]*\)/g, '')
+    .split(/[\/;,]/).map(t => t.trim().replace(/^to /, '')).filter(Boolean);
+}
+
+// Near-synonyms are not fair distractors: 这 / 这个, 见 / 看见, 这里 / 这儿 ("here"), 星期日 / 星期天.
+function tooCloseForOption(a, b) {
+  const ha = baseHanzi(a), hb = baseHanzi(b);
+  if (ha.includes(hb) || hb.includes(ha)) return true;
+  const terms = new Set(meaningTerms(a));
+  return meaningTerms(b).some(t => terms.has(t));
+}
+
 function optionWords(block, target, labelFn, max = 4) {
   const targetLabel = labelFn(target).trim().toLowerCase();
   const seen = new Set([targetLabel]);
-  const candidates = shuffle(block.words.map(wordByN).filter(Boolean).filter(w => w.n !== target.n));
+  const candidates = shuffle(block.words.map(wordByN).filter(Boolean).filter(w => w.n !== target.n && !tooCloseForOption(w, target)));
   const picks = [target];
   for (const w of candidates) {
     const label = labelFn(w).trim().toLowerCase();
@@ -2133,7 +2157,9 @@ function checkBuiltSentence() {
   if (!q?.builder || !session || !$('#feedbackPanel').hidden) return;
   const builtIds = builtSentenceTokenIds(q);
   const expectedIds = q.expectedTokenIds || [];
-  const correctNow = builtIds.length === expectedIds.length && builtIds.every((id, index) => id === expectedIds[index]);
+  // Compare by text: a sentence may repeat a word (有的人…有的人…), and identical tiles are interchangeable.
+  const tokenText = new Map((q.bankTokens || []).map(token => [token.id, token.text]));
+  const correctNow = builtIds.length === expectedIds.length && builtIds.every((id, index) => tokenText.get(id) === tokenText.get(expectedIds[index]));
   const status = $('#builderStatus');
 
   if (!builtIds.length) {
