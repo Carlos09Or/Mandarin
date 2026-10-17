@@ -280,3 +280,155 @@ This version intentionally does not add a full movement/physics engine yet. It t
 - Front and back card faces now use the same visual height.
 - The front is vertically balanced again instead of looking compressed.
 - The circular flip control is slightly larger while staying minimal.
+
+
+## v12 dashboard home
+- Added a new interactive Home dashboard inspired by the approved mockup.
+- The app now opens on a visual landing page with:
+  - Home
+  - Cards
+  - Practice
+  - Write Hanzi
+  - Situations
+- Included dashboard illustrations cropped from the approved mockup for visual consistency.
+- Cards, Practice, Write Hanzi, and Situations can now be opened directly from the dashboard.
+
+
+## v12.1 dashboard hero fix
+- Replaced the broken hero crop that showed stray text.
+- Cleaned the home hero artwork so it only shows mountains, sun, and blossoms.
+- Slightly polished spacing and hero scale for a cleaner interface.
+
+
+## v12.2 remove top category header
+- Removed the redundant top header banner from Cards, Practice, Write Hanzi, and Situations.
+- The dashboard/sidebar remains the main navigation structure.
+
+## v12.3 clean category layout
+- Removed the old top category masthead from the HTML itself.
+- Removed the old horizontal top tabs from the HTML itself.
+- Sidebar/dashboard navigation is now the only main navigation.
+- Packaged in a uniquely named v12.3 folder so it cannot be confused with older extracted builds.
+
+
+## v12.4 Practice Studio
+- Practice now uses a single-screen selection flow.
+- Pick a mode, pick a block, and start immediately from the featured card.
+- The featured practice card updates live when the selected block or mode changes.
+- Redesigned the Practice interface to match the premium mockup direction more closely.
+
+
+## v12.5 Practice mockup fix
+- Rebuilt the Practice page so it matches the professional mockup much more closely.
+- Added the browser-style top bar, premium hero layout, mode cards, and a 10-block image grid.
+- Selecting a block now updates the main practice card immediately; selecting a mode updates the session mode immediately.
+- Included custom block thumbnail artwork cropped from the approved mockup reference.
+
+## v12.8 approved Practice mockup
+- Implemented the approved Practice layout with a vivid selected block and transparent neighboring blocks.
+- Removed the three intermediate statistics cards so the block selector remains the visual focus.
+- Added six purpose-built watercolor illustrations for Mixed, Meaning, Listening, Hanzi ↔ Pinyin, Type Hanzi, and Review mistakes.
+- Practice mode cards are now compact illustrated cards; the selected mode is visibly highlighted.
+- Block selection supports arrow buttons, tapping side cards, dots, and touch swipe gestures.
+- On compact screens, inner learning pages use a bottom dock for Home, Cards, Practice, Write, and Situations; the established Home layout remains intact.
+
+## v12.9 — Practice mode image cards
+- Rebuilt the six Practice Mode cards to match the approved mockup.
+- Each mode now displays its actual watercolor illustration as a visible top panel.
+- The mode name and short explanation sit below the artwork.
+- The selected mode gets a red outline, check indicator, and solid arrow button.
+- Mixed keeps a Recommended badge.
+- Desktop uses one six-card row; tablet uses 3 columns; compact screens use 2 columns.
+- Existing block carousel, swipe gestures, block selection, mode selection, and Start practice logic remain intact.
+
+## v13.2 — full word writing stage
+- The complete word is now shown inside the writing area at the same time.
+- Multi-character words such as 衣服 display every character side-by-side and centered.
+- The active character remains stroke-validated while the other characters stay visible as guides.
+- Completed characters remain visible while the next character becomes active.
+- The writing stage automatically scales for 1, 2, 3, or more characters without overlapping.
+
+## v13.5 true single-Hanzi centering
+- Fixed the actual cause of off-center single-character writing stages.
+- Hanzi Writer was capped at 430px while the single-character cell could be ~580px.
+- The writer now uses the real cell size, so single Hanzi are centered in the full square.
+- Removed the previous post-render SVG translation workaround.
+
+
+## v13.7 — Practice exercise redesign
+- Practice landing/block/mode selection stays unchanged.
+- Only the exercise screen after Start practice was redesigned.
+- Meaning, Listening, Hanzi ↔ Pinyin, Type Hanzi, Association, Mixed, and Mistake Review use the new lesson layout.
+- Automatic spoken correct/incorrect TTS is removed.
+- Five mascots react inside the feedback panel with randomized happy/sad animation and randomized nonverbal sounds.
+
+## v13.8 — no mascot reactions
+- Removed all mascot/animal reactions from Practice exercises.
+- Removed mascot image assets from the project.
+- Kept randomized nonverbal correct/incorrect sounds.
+- Kept the redesigned exercise interfaces for Meaning, Listening, Hanzi ↔ Pinyin, Type Hanzi, Association, Mixed, and Review mistakes.
+- Practice landing/block-selection interface was not changed.
+
+## v13.9 — Listening layout fix
+- Removed the visible “Tap to listen” label from Listening exercises.
+- The large speaker button remains the only listening control.
+- Added spacing so Listening answer choices no longer overlap the audio control.
+- Kept an accessible label on the audio button.
+
+## v13.10 — Home → Practice navigation fix
+- Fixed the Practice card on Home.
+- The “Start →” button now opens the Practice section correctly.
+- Existing Practice layout and all exercise modes remain unchanged.
+
+## v13.11 — remove Review mistakes card
+- Removed “Review mistakes” from the visible Practice Modes row.
+- Kept the internal mistake-review logic intact.
+- Desktop Practice Modes now use five equal columns.
+- Old saved “mistakes” selections automatically fall back to Mixed on the Practice home screen.
+
+## v13.13 — Sentence Builder cache fix
+- Sentence Builder remains the sixth visible Practice mode.
+- Renamed the main CSS and app JavaScript files so VS Code Simple Browser cannot reuse cached v13.11 assets.
+- index.html now loads styles-v13-13.css and app-v13-13.js.
+
+
+## v13.14 — listening Sentence Builder
+- Sentence Builder now follows a minimal listening-first interaction.
+- No English/pinyin prompt text is shown before answering.
+- The learner hears the full example sentence, then orders Hanzi tiles.
+- Each tile shows Hanzi with its pinyin underneath.
+- Tap-to-move and drag/reorder remain available.
+- Check activates only after all tiles are placed.
+
+## v13.15 — Sentence Builder 4 ways
+- Hanzi cue → arrange pinyin blocks.
+- Pinyin cue → arrange Hanzi blocks.
+- English cue → arrange Hanzi blocks.
+- Hanzi + pinyin cue → arrange English blocks.
+- Removed extra Sentence Builder instructions/title copy.
+
+## v13.16 — individual Sentence Builder drag
+- Dragging one block now moves only that exact block.
+- Builder movement now tracks each block by its unique token ID instead of its array position.
+- Suppresses the click event that browsers can fire immediately after a drag, which previously could move the next block too.
+
+## v13.17 — Sentence Builder feedback + guaranteed four-way rotation
+- Wrong answers now open the same feedback panel as correct answers.
+- Wrong feedback says “Not quite.” and shows the correct block order below.
+- Sentence Builder explicitly cycles through all four forms:
+  1. English → Hanzi
+  2. Hanzi + pinyin → English
+  3. Pinyin → Hanzi
+  4. Hanzi → pinyin
+- The cycle repeats across the 15-question session so no variant is accidentally skipped.
+
+## v13.18 — automatic listening
+- Any Practice question that uses audio now plays automatically 0.7 seconds after it appears.
+- This applies to Listening and Sentence Builder audio questions.
+- The speaker button remains available for replay.
+- Pending speech is cancelled when moving to the next question or leaving Practice.
+
+## v13.19 — full Sentence Builder autoplay
+- Fixed autoplay so Sentence Builder reads the full example sentence.
+- Manual replay and autoplay now use the exact same text source.
+- Standard Listening mode still reads the target word.

@@ -34,29 +34,10 @@ if (!PRACTICE_BLOCKS.some(b => b.id === selectedBlockId)) selectedBlockId = PRAC
 let exerciseSession = null;
 let exerciseQuestion = null;
 
-const VALID_PRACTICE_MODES = ['mixed', 'meaning', 'listening', 'hanziPinyin', 'typeHanzi', 'association'];
+const VALID_PRACTICE_MODES = ['mixed', 'meaning', 'listening', 'hanziPinyin', 'typeHanzi', 'buildSentence', 'mistakes'];
 let selectedPracticeMode = localStorage.getItem('hsk1SelectedPracticeModeV10') || 'mixed';
 if (!VALID_PRACTICE_MODES.includes(selectedPracticeMode)) selectedPracticeMode = 'mixed';
 
-const FEEDBACK_PHRASES = {
-  correct: [
-    { hanzi: '太棒了！', pinyin: 'Tài bàng le!', en: 'Great!' },
-    { hanzi: '很好！', pinyin: 'Hěn hǎo!', en: 'Very good!' },
-    { hanzi: '答对了！', pinyin: 'Dá duì le!', en: 'Correct!' },
-    { hanzi: '做得好！', pinyin: 'Zuò de hǎo!', en: 'Well done!' },
-    { hanzi: '真不错！', pinyin: 'Zhēn búcuò!', en: 'Really good!' },
-    { hanzi: '厉害！', pinyin: 'Lìhai!', en: 'Awesome!' }
-  ],
-  wrong: [
-    { hanzi: '再试一次。', pinyin: 'Zài shì yí cì.', en: 'Try again.' },
-    { hanzi: '差一点。', pinyin: 'Chà yìdiǎn.', en: 'Almost.' },
-    { hanzi: '没关系。', pinyin: 'Méi guānxi.', en: "It's okay." },
-    { hanzi: '再想想。', pinyin: 'Zài xiǎngxiang.', en: 'Think again.' },
-    { hanzi: '慢慢来。', pinyin: 'Mànmàn lái.', en: 'Take your time.' },
-    { hanzi: '继续加油！', pinyin: 'Jìxù jiāyóu!', en: 'Keep going!' }
-  ]
-};
-let lastFeedbackPhrase = { correct: -1, wrong: -1 };
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -295,6 +276,7 @@ function updateStats() {
   if ($('#writeProgressText')) $('#writeProgressText').textContent = `${doneCount}/150`;
   if ($('#writeProgress')) $('#writeProgress').style.width = `${(doneCount / 150) * 100}%`;
   updatePracticeSummary();
+  renderHomeDashboard();
 }
 
 function escapeHtml(value) {
@@ -707,8 +689,10 @@ $('#clearCardSearch').addEventListener('click', () => {
 });
 
 function switchPage(id) {
+  document.body.dataset.page = id;
   $$('.tab').forEach(t => t.classList.toggle('active', t.dataset.page === id));
   $$('.page').forEach(p => p.classList.toggle('active', p.id === id));
+  if (id === 'home') renderHomeDashboard();
   if (id === 'vocab') renderLearningCard();
   if (id === 'write') renderWriter();
   if (id === 'practice') renderPracticeHome();
@@ -717,144 +701,227 @@ function switchPage(id) {
 $$('.tab').forEach(t => t.addEventListener('click', () => {
   const page = t.dataset.page;
   if (page === 'vocab') {
-    switchPage('vocab');
-    cardScope = { type: 'all' };
-    explorerMode = { type: 'all' };
-    explorerQuery = '';
-    $('#cardSearch').value = '';
-    $('#cardView').hidden = true;
-    $('#cardExplorer').hidden = false;
-    renderCardExplorer();
+    openCardsExplorerHome();
     return;
   }
   switchPage(page);
 }));
 let hwWriter = null;
+let hwWriters = [];
 let hwMistakes = 0;
 let hwCurrentStroke = 0;
 let guideVisible = true;
 let writerSession = 0;
 
-function writerSize() {
-  const el = $('#hanziWriterTarget');
-  const w = Math.max(260, Math.min(430, Math.round(el.getBoundingClientRect().width || 360)));
-  return w;
-}
-
-function resetWriterMessage(text = 'Start with the first stroke. If the stroke is wrong, you will get immediate feedback.') {
+function resetWriterMessage(text = '') {
   const box = $('#traceResult');
-  box.className = 'result';
-  box.textContent = text;
+  if (box) {
+    box.className = 'result';
+    box.textContent = text;
+  }
   hwMistakes = 0;
   hwCurrentStroke = 0;
-  $('#strokeCounter').textContent = 'Stroke 1';
-  $('#strokeCounter').className = 'strokePill';
-  $('#mistakeCounter').textContent = '0 mistakes';
-  $('#mistakeCounter').className = 'strokePill';
+  const strokeCounter = $('#strokeCounter');
+  const mistakeCounter = $('#mistakeCounter');
+  if (strokeCounter) {
+    strokeCounter.textContent = 'Stroke 1';
+    strokeCounter.className = 'strokePill';
+  }
+  if (mistakeCounter) {
+    mistakeCounter.textContent = '0 mistakes';
+    mistakeCounter.className = 'strokePill';
+  }
 }
 
-function createHanziWriter(mode = 'quiz') {
-  const target = $('#hanziWriterTarget');
-  const chars = practiceChars(WORDS[writeIndex]);
-  const ch = chars[charIndex];
-  if (!ch) return;
-  const session = ++writerSession;
-  target.innerHTML = '';
-  resetWriterMessage(mode === 'animation' ? 'Watch the stroke order. When the animation ends, practice mode will return.' : undefined);
+function writerCellSize(cell) {
+  const rect = cell?.getBoundingClientRect?.();
+  const raw = Math.round(rect?.width || 300);
+  // Use the real cell size so a single Hanzi fills and centers inside its square.
+  // Two+ character words naturally get smaller cells from the stage grid.
+  return Math.max(120, Math.min(620, raw));
+}
 
-  if (typeof HanziWriter === 'undefined') {
-    $('#traceResult').className = 'result no';
-    $('#traceResult').textContent = 'Hanzi Writer could not load. Check your Internet connection and reload the page.';
-    return;
-  }
 
-  const size = writerSize();
-  hwWriter = HanziWriter.create('hanziWriterTarget', ch, {
+function centerSingleHanziOptically(chars) {
+  // No extra SVG translation is needed. The writer is now created at the
+  // exact size of the single-character cell, which keeps the glyph centered.
+}
+
+function writerOptions(size, completed = false) {
+  return {
     width: size,
     height: size,
-    padding: 24,
-    showCharacter: false,
+    padding: Math.max(16, Math.round(size * 0.07)),
+    showCharacter: completed,
     showOutline: guideVisible,
+    characterColor: completed ? '#caa9a5' : '#4e1217',
     strokeColor: '#4e1217',
     outlineColor: '#eadbd8',
     drawingColor: '#b72d36',
     highlightColor: '#df7c83',
     highlightCompleteColor: '#2f7d59',
-    drawingWidth: 12,
+    drawingWidth: Math.max(8, Math.round(size * 0.035)),
     strokeAnimationSpeed: 1,
     delayBetweenStrokes: 260,
     showHintAfterMisses: 2,
     acceptBackwardsStrokes: false,
     leniency: 0.85
-  });
+  };
+}
 
-  if (mode === 'animation') {
-    hwWriter.animateCharacter({ onComplete: () => {
-      if (session !== writerSession) return;
-      setTimeout(() => createHanziWriter('quiz'), 500);
-    }});
+function buildWordStage(chars) {
+  const stage = $('#hanziWordStage');
+  if (!stage) return [];
+  stage.className = `hanziWordStage count-${Math.min(chars.length, 4)}`;
+  stage.style.setProperty('--char-count', String(chars.length || 1));
+  stage.innerHTML = chars.map((ch, i) => `
+    <div class="hanziCharCell ${i === charIndex ? 'active' : ''}" data-char-index="${i}" aria-label="Character ${i + 1}: ${escapeHtml(ch)}">
+      <div id="hanziWriterTarget-${i}" class="hanziCharTarget"></div>
+    </div>`).join('');
+  const cells = $$('#hanziWordStage .hanziCharCell');
+  cells.forEach(cell => cell.addEventListener('click', () => {
+    const idx = +cell.dataset.charIndex;
+    if (!Number.isInteger(idx) || idx === charIndex) return;
+    charIndex = idx;
+    renderWriterTabsOnly();
+    createHanziWriter('quiz');
+  }));
+  return cells;
+}
+
+function createStaticWordWriters(chars, cells) {
+  hwWriters = chars.map((ch, i) => {
+    const completed = i !== charIndex && written[WORDS[writeIndex].n]?.includes(i);
+    const size = writerCellSize(cells[i]);
+    return HanziWriter.create(`hanziWriterTarget-${i}`, ch, writerOptions(size, completed));
+  });
+  hwWriter = hwWriters[charIndex] || null;
+  centerSingleHanziOptically(chars);
+}
+
+function animateWholeWord(chars, cells, session) {
+  hwWriters = chars.map((ch, i) => {
+    const size = writerCellSize(cells[i]);
+    return HanziWriter.create(`hanziWriterTarget-${i}`, ch, writerOptions(size, false));
+  });
+  hwWriter = hwWriters[charIndex] || null;
+  centerSingleHanziOptically(chars);
+
+  let i = 0;
+  const next = () => {
+    if (session !== writerSession) return;
+    if (i >= hwWriters.length) {
+      setTimeout(() => {
+        if (session === writerSession) createHanziWriter('quiz');
+      }, 400);
+      return;
+    }
+    hwWriters[i].animateCharacter({
+      onComplete: () => {
+        i++;
+        setTimeout(next, 180);
+      }
+    });
+  };
+  next();
+}
+
+function createHanziWriter(mode = 'quiz') {
+  const stage = $('#hanziWordStage');
+  const chars = practiceChars(WORDS[writeIndex]);
+  const ch = chars[charIndex];
+  if (!stage || !ch) return;
+  const session = ++writerSession;
+  resetWriterMessage();
+
+  if (typeof HanziWriter === 'undefined') {
+    const traceBox = $('#traceResult');
+    if (traceBox) {
+      traceBox.className = 'result no';
+      traceBox.textContent = 'Hanzi Writer could not load. Check your Internet connection and reload the page.';
+    }
     return;
   }
 
-  hwWriter.quiz({
-    showHintAfterMisses: 2,
-    acceptBackwardsStrokes: false,
-    leniency: 0.85,
-    onMistake: data => {
-      if (session !== writerSession) return;
-      hwMistakes = data.totalMistakes;
-      hwCurrentStroke = data.strokeNum;
-      const box = $('#traceResult');
-      box.className = 'result no';
-      box.innerHTML = `❌ That stroke does not match. Draw <b>stroke ${data.strokeNum + 1}</b> in the correct direction.${data.mistakesOnStroke >= 2 ? ' Follow the highlighted hint.' : ''}`;
-      $('#strokeCounter').textContent = `Stroke ${data.strokeNum + 1}`;
-      $('#strokeCounter').className = 'strokePill bad';
-      $('#mistakeCounter').textContent = `${data.totalMistakes} ${data.totalMistakes === 1 ? 'mistake' : 'mistakes'}`;
-      $('#mistakeCounter').className = 'strokePill bad';
-    },
-    onCorrectStroke: data => {
-      if (session !== writerSession) return;
-      hwMistakes = data.totalMistakes;
-      hwCurrentStroke = data.strokeNum + 1;
-      const box = $('#traceResult');
-      box.className = 'result ok';
-      box.innerHTML = `✓ Stroke ${data.strokeNum + 1} correct${data.strokesRemaining ? ` · <b>${data.strokesRemaining}</b> left` : ''}`;
-      $('#strokeCounter').textContent = data.strokesRemaining ? `Next: ${data.strokeNum + 2}` : 'Last stroke ✓';
-      $('#strokeCounter').className = 'strokePill good';
-      $('#mistakeCounter').textContent = `${data.totalMistakes} ${data.totalMistakes === 1 ? 'mistake' : 'mistakes'}`;
-      $('#mistakeCounter').className = data.totalMistakes ? 'strokePill bad' : 'strokePill good';
-    },
-    onComplete: data => {
-      if (session !== writerSession) return;
-      const w = WORDS[writeIndex];
-      const charsNow = practiceChars(w);
-      if (!written[w.n]) written[w.n] = [];
-      if (!written[w.n].includes(charIndex)) written[w.n].push(charIndex);
-      save();
-      renderWriterTabsOnly();
-      renderMini();
-      const box = $('#traceResult');
-      box.className = 'result ok';
-      box.innerHTML = `✅ <b>${ch}</b> completed in the correct order · ${data.totalMistakes} ${data.totalMistakes === 1 ? 'mistake' : 'mistakes'}`;
-      $('#strokeCounter').textContent = 'Complete ✓';
-      $('#strokeCounter').className = 'strokePill good';
-      if (charIndex < charsNow.length - 1) {
-        setTimeout(() => {
-          if (session !== writerSession) return;
-          charIndex++;
-          renderWriterTabsOnly();
-          createHanziWriter('quiz');
-        }, 850);
-      } else {
-        setTimeout(() => {
-          if (session !== writerSession) return;
-          writeIndex = (writeIndex + 1) % WORDS.length;
-          charIndex = 0;
-          save();
-          renderWriter();
-        }, 1100);
-      }
+  const cells = buildWordStage(chars);
+  requestAnimationFrame(() => {
+    if (session !== writerSession) return;
+    if (mode === 'animation') {
+      animateWholeWord(chars, cells, session);
+      return;
     }
+
+    createStaticWordWriters(chars, cells);
+    hwWriter = hwWriters[charIndex];
+    if (!hwWriter) return;
+
+    hwWriter.quiz({
+      showHintAfterMisses: 2,
+      acceptBackwardsStrokes: false,
+      leniency: 0.85,
+      onMistake: data => {
+        if (session !== writerSession) return;
+        hwMistakes = data.totalMistakes;
+        hwCurrentStroke = data.strokeNum;
+        const box = $('#traceResult');
+        if (box) {
+          box.className = 'result no';
+          box.innerHTML = `❌ Stroke ${data.strokeNum + 1} does not match.`;
+        }
+        const strokeCounter = $('#strokeCounter');
+        const mistakeCounter = $('#mistakeCounter');
+        if (strokeCounter) {
+          strokeCounter.textContent = `Stroke ${data.strokeNum + 1}`;
+          strokeCounter.className = 'strokePill bad';
+        }
+        if (mistakeCounter) {
+          mistakeCounter.textContent = `${data.totalMistakes} ${data.totalMistakes === 1 ? 'mistake' : 'mistakes'}`;
+          mistakeCounter.className = 'strokePill bad';
+        }
+      },
+      onCorrectStroke: data => {
+        if (session !== writerSession) return;
+        hwMistakes = data.totalMistakes;
+        hwCurrentStroke = data.strokeNum + 1;
+        const strokeCounter = $('#strokeCounter');
+        const mistakeCounter = $('#mistakeCounter');
+        if (strokeCounter) {
+          strokeCounter.textContent = data.strokesRemaining ? `Next: ${data.strokeNum + 2}` : 'Last stroke ✓';
+          strokeCounter.className = 'strokePill good';
+        }
+        if (mistakeCounter) {
+          mistakeCounter.textContent = `${data.totalMistakes} ${data.totalMistakes === 1 ? 'mistake' : 'mistakes'}`;
+          mistakeCounter.className = data.totalMistakes ? 'strokePill bad' : 'strokePill good';
+        }
+      },
+      onComplete: data => {
+        if (session !== writerSession) return;
+        const w = WORDS[writeIndex];
+        const charsNow = practiceChars(w);
+        if (!written[w.n]) written[w.n] = [];
+        if (!written[w.n].includes(charIndex)) written[w.n].push(charIndex);
+        save();
+        renderWriterTabsOnly();
+        renderMini();
+
+        if (charIndex < charsNow.length - 1) {
+          setTimeout(() => {
+            if (session !== writerSession) return;
+            charIndex++;
+            renderWriterTabsOnly();
+            createHanziWriter('quiz');
+          }, 450);
+        } else {
+          setTimeout(() => {
+            if (session !== writerSession) return;
+            writeIndex = (writeIndex + 1) % WORDS.length;
+            charIndex = 0;
+            save();
+            renderWriter();
+          }, 850);
+        }
+      }
+    });
   });
 }
 
@@ -862,9 +929,10 @@ function renderWriter() {
   const w = WORDS[writeIndex];
   const chars = practiceChars(w);
   if (charIndex >= chars.length) charIndex = 0;
-  $('#writeWord').textContent = w.hanzi;
+  $('#writeWord').textContent = baseHanzi(w);
   $('#writePinyin').textContent = w.pinyin;
   $('#writeMeaning').textContent = w.en;
+  updateGuideButton();
   $('#characterTabs').innerHTML = chars.map((c, i) => `<button class="charBtn ${i === charIndex ? 'active' : ''} ${written[w.n]?.includes(i) ? 'done' : ''}" data-i="${i}" type="button">${escapeHtml(c)}${written[w.n]?.includes(i) ? ' ✓' : ''}</button>`).join('');
   $$('.charBtn').forEach(b => b.addEventListener('click', () => {
     charIndex = +b.dataset.i;
@@ -882,10 +950,16 @@ function renderWriterTabsOnly() {
     b.classList.toggle('active', i === charIndex);
     b.classList.toggle('done', written[w.n]?.includes(i));
   });
+  $$('#hanziWordStage .hanziCharCell').forEach((cell, i) => {
+    cell.classList.toggle('active', i === charIndex);
+    cell.classList.toggle('done', written[w.n]?.includes(i));
+  });
 }
 
 function renderMini() {
-  $('#miniList').innerHTML = WORDS.map(w => `<div class="mini" data-n="${w.n}"><span><span class="num">#${w.n}</span> <span class="c">${escapeHtml(w.hanzi)}</span></span><span class="tick">${isWordWritten(w) ? '✓' : ''}</span></div>`).join('');
+  const miniList = $('#miniList');
+  if (!miniList) return;
+  miniList.innerHTML = WORDS.map(w => `<div class="mini" data-n="${w.n}"><span><span class="num">#${w.n}</span> <span class="c">${escapeHtml(w.hanzi)}</span></span><span class="tick">${isWordWritten(w) ? '✓' : ''}</span></div>`).join('');
   $$('.mini').forEach(m => m.addEventListener('click', () => {
     writeIndex = +m.dataset.n - 1;
     charIndex = 0;
@@ -894,26 +968,66 @@ function renderMini() {
   }));
 }
 
-$('#resetQuiz').addEventListener('click', () => createHanziWriter('quiz'));
-$('#animateChar').addEventListener('click', () => createHanziWriter('animation'));
-$('#toggleGuide').addEventListener('click', () => {
-  guideVisible = !guideVisible;
-  $('#toggleGuide').textContent = guideVisible ? 'Hide guide' : 'Show guide';
-  createHanziWriter('quiz');
-});
-$('#prevWord').addEventListener('click', () => {
+function updateGuideButton() {
+  const btn = $('#toggleGuide');
+  if (!btn) return;
+  btn.innerHTML = `${guideVisible ? '◌' : '◎'} <span>${guideVisible ? 'Hide guide' : 'Show guide'}</span>`;
+}
+
+function goToPrevWriteWord() {
   writeIndex = (writeIndex - 1 + WORDS.length) % WORDS.length;
   charIndex = 0;
   save();
   renderWriter();
-});
-$('#nextWord').addEventListener('click', () => {
+}
+
+function goToNextWriteWord() {
   writeIndex = (writeIndex + 1) % WORDS.length;
   charIndex = 0;
   save();
   renderWriter();
+}
+
+function initWriteSwipe() {
+  const swipeArea = $('#writeSwipeArea');
+  if (!swipeArea) return;
+  let startX = 0;
+  let startY = 0;
+  let touching = false;
+  swipeArea.addEventListener('touchstart', (e) => {
+    const target = e.target;
+    if (target && target.closest && target.closest('#hanziWordStage')) return;
+    const touch = e.touches && e.touches[0];
+    if (!touch) return;
+    touching = true;
+    startX = touch.clientX;
+    startY = touch.clientY;
+  }, { passive: true });
+  swipeArea.addEventListener('touchend', (e) => {
+    if (!touching) return;
+    touching = false;
+    const touch = e.changedTouches && e.changedTouches[0];
+    if (!touch) return;
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.25) return;
+    if (dx < 0) goToNextWriteWord();
+    else goToPrevWriteWord();
+  }, { passive: true });
+}
+
+$('#resetQuiz').addEventListener('click', () => createHanziWriter('quiz'));
+$('#animateChar').addEventListener('click', () => createHanziWriter('animation'));
+$('#toggleGuide').addEventListener('click', () => {
+  guideVisible = !guideVisible;
+  updateGuideButton();
+  createHanziWriter('quiz');
 });
-$('#speakWrite').addEventListener('click', () => speak(WORDS[writeIndex].hanzi, true));
+$('#prevWord').addEventListener('click', goToPrevWriteWord);
+$('#nextWord').addEventListener('click', goToNextWriteWord);
+$('#speakWrite').addEventListener('click', () => speak(baseHanzi(WORDS[writeIndex]), true));
+updateGuideButton();
+initWriteSwipe();
 const PRACTICE_SKILLS = [
   {
     id: 'meaning',
@@ -946,10 +1060,16 @@ const PRACTICE_SKILLS = [
     description: 'Retrieve the word inside a real HSK 1 sentence.'
   },
   {
+    id: 'buildSentence',
+    name: 'Sentence Builder',
+    icon: '排',
+    description: 'Rebuild a Chinese sentence from pinyin or English by arranging Hanzi blocks.'
+  },
+  {
     id: 'mixed',
     name: 'Mixed practice',
     icon: '混',
-    description: 'Rotate through all five practice skills.'
+    description: 'Rotate through all six practice skills.'
   }
 ];
 
@@ -959,7 +1079,7 @@ function statFor(n, skill) {
 
 function aggregateSkill(block, skill) {
   if (!block) return { attempts: 0, correct: 0, accuracy: null };
-  const skills = skill === 'mixed' ? ['meaning', 'hanziPinyin', 'typeHanzi', 'listening', 'association'] : [skill];
+  const skills = skill === 'mixed' ? ['meaning', 'hanziPinyin', 'typeHanzi', 'listening', 'association', 'buildSentence'] : [skill];
   let attempts = 0;
   let correct = 0;
   block.words.forEach(n => skills.forEach(s => {
@@ -985,6 +1105,84 @@ function updatePracticeSummary() {
   const overall = aggregateAllPractice();
   if ($('#practiceOverall')) $('#practiceOverall').textContent = overall.accuracy === null ? '—' : `${overall.accuracy}%`;
 }
+function uniqueActivityDays() {
+  const stamps = [];
+  Object.values(practiceStats).forEach(skills => {
+    Object.values(skills || {}).forEach(st => {
+      if (st?.lastAt) stamps.push(st.lastAt);
+    });
+  });
+  const days = new Set(stamps.map(ts => new Date(ts).toISOString().slice(0, 10)));
+  return days.size;
+}
+
+function todaysAttempts() {
+  const today = new Date().toISOString().slice(0, 10);
+  let count = 0;
+  Object.values(practiceStats).forEach(skills => {
+    Object.values(skills || {}).forEach(st => {
+      if (st?.lastAt && new Date(st.lastAt).toISOString().slice(0, 10) === today) {
+        count += st.attempts || 0;
+      }
+    });
+  });
+  return count;
+}
+
+function reviewedWordsToday() {
+  const today = new Date().toISOString().slice(0, 10);
+  let count = 0;
+  WORDS.forEach(w => {
+    const skills = practiceStats[w.n] || {};
+    const activeToday = Object.values(skills).some(st => st?.lastAt && new Date(st.lastAt).toISOString().slice(0, 10) === today);
+    if (activeToday) count += 1;
+  });
+  return count;
+}
+
+function totalXp() {
+  const overall = aggregateAllPractice();
+  const doneCount = WORDS.filter(w => isWordWritten(w)).length;
+  return (overall.correct || 0) * 10 + doneCount * 5;
+}
+
+function openCardsExplorerHome() {
+  cardScope = { type: 'all' };
+  explorerMode = { type: 'all' };
+  explorerQuery = '';
+  if ($('#cardSearch')) $('#cardSearch').value = '';
+  $('#cardView').hidden = true;
+  $('#cardExplorer').hidden = false;
+  renderCardExplorer();
+  switchPage('vocab');
+}
+
+function openPracticeBlockHome(id = 1) {
+  selectedBlockId = id;
+  save();
+  switchPage('practice');
+  renderPracticeHome();
+}
+
+function renderHomeDashboard() {
+  const streak = uniqueActivityDays();
+  const xp = totalXp();
+  const reviewedToday = reviewedWordsToday();
+  const goalNow = Math.min(5, reviewedToday);
+  if ($('#homeStreakValue')) $('#homeStreakValue').textContent = `${streak} day${streak === 1 ? '' : 's'}`;
+  if ($('#homeXpValue')) $('#homeXpValue').textContent = `${xp} XP`;
+  if ($('#homeReviewedValue')) $('#homeReviewedValue').textContent = `${reviewedToday} cards`;
+  if ($('#homeGoalValue')) $('#homeGoalValue').textContent = `${goalNow} / 5`;
+  if ($('#homeGoalBar')) $('#homeGoalBar').style.width = `${(goalNow / 5) * 100}%`;
+
+  const block = blockById(selectedBlockId) || PRACTICE_BLOCKS[0];
+  if (block) {
+    const title = `Continue Block ${block.id} – ${block.title}`;
+    if ($('#homeContinueTitle')) $('#homeContinueTitle').textContent = title;
+    if ($('#homeContinueText')) $('#homeContinueText').textContent = block.description || 'Keep building your vocabulary with the next focused set of words.';
+  }
+}
+
 
 function recordPracticeAnswer(n, skill, correct) {
   if (!practiceStats[n]) practiceStats[n] = {};
@@ -1022,74 +1220,65 @@ function setPracticeMode(mode) {
   if (!VALID_PRACTICE_MODES.includes(mode)) return;
   selectedPracticeMode = mode;
   save();
+  if ($('#practiceHome') && !$('#practiceHome').hidden) {
+    renderPracticeHome();
+    return;
+  }
   $$('.practiceModeButton').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.skill === selectedPracticeMode);
     btn.setAttribute('aria-pressed', btn.dataset.skill === selectedPracticeMode ? 'true' : 'false');
   });
 }
 
-function chooseFeedbackPhrase(kind) {
-  const list = FEEDBACK_PHRASES[kind] || [];
-  if (!list.length) return null;
-  let index = Math.floor(Math.random() * list.length);
-  if (list.length > 1 && index === lastFeedbackPhrase[kind]) index = (index + 1) % list.length;
-  lastFeedbackPhrase[kind] = index;
-  return list[index];
-}
+let lastResultSound = { correct: -1, wrong: -1 };
 
-function playResultChime(correct) {
+function pickNonRepeatingIndex(length, previous) {
+  if (length <= 1) return 0;
+  let i = Math.floor(Math.random() * length);
+  if (i === previous) i = (i + 1 + Math.floor(Math.random() * (length - 1))) % length;
+  return i;
+}
+function playPracticeResultSound(correct) {
   try {
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    if (!AudioCtx) return;
-    const ctx = new AudioCtx();
-    const now = ctx.currentTime;
-    const tones = correct
-      ? [{ f: 523.25, t: 0 }, { f: 659.25, t: 0.09 }, { f: 783.99, t: 0.18 }]
-      : [{ f: 392.00, t: 0 }, { f: 329.63, t: 0.10 }];
-    tones.forEach(({ f, t }) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = f;
-      gain.gain.setValueAtTime(0.0001, now + t);
-      gain.gain.exponentialRampToValueAtTime(correct ? 0.08 : 0.055, now + t + 0.015);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + t + 0.12);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(now + t);
-      osc.stop(now + t + 0.14);
+    const AudioCtx = window.AudioContext || window.webkitAudioContext; if (!AudioCtx) return;
+    const ctx = new AudioCtx(), now = ctx.currentTime;
+    const correctPatterns = [
+      {type:'sine',gain:.055,tones:[[523.25,0,.09],[659.25,.07,.10],[783.99,.15,.15]]},
+      {type:'triangle',gain:.050,tones:[[659.25,0,.08],[880,.09,.16]]},
+      {type:'sine',gain:.048,tones:[[587.33,0,.07],[739.99,.06,.07],[987.77,.13,.14]]},
+      {type:'triangle',gain:.046,tones:[[493.88,0,.08],[659.25,.07,.08],[830.61,.15,.13]]},
+      {type:'sine',gain:.043,tones:[[698.46,0,.08],[1046.50,.10,.17]]}
+    ];
+    const wrongPatterns = [
+      {type:'sine',gain:.040,tones:[[392,0,.10],[329.63,.09,.14]]},
+      {type:'triangle',gain:.035,tones:[[349.23,0,.09],[293.66,.09,.14]]},
+      {type:'sine',gain:.034,tones:[[329.63,0,.08],[277.18,.08,.12]]},
+      {type:'triangle',gain:.032,tones:[[440,0,.06],[369.99,.07,.08],[329.63,.14,.11]]}
+    ];
+    const patterns = correct ? correctPatterns : wrongPatterns, key = correct ? 'correct' : 'wrong';
+    const index = pickNonRepeatingIndex(patterns.length, lastResultSound[key]); lastResultSound[key] = index;
+    const p = patterns[index];
+    p.tones.forEach(([freq, offset, duration]) => {
+      const osc=ctx.createOscillator(), gain=ctx.createGain(); osc.type=p.type; osc.frequency.setValueAtTime(freq,now+offset);
+      osc.detune.setValueAtTime((Math.random()-.5)*(correct?9:5),now+offset);
+      gain.gain.setValueAtTime(.0001,now+offset); gain.gain.exponentialRampToValueAtTime(p.gain,now+offset+.012); gain.gain.exponentialRampToValueAtTime(.0001,now+offset+duration);
+      osc.connect(gain); gain.connect(ctx.destination); osc.start(now+offset); osc.stop(now+offset+duration+.02);
     });
-    setTimeout(() => ctx.close().catch(() => {}), 700);
+    setTimeout(()=>ctx.close().catch(()=>{}),900);
   } catch (_) {}
+}
+function clearPracticeReactions() {
+  // Mascot reactions were intentionally removed.
 }
 
 function showLearningFeedback(correct) {
-  const kind = correct ? 'correct' : 'wrong';
-  const phrase = chooseFeedbackPhrase(kind);
-  if (!phrase) return;
+  // Nonverbal feedback only: keep the short randomized sound.
+  playPracticeResultSound(correct);
+}
 
-  let toast = document.getElementById('learningFeedbackToast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'learningFeedbackToast';
-    toast.className = 'learningFeedbackToast';
-    document.body.appendChild(toast);
-  }
-
-  toast.className = `learningFeedbackToast ${correct ? 'good' : 'retry'}`;
-  toast.innerHTML = `
-    <div class="learningFeedbackHanzi">${escapeHtml(phrase.hanzi)}</div>
-    <div class="learningFeedbackMeta">
-      <b>${escapeHtml(phrase.pinyin)}</b>
-      <span>${escapeHtml(phrase.en)}</span>
-    </div>`;
-  toast.classList.add('show');
-
-  playResultChime(correct);
-  setTimeout(() => speak(phrase.hanzi, false), 250);
-
-  clearTimeout(showLearningFeedback._timer);
-  showLearningFeedback._timer = setTimeout(() => toast.classList.remove('show'), 1600);
+function showTransientTypingReaction(correct) {
+  // Typing mistakes/corrections use the same short randomized sound only.
+  playPracticeResultSound(correct);
 }
 
 function renderPracticeHome() {
@@ -1099,23 +1288,119 @@ function renderPracticeHome() {
   $('#exerciseView').hidden = true;
   exerciseSession = null;
   exerciseQuestion = null;
-  updatePracticeSummary();
 
-  $('#blockGrid').innerHTML = PRACTICE_BLOCKS.map(block => {
-    const agg = aggregateSkill(block, 'mixed');
-    const preview = block.words.slice(0, 6).map(n => `<span>${escapeHtml(wordByN(n)?.hanzi || '')}</span>`).join('');
-    const status = agg.accuracy === null ? 'Not started' : `${agg.accuracy}% accuracy`;
-    return `
-      <button class="blockCard" type="button" data-block-id="${block.id}">
-        <div class="blockCardTop"><span>BLOCK ${block.id}</span><b>${status}</b></div>
-        <h3>${escapeHtml(block.title)}</h3>
-        <p>${escapeHtml(block.description)}</p>
-        <div class="blockPreview">${preview}<span class="moreChip">+9</span></div>
-        <div class="blockCardFoot"><span>15 related words</span><span>Open →</span></div>
-      </button>`;
+  const overall = aggregateAllPractice();
+  const streak = uniqueActivityDays();
+  const reviewedToday = reviewedWordsToday();
+  const goalNow = Math.min(5, reviewedToday);
+  const block = blockById(selectedBlockId) || PRACTICE_BLOCKS[0];
+  if (!block) return;
+  const total = PRACTICE_BLOCKS.length;
+  const currentIdx = PRACTICE_BLOCKS.findIndex(b => b.id === block.id);
+  const prevBlock = PRACTICE_BLOCKS[(currentIdx - 1 + total) % total];
+  const nextBlock = PRACTICE_BLOCKS[(currentIdx + 1) % total];
+  const modeMap = {
+    mixed: { name: 'Mixed', desc: 'A mix of meaning, listening, and typing.', icon: '🔀', cls: 'mode-mixed', recommended: true, label: 'Mixed practice', art: 'assets/ui/mode-card-mixed.webp' },
+    meaning: { name: 'Meaning', desc: 'Choose the correct meaning.', icon: '📖', cls: 'mode-meaning', label: 'Meaning practice', art: 'assets/ui/mode-card-meaning.webp' },
+    listening: { name: 'Listening', desc: 'Listen and choose the correct answer.', icon: '🎧', cls: 'mode-listening', label: 'Listening practice', art: 'assets/ui/mode-card-listening.webp' },
+    hanziPinyin: { name: 'Hanzi ↔ Pinyin', desc: 'Match characters and pinyin.', icon: '🔤', cls: 'mode-hanziPinyin', label: 'Hanzi ↔ Pinyin', art: 'assets/ui/mode-card-hanzi-pinyin.webp' },
+    typeHanzi: { name: 'Type Hanzi', desc: 'Type the correct character.', icon: '⌨️', cls: 'mode-typeHanzi', label: 'Type Hanzi', art: 'assets/ui/mode-card-type-hanzi.webp' },
+    buildSentence: { name: 'Sentence Builder', desc: 'Drag Hanzi blocks into the correct sentence order.', icon: '🧩', cls: 'mode-buildSentence', label: 'Sentence Builder', art: 'assets/ui/mode-card-sentence-builder.webp' },
+    mistakes: { name: 'Review mistakes', desc: 'Focus on words you got wrong.', icon: '🎯', cls: 'mode-mistakes', label: 'Review mistakes', art: 'assets/ui/mode-card-mistakes.webp' }
+  };
+  const modeOrder = ['mixed','meaning','listening','hanziPinyin','typeHanzi','buildSentence'];
+  // Review mistakes still exists internally, but it is no longer shown as a Practice Mode card.
+  // If it was selected in an older saved session, return the visible selector to Mixed.
+  if (!modeOrder.includes(selectedPracticeMode)) {
+    selectedPracticeMode = 'mixed';
+    save();
+  }
+  const currentMode = modeMap[selectedPracticeMode] || modeMap.mixed;
+  const mistakeCount = mistakeWordsForBlock(block).length;
+  const startDisabled = selectedPracticeMode === 'mistakes' && mistakeCount === 0;
+
+  const previewWords = (item, maxN = 4) => item.words.slice(0, maxN).map(n => wordByN(n)).filter(Boolean);
+  const renderPeek = (item, dir) => {
+    const preview = previewWords(item, 3).map(w => `<span>${escapeHtml(baseHanzi(w))}</span>`).join('');
+    return `<div class="practicePeekLabel">Block ${item.id}</div>
+      <div>
+        <div class="practicePeekTitle">${escapeHtml(item.title)}</div>
+        <div class="practicePeekPreview">${preview}</div>
+      </div>
+      <img class="practicePeekArt" src="assets/ui/practice-block-${item.id}.png" alt="${escapeHtml(item.title)} illustration">`;
+  };
+
+  if ($('#practiceSummaryStreak')) $('#practiceSummaryStreak').textContent = String(streak || 0);
+  if ($('#practiceCardBlockLabel')) $('#practiceCardBlockLabel').textContent = `Block ${block.id}`;
+  if ($('#practiceCardModePill')) $('#practiceCardModePill').textContent = selectedPracticeMode === 'mistakes' ? `${mistakeCount || 0} to review` : (currentMode.recommended ? 'Recommended' : currentMode.name);
+  if ($('#practiceFeatureTitle')) $('#practiceFeatureTitle').textContent = block.title;
+  if ($('#practiceFeatureDesc')) $('#practiceFeatureDesc').textContent = block.description;
+  if ($('#practiceFeatureMode')) $('#practiceFeatureMode').textContent = currentMode.label;
+  if ($('#practiceRingValue')) $('#practiceRingValue').textContent = overall.accuracy === null ? '—' : `${overall.accuracy}%`;
+  if ($('#practiceInsightReviewed')) $('#practiceInsightReviewed').textContent = String(overall.attempts || 0);
+  if ($('#practiceGoalText')) $('#practiceGoalText').textContent = `${goalNow} / 5`;
+  if ($('#practiceGoalBar2')) $('#practiceGoalBar2').style.width = `${(goalNow / 5) * 100}%`;
+
+  const featurePreview = previewWords(block, 4);
+  $('#practiceFeaturePreview').innerHTML = featurePreview.map(w => `<span><b>${escapeHtml(baseHanzi(w))}</b><small>${escapeHtml(w.pinyin)}</small></span>`).join('');
+  const art = $('#practiceFeatureArt');
+  if (art) art.src = `assets/ui/practice-block-${block.id}.png`;
+  const startBtn = $('#startSelectedPractice');
+  if (startBtn) {
+    startBtn.disabled = startDisabled;
+    startBtn.textContent = startDisabled ? 'No mistakes yet' : 'Start practice →';
+  }
+
+  $('#practicePeekLeft').innerHTML = renderPeek(prevBlock, 'left');
+  $('#practicePeekRight').innerHTML = renderPeek(nextBlock, 'right');
+  $('#practicePeekLeft').onclick = () => { selectedBlockId = prevBlock.id; save(); renderPracticeHome(); };
+  $('#practicePeekRight').onclick = () => { selectedBlockId = nextBlock.id; save(); renderPracticeHome(); };
+  $('#practicePrevBlock').onclick = () => { selectedBlockId = prevBlock.id; save(); renderPracticeHome(); };
+  $('#practiceNextBlock').onclick = () => { selectedBlockId = nextBlock.id; save(); renderPracticeHome(); };
+
+  const dots = PRACTICE_BLOCKS.map((item, idx) => `<button type="button" class="${item.id === block.id ? 'active' : ''}" aria-label="Go to block ${item.id}" data-block-id="${item.id}"></button>`).join('');
+  $('#practiceCarouselDots').innerHTML = dots;
+  $$('#practiceCarouselDots button').forEach(btn => btn.addEventListener('click', () => {
+    selectedBlockId = +btn.dataset.blockId;
+    save();
+    renderPracticeHome();
+  }));
+
+  $('#practiceModeGridMain').innerHTML = modeOrder.map(id => {
+    const m = modeMap[id];
+    const active = selectedPracticeMode === id;
+    return `<button class="practiceModeCard practiceModeImageCard ${m.cls} ${active ? 'active' : ''}" type="button" data-mode="${id}" aria-pressed="${active ? 'true' : 'false'}">
+      <div class="practiceModeVisual">
+        <img class="practiceModeVisualImage" src="${m.art}" alt="" loading="lazy" decoding="async">
+        ${m.recommended ? '<span class="practiceModeBadge">Recommended</span>' : ''}
+        ${active ? '<span class="practiceModeSelectedMark" aria-hidden="true">✓</span>' : ''}
+      </div>
+      <div class="practiceModeImageBody">
+        <b>${escapeHtml(m.name)}</b>
+        <p>${escapeHtml(m.desc)}</p>
+        <span class="practiceModeArrow" aria-hidden="true">›</span>
+      </div>
+    </button>`;
   }).join('');
+  $$('#practiceModeGridMain .practiceModeCard').forEach(btn => btn.addEventListener('click', () => setPracticeMode(btn.dataset.mode)));
 
-  $$('.blockCard').forEach(card => card.addEventListener('click', () => openPracticeBlock(+card.dataset.blockId)));
+  const shell = $('#practiceCarouselShell');
+  if (shell) {
+    let startX = 0;
+    shell.ontouchstart = (e) => {
+      startX = e.changedTouches[0]?.clientX || 0;
+    };
+    shell.ontouchend = (e) => {
+      const endX = e.changedTouches[0]?.clientX || 0;
+      const delta = endX - startX;
+      if (Math.abs(delta) < 40) return;
+      selectedBlockId = delta < 0 ? nextBlock.id : prevBlock.id;
+      save();
+      renderPracticeHome();
+    };
+  }
+
+  window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
 function openPracticeBlock(id) {
@@ -1124,7 +1409,7 @@ function openPracticeBlock(id) {
   selectedBlockId = block.id;
   save();
   switchPage('practice');
-  renderBlockView();
+  renderPracticeHome();
 }
 
 function renderBlockView() {
@@ -1173,7 +1458,7 @@ function renderBlockView() {
     ? `${mistakeCount} ${mistakeCount === 1 ? 'word needs' : 'words need'} another look.`
     : 'No saved mistakes in this block yet.';
 
-  const orderedModes = ['mixed', 'meaning', 'listening', 'hanziPinyin', 'typeHanzi', 'association'];
+  const orderedModes = ['mixed', 'meaning', 'listening', 'hanziPinyin', 'typeHanzi', 'buildSentence', 'association'];
   $('#skillGrid').innerHTML = orderedModes.map(modeId => {
     const skill = PRACTICE_SKILLS.find(s => s.id === modeId);
     if (!skill) return '';
@@ -1184,7 +1469,8 @@ function renderBlockView() {
       listening: '耳',
       hanziPinyin: '拼',
       typeHanzi: '键',
-      association: '句'
+      association: '句',
+      buildSentence: '排'
     };
     return `
       <button class="practiceModeButton ${active ? 'active' : ''} mode-${skill.id}" type="button"
@@ -1394,9 +1680,55 @@ function makeAssociationQuestion(target, block) {
   };
 }
 
+function tokenizeChineseSentence(sentence) {
+  const src = String(sentence || '').trim();
+  if (!src) return [];
+  const vocab = WORDS.map(w => baseHanzi(w)).filter(Boolean).sort((a, b) => b.length - a.length);
+  const tokens = [];
+  let i = 0;
+  while (i < src.length) {
+    const ch = src[i];
+    if (/\s/.test(ch)) { i += 1; continue; }
+    if (/[，。！？!?、；：,.]/.test(ch)) { tokens.push(ch); i += 1; continue; }
+    let match = '';
+    for (const form of vocab) {
+      if (form && src.startsWith(form, i)) { match = form; break; }
+    }
+    if (match) {
+      tokens.push(match);
+      i += match.length;
+      continue;
+    }
+    tokens.push(ch);
+    i += 1;
+  }
+  return tokens;
+}
+
+function makeBuildSentenceQuestion(target, block) {
+  const answerTokens = tokenizeChineseSentence(target.example?.hanzi || target.hanzi).filter(Boolean);
+  if (answerTokens.length < 2) return makeAssociationQuestion(target, block);
+  const useEnglish = Math.random() < 0.5;
+  const cueHtml = useEnglish
+    ? `<span class="promptEnglish sentenceBuilderCue">${escapeHtml(target.example.en)}</span>`
+    : `<span class="promptPinyin sentenceBuilderCue">${escapeHtml(target.example.pinyin)}</span>`;
+  return {
+    skill: 'buildSentence',
+    type: useEnglish ? 'SENTENCE BUILDER · ENGLISH → HANZI' : 'SENTENCE BUILDER · PINYIN → HANZI',
+    prompt: cueHtml,
+    sub: useEnglish
+      ? 'Read the English sentence, then drag the Hanzi blocks into the correct order.'
+      : 'Read the pinyin cue, then drag the Hanzi blocks into the correct Chinese sentence.',
+    builder: true,
+    answerLabel: target.example.hanzi,
+    answerTokens,
+    bankTokens: shuffle(answerTokens.map((text, index) => ({ id: `${target.n}-${index}-${text}`, text })))
+  };
+}
+
 function makeQuestion(target, requestedSkill, block) {
   let skill = requestedSkill;
-  const availableSkills = ['meaning', 'hanziPinyin', 'typeHanzi', 'listening', 'association'];
+  const availableSkills = ['meaning', 'hanziPinyin', 'typeHanzi', 'listening', 'association', 'buildSentence'];
   if (requestedSkill === 'mixed') skill = shuffle(availableSkills)[0];
   if (requestedSkill === 'mistakes') {
     const weak = mistakeSkillsForWord(target.n);
@@ -1408,6 +1740,7 @@ function makeQuestion(target, requestedSkill, block) {
   if (skill === 'typeHanzi') q = makeTypeHanziQuestion(target, block);
   if (skill === 'listening') q = makeListeningQuestion(target, block);
   if (skill === 'association') q = makeAssociationQuestion(target, block);
+  if (skill === 'buildSentence') q = makeBuildSentenceQuestion(target, block);
   return { ...q, target, requestedSkill, recorded: false, usedHint: false, wrongInputs: [] };
 }
 
@@ -1432,94 +1765,235 @@ function startExercise(skill) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function exercisePresentation(q) {
+  const type=String(q.type||'');
+  if(q.skill==='listening') return {mode:'Listening Practice',title:'What did you hear?'};
+  if(q.skill==='typeHanzi') return {mode:'Type Hanzi Practice',title:'Type the Hanzi.'};
+  if(q.skill==='association') return {mode:'Association Practice',title:'Complete the sentence.'};
+  if(q.skill==='buildSentence') return {mode:'Sentence Builder',title:'Build the sentence.'};
+  if(q.skill==='hanziPinyin') return {mode:'Hanzi ↔ Pinyin Practice',title:type.includes('SOUND → FORM')?'Which Hanzi matches this pronunciation?':'Match the Hanzi with the pinyin.'};
+  return {mode:'Meaning Practice',title:type.includes('ENGLISH → HANZI')?'Which Hanzi matches this meaning?':'What does this mean?'};
+}
+
 function renderExerciseQuestion() {
-  const session = exerciseSession;
-  const block = session ? blockById(session.blockId) : null;
-  if (!session || !block) return;
-  if (session.index >= session.queue.length) {
-    renderSessionComplete();
-    return;
-  }
-
-  const target = wordByN(session.queue[session.index]);
-  exerciseQuestion = makeQuestion(target, session.skill, block);
-  const q = exerciseQuestion;
-  const skillName = session.skill === 'mistakes' ? 'Mistake review' : (PRACTICE_SKILLS.find(s => s.id === session.skill)?.name || 'Practice');
-  $('#exerciseLabel').textContent = `${block.title} · ${skillName}`;
-  $('#exerciseCount').textContent = `${session.index + 1} / ${session.queue.length}`;
-  $('#exerciseProgress').style.width = `${((session.index + 1) / session.queue.length) * 100}%`;
-  $('#questionType').textContent = q.type;
-  $('#questionPrompt').innerHTML = q.prompt;
-  $('#questionSub').innerHTML = q.sub;
-  $('#questionAudio').hidden = !q.audio;
-  $('#feedbackPanel').hidden = true;
-  $('#feedbackPanel').className = 'feedbackPanel';
-  $('#exerciseOptions').className = 'exerciseOptions';
-
-  if (q.textInput) {
-    renderTypeHanziInput(q);
+  clearPracticeReactions();
+  const session=exerciseSession, block=session?blockById(session.blockId):null; if(!session||!block)return;
+  if(session.index>=session.queue.length){renderSessionComplete();return;}
+  const target=wordByN(session.queue[session.index]); exerciseQuestion=makeQuestion(target,session.skill,block); const q=exerciseQuestion;
+  const skillName=session.skill==='mistakes'?'Mistake review':(PRACTICE_SKILLS.find(s=>s.id===session.skill)?.name||'Practice');
+  const p=exercisePresentation(q), card=$('#exerciseLessonCard');
+  if(card){card.dataset.skill=q.skill;card.style.setProperty('--lesson-block-art',`url("assets/ui/practice-block-${block.id}.png")`);}
+  $('#exerciseLabel').textContent=`${block.title} · ${skillName}`; $('#exerciseCount').textContent=`${session.index+1} / ${session.queue.length}`;
+  $('#exerciseProgress').style.width=`${((session.index+1)/session.queue.length)*100}%`; $('#exerciseModeName').textContent=p.mode; $('#exerciseQuestionTitle').textContent=p.title; $('#questionType').textContent=q.type;
+  const prompt=$('#questionPrompt'); prompt.className='questionPrompt';
+  if(q.skill==='listening'){prompt.innerHTML='';prompt.classList.add('isListeningPrompt');}
+  else if(q.skill==='meaning'&&q.type.includes('HANZI → ENGLISH')) prompt.innerHTML=`<div class="lessonWordCard"><span class="promptHanzi">${escapeHtml(target.hanzi)}</span><span class="promptHelperPinyin">${escapeHtml(target.pinyin)}</span></div>`;
+  else prompt.innerHTML=q.prompt;
+  $('#questionSub').innerHTML=q.sub||'';
+  const audio=$('#questionAudio'); audio.hidden=!q.audio; audio.className=`exerciseAudio lessonAudioButton${q.skill==='listening'?' isHeroAudio':''}`;
+  if(q.skill==='listening'){
+    audio.innerHTML='<span class="lessonAudioIcon" aria-hidden="true">🔊</span>';
+    audio.setAttribute('aria-label','Play audio');
+    audio.setAttribute('title','Play audio');
   } else {
-    $('#exerciseOptions').innerHTML = q.options.map(o => {
-      const label = String(o.label || '');
-      const optionClass = /[\u3400-\u9fff]/.test(label)
-        ? ' optionHanzi'
-        : /[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]|[a-z]+[1-5](?:\s|$)/i.test(label)
-          ? ' optionPinyin'
-          : ' optionEnglish';
-      return `<button class="exerciseOption${optionClass}" type="button" data-n="${o.n}">${escapeHtml(label)}</button>`;
+    audio.innerHTML='<span class="lessonAudioIcon">🔊</span><span class="lessonAudioText">Listen</span>';
+    audio.setAttribute('aria-label','Listen');
+    audio.removeAttribute('title');
+  }
+  const feedback=$('#feedbackPanel'); feedback.hidden=true; feedback.className='feedbackPanel lessonFeedback'; $('#feedbackAnswerLine').innerHTML='';
+  $('#exerciseOptions').className=`exerciseOptions lessonOptions skill-${q.skill}`;
+  if(q.builder) renderBuildSentenceInput(q);
+  else if(q.textInput) renderTypeHanziInput(q);
+  else {
+    $('#exerciseOptions').innerHTML=q.options.map(o=>{
+      const label=String(o.label||'');
+      const optionClass=/[\u3400-\u9fff]/.test(label)?' optionHanzi':/[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]|[a-z]+[1-5](?:\s|$)/i.test(label)?' optionPinyin':' optionEnglish';
+      return `<button class="exerciseOption lessonOption${optionClass}" type="button" data-n="${o.n}"><span class="optionRadio" aria-hidden="true"></span><span class="optionText">${escapeHtml(label)}</span><span class="optionResultIcon" aria-hidden="true"></span></button>`;
     }).join('');
-    $$('.exerciseOption').forEach(btn => btn.addEventListener('click', () => answerExercise(btn)));
+    $$('.exerciseOption').forEach(btn=>btn.addEventListener('click',()=>answerExercise(btn)));
   }
 }
 
 function renderTypeHanziInput(q) {
-  const host = $('#exerciseOptions');
-  host.classList.add('typingExerciseHost');
-  host.innerHTML = `
-    <form id="typeHanziForm" class="typeHanziForm" novalidate>
-      <label for="typeHanziInput">Type in Chinese</label>
-      <div class="typeInputRow">
-        <input id="typeHanziInput" class="typeHanziInput" type="text" lang="zh-CN" inputmode="text"
-          autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
-          placeholder="${escapeHtml(q.inputPlaceholder || 'Type Hanzi…')}" aria-describedby="typeKeyboardTip typingStatus">
-        <button id="checkTypedHanzi" class="primaryButton typeCheckButton" type="submit">Check</button>
-      </div>
-      <p id="typeKeyboardTip" class="typeKeyboardTip">Use your phone, tablet, or computer’s <b>Chinese · Simplified Pinyin</b> keyboard. Type pinyin, choose the Hanzi candidate, then check it here.</p>
-      <div class="typeAssistRow">
-        <button id="typeHintButton" class="typeHintButton" type="button">Show pinyin hint</button>
-        <button id="typeListenButton" class="typeHintButton" type="button">🔊 Listen</button>
-      </div>
-      <div id="typingHint" class="typingHint" hidden></div>
-      <div id="typingStatus" class="typingStatus" aria-live="polite"></div>
-    </form>`;
+  const host=$('#exerciseOptions'); host.classList.add('typingExerciseHost','lessonTypingHost');
+  host.innerHTML=`<form id="typeHanziForm" class="typeHanziForm lessonTypeForm" novalidate>
+    <div class="lessonTypeCue">Use your Chinese Pinyin keyboard</div>
+    <div class="typeInputRow lessonTypeInputRow"><input id="typeHanziInput" class="typeHanziInput lessonTypeInput" type="text" lang="zh-CN" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="${escapeHtml(q.inputPlaceholder||'Type Hanzi…')}" aria-describedby="typeKeyboardTip typingStatus"><button id="checkTypedHanzi" class="primaryButton typeCheckButton lessonCheckButton" type="submit">Check</button></div>
+    <p id="typeKeyboardTip" class="typeKeyboardTip lessonKeyboardTip">Type pinyin, then choose the correct Hanzi candidate.</p>
+    <div class="typeAssistRow lessonTypeAssistRow"><button id="typeHintButton" class="typeHintButton" type="button">Show pinyin hint</button><button id="typeListenButton" class="typeHintButton" type="button">🔊 Listen</button></div>
+    <div id="typingHint" class="typingHint" hidden></div><div id="typingStatus" class="typingStatus" aria-live="polite"></div></form>`;
+  let composing=false; const input=$('#typeHanziInput'), form=$('#typeHanziForm');
+  input.addEventListener('compositionstart',()=>{composing=true;}); input.addEventListener('compositionend',()=>{composing=false;});
+  input.addEventListener('input',()=>{input.classList.remove('isWrong');$('#typingStatus').className='typingStatus';$('#typingStatus').textContent='';});
+  input.addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.isComposing||composing))return;});
+  form.addEventListener('submit',e=>{e.preventDefault();if(composing)return;checkTypedHanzi();});
+  $('#typeHintButton').addEventListener('click',()=>{q.usedHint=true;const hint=$('#typingHint');hint.hidden=false;hint.innerHTML=`<b>Pinyin:</b> ${escapeHtml(q.hintPinyin||q.target.pinyin)}`;$('#typeHintButton').disabled=true;});
+  $('#typeListenButton').addEventListener('click',()=>speak(q.target.hanzi,true)); setTimeout(()=>input?.focus({preventScroll:true}),80);
+}
 
-  let composing = false;
-  const input = $('#typeHanziInput');
-  const form = $('#typeHanziForm');
-  input.addEventListener('compositionstart', () => { composing = true; });
-  input.addEventListener('compositionend', () => { composing = false; });
-  input.addEventListener('input', () => {
-    input.classList.remove('isWrong');
-    $('#typingStatus').className = 'typingStatus';
-    $('#typingStatus').textContent = '';
+
+function renderBuildSentenceInput(q) {
+  const host = $('#exerciseOptions');
+  host.classList.add('sentenceBuilderHost', 'lessonSentenceBuilderHost');
+  if (!q.builderState) q.builderState = { bank: (q.bankTokens || []).slice(), answer: [] };
+  host.innerHTML = `
+    <div class="builderShell">
+      <div class="builderZone">
+        <div class="builderZoneHead">Your sentence</div>
+        <div id="builderAnswerZone" class="builderDropZone builderAnswerZone ${q.builderState.answer.length ? '' : 'isEmpty'}"></div>
+        <div class="builderHintLine">Tap a block to move it, or drag to reorder.</div>
+      </div>
+      <div class="builderActions">
+        <button id="builderResetButton" class="typeHintButton" type="button">Reset blocks</button>
+        <button id="builderCheckButton" class="primaryButton lessonCheckButton" type="button">Check</button>
+      </div>
+      <div class="builderZone">
+        <div class="builderZoneHead">Available blocks</div>
+        <div id="builderBankZone" class="builderDropZone builderBankZone ${q.builderState.bank.length ? '' : 'isEmpty'}"></div>
+      </div>
+      <div id="builderStatus" class="builderStatus" aria-live="polite"></div>
+    </div>`;
+  bindBuildSentenceControls(q);
+  renderBuildSentenceState(q);
+}
+
+function bindBuildSentenceControls(q) {
+  $('#builderResetButton')?.addEventListener('click', () => {
+    q.builderState = { bank: (q.bankTokens || []).slice(), answer: [] };
+    const status = $('#builderStatus');
+    if (status) { status.textContent = ''; status.className = 'builderStatus'; }
+    renderBuildSentenceState(q);
   });
-  input.addEventListener('keydown', event => {
-    if (event.key === 'Enter' && (event.isComposing || composing)) return;
+  $('#builderCheckButton')?.addEventListener('click', () => checkBuiltSentence());
+}
+
+function moveBuilderToken(q, fromKey, fromIndex, toKey, toIndex = null) {
+  const from = q.builderState?.[fromKey];
+  const to = q.builderState?.[toKey];
+  if (!from || !to || fromIndex < 0 || fromIndex >= from.length) return;
+  const [token] = from.splice(fromIndex, 1);
+  if (!token) return;
+  if (toIndex === null || toIndex < 0 || toIndex > to.length) to.push(token);
+  else to.splice(toIndex, 0, token);
+  renderBuildSentenceState(q);
+}
+
+function renderBuildSentenceState(q) {
+  const answerZone = $('#builderAnswerZone');
+  const bankZone = $('#builderBankZone');
+  if (!answerZone || !bankZone) return;
+
+  const renderToken = (token, sourceKey, index) => {
+    const punctuation = /^[，。！？!?、；：,.]$/.test(token.text);
+    return `<button class="builderToken ${punctuation ? 'isPunctuation' : ''}" type="button" draggable="true" data-source="${sourceKey}" data-index="${index}">${escapeHtml(token.text)}</button>`;
+  };
+
+  answerZone.innerHTML = q.builderState.answer.length
+    ? q.builderState.answer.map((token, index) => renderToken(token, 'answer', index)).join('')
+    : '<div class="builderPlaceholder">Drag or tap the blocks here</div>';
+  bankZone.innerHTML = q.builderState.bank.length
+    ? q.builderState.bank.map((token, index) => renderToken(token, 'bank', index)).join('')
+    : '<div class="builderPlaceholder">All blocks are in your sentence</div>';
+
+  answerZone.classList.toggle('isEmpty', !q.builderState.answer.length);
+  bankZone.classList.toggle('isEmpty', !q.builderState.bank.length);
+
+  const zones = [
+    { el: answerZone, key: 'answer' },
+    { el: bankZone, key: 'bank' }
+  ];
+
+  zones.forEach(({ el, key }) => {
+    el.addEventListener('dragover', ev => { ev.preventDefault(); el.classList.add('isDragOver'); });
+    el.addEventListener('dragleave', () => el.classList.remove('isDragOver'));
+    el.addEventListener('drop', ev => {
+      ev.preventDefault();
+      el.classList.remove('isDragOver');
+      try {
+        const payload = JSON.parse(ev.dataTransfer.getData('text/plain') || '{}');
+        if (!payload.source) return;
+        const targetButton = ev.target.closest('.builderToken');
+        const insertAt = targetButton ? +targetButton.dataset.index : q.builderState[key].length;
+        moveBuilderToken(q, payload.source, +payload.index, key, insertAt);
+      } catch (_) {}
+    });
   });
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    if (composing) return;
-    checkTypedHanzi();
+
+  $$('.builderToken').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const source = btn.dataset.source;
+      const index = +btn.dataset.index;
+      moveBuilderToken(q, source, index, source === 'bank' ? 'answer' : 'bank', null);
+    });
+    btn.addEventListener('dragstart', ev => {
+      ev.dataTransfer.setData('text/plain', JSON.stringify({ source: btn.dataset.source, index: btn.dataset.index }));
+      btn.classList.add('isDragging');
+    });
+    btn.addEventListener('dragend', () => btn.classList.remove('isDragging'));
   });
-  $('#typeHintButton').addEventListener('click', () => {
-    q.usedHint = true;
-    const hint = $('#typingHint');
-    hint.hidden = false;
-    hint.innerHTML = `<b>Pinyin:</b> ${escapeHtml(q.hintPinyin || q.target.pinyin)}`;
-    $('#typeHintButton').disabled = true;
-  });
-  $('#typeListenButton').addEventListener('click', () => speak(q.target.hanzi, true));
-  setTimeout(() => input?.focus({ preventScroll: true }), 80);
+}
+
+function builtSentenceText(q) {
+  return (q?.builderState?.answer || []).map(token => token.text).join('');
+}
+
+function showBuildSentenceFeedback(q) {
+  const target = q.target, feedback = $('#feedbackPanel');
+  feedback.hidden = false;
+  feedback.className = 'feedbackPanel lessonFeedback isCorrect';
+  $('#feedbackStatus').textContent = resultHeadlineFor(q, true);
+  $('#feedbackAnswerLine').innerHTML = feedbackAnswerHtml(target, true, q);
+  $('#feedbackCompare').hidden = true;
+  $('#feedbackCompare').innerHTML = '';
+  populateFeedbackDetails(target);
+  $('#nextExercise').textContent = exerciseSession.index === exerciseSession.queue.length - 1 ? 'Finish session →' : 'Continue →';
+  showLearningFeedback(true);
+  $('#nextExercise').focus({ preventScroll: true });
+  feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function checkBuiltSentence() {
+  const q = exerciseQuestion;
+  const session = exerciseSession;
+  if (!q?.builder || !session || !$('#feedbackPanel').hidden) return;
+  const built = builtSentenceText(q);
+  const expected = (q.answerTokens || []).join('');
+  const correctNow = built === expected;
+  const status = $('#builderStatus');
+
+  if (!built) {
+    if (status) {
+      status.className = 'builderStatus isWrong';
+      status.textContent = 'Move the Hanzi blocks into the answer area first.';
+    }
+    return;
+  }
+
+  if (!q.recorded) {
+    q.recorded = true;
+    const firstTryCorrect = correctNow;
+    session.attempts += 1;
+    if (firstTryCorrect) session.correct += 1;
+    recordPracticeAnswer(q.target.n, q.skill, firstTryCorrect);
+  }
+
+  if (!correctNow) {
+    if (status) {
+      status.className = 'builderStatus isWrong';
+      status.textContent = 'Not quite. Rearrange the blocks and try again.';
+    }
+    showTransientTypingReaction(false);
+    return;
+  }
+
+  if (status) {
+    status.className = 'builderStatus isCorrect';
+    status.textContent = '✓ Correct sentence.';
+  }
+  $$('.builderToken').forEach(btn => btn.disabled = true);
+  $('#builderResetButton')?.setAttribute('disabled', 'true');
+  $('#builderCheckButton')?.setAttribute('disabled', 'true');
+  showBuildSentenceFeedback(q);
 }
 
 function findWordByTypedHanzi(value) {
@@ -1562,13 +2036,12 @@ function checkTypedHanzi() {
     $('#typingStatus').innerHTML = known
       ? `Not quite. You typed <b>${escapeHtml(known.hanzi)}</b> · ${escapeHtml(known.pinyin)} · ${escapeHtml(known.en)}. Keep the target in mind and try again.`
       : `Not quite. <b>${escapeHtml(typedRaw.trim())}</b> does not match the target yet. Try another candidate.`;
-    showLearningFeedback(false);
+    showTransientTypingReaction(false);
     input.select();
     input.focus();
     return;
   }
 
-  showLearningFeedback(true);
   input.disabled = true;
   $('#checkTypedHanzi').disabled = true;
   $('#typeHintButton').disabled = true;
@@ -1582,65 +2055,16 @@ function checkTypedHanzi() {
   showTypeHanziFeedback(q, typedRaw.trim());
 }
 
-function showTypeHanziFeedback(q, typedValue) {
-  const target = q.target;
-  const feedback = $('#feedbackPanel');
-  feedback.hidden = false;
-  feedback.className = 'feedbackPanel isCorrect';
-  $('#feedbackStatus').textContent = '✓ Correct — produced in Chinese';
-  const firstWrong = q.wrongInputs[0];
-  $('#feedbackCompare').hidden = true;
-  $('#feedbackCompare').innerHTML = '';
-  $('#feedbackHanzi').textContent = target.hanzi;
-  $('#feedbackPinyin').textContent = target.pinyin;
-  $('#feedbackEnglish').textContent = target.en;
-  $('#feedbackExplanation').textContent = target.explanation;
-  $('#feedbackExampleHanzi').textContent = target.example.hanzi;
-  $('#feedbackExamplePinyin').textContent = target.example.pinyin;
-  $('#feedbackExampleEnglish').textContent = target.example.en;
-  $('#nextExercise').textContent = exerciseSession.index === exerciseSession.queue.length - 1 ? 'Finish session →' : 'Next →';
-  $('#nextExercise').focus({ preventScroll: true });
-  feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
+function resultHeadlineFor(q,correct){if(!correct)return q?.skill==='buildSentence'?'Almost there.':'Not quite.';if(q?.skill==='buildSentence')return 'Sentence complete!';if(q?.skill==='hanziPinyin')return 'Great match!';if(q?.skill==='association')return 'Nice context!';return 'Correct!';}
+function feedbackAnswerHtml(target,correct,q){const h=escapeHtml(baseHanzi(target)),p=escapeHtml(target.pinyin),e=escapeHtml(target.en);if(q?.skill==='buildSentence'){const sentenceH=escapeHtml(target.example.hanzi),sentenceP=escapeHtml(target.example.pinyin),sentenceE=escapeHtml(target.example.en);if(correct)return `You built <b class="answerHanziInline">${sentenceH}</b> (${sentenceP}) · ${sentenceE}.`;return `Correct sentence: <b class="answerHanziInline">${sentenceH}</b> (${sentenceP}) · ${sentenceE}.`;}if(correct){if(q?.skill==='typeHanzi')return `You typed <b class="answerHanziInline">${h}</b> (${p}) · ${e}.`;return `<b class="answerHanziInline">${h}</b> (${p}) means “${e}.”`;}return `Correct answer: <b class="answerHanziInline">${h}</b> (${p}) · ${e}.`;}
+function populateFeedbackDetails(target){$('#feedbackHanzi').textContent=target.hanzi;$('#feedbackPinyin').textContent=target.pinyin;$('#feedbackEnglish').textContent=target.en;$('#feedbackExplanation').textContent=target.explanation;$('#feedbackExampleHanzi').textContent=target.example.hanzi;$('#feedbackExamplePinyin').textContent=target.example.pinyin;$('#feedbackExampleEnglish').textContent=target.example.en;}
+function showTypeHanziFeedback(q,typedValue){const target=q.target,feedback=$('#feedbackPanel');feedback.hidden=false;feedback.className='feedbackPanel lessonFeedback isCorrect';$('#feedbackStatus').textContent=resultHeadlineFor(q,true);$('#feedbackAnswerLine').innerHTML=feedbackAnswerHtml(target,true,q);$('#feedbackCompare').hidden=true;$('#feedbackCompare').innerHTML='';populateFeedbackDetails(target);$('#nextExercise').textContent=exerciseSession.index===exerciseSession.queue.length-1?'Finish session →':'Continue →';showLearningFeedback(true);$('#nextExercise').focus({preventScroll:true});feedback.scrollIntoView({behavior:'smooth',block:'nearest'});}
 
-function answerExercise(button) {
-  if (!exerciseSession || !exerciseQuestion || !$('#feedbackPanel').hidden) return;
-  const q = exerciseQuestion;
-  const chosenN = +button.dataset.n;
-  const chosen = wordByN(chosenN);
-  const target = q.target;
-  const correct = chosenN === target.n;
-
-  exerciseSession.attempts += 1;
-  if (correct) exerciseSession.correct += 1;
-  recordPracticeAnswer(target.n, q.skill, correct);
-
-  $$('.exerciseOption').forEach(btn => {
-    btn.disabled = true;
-    if (+btn.dataset.n === target.n) btn.classList.add('correct');
-  });
-  if (!correct) button.classList.add('wrong');
-
-  showLearningFeedback(correct);
-
-  const feedback = $('#feedbackPanel');
-  feedback.hidden = false;
-  feedback.className = `feedbackPanel ${correct ? 'isCorrect' : 'isWrong'}`;
-  $('#feedbackStatus').textContent = correct ? '✓ Correct' : 'Not quite — keep the contrast clear';
-
-  $('#feedbackCompare').hidden = true;
-  $('#feedbackCompare').innerHTML = '';
-
-  $('#feedbackHanzi').textContent = target.hanzi;
-  $('#feedbackPinyin').textContent = target.pinyin;
-  $('#feedbackEnglish').textContent = target.en;
-  $('#feedbackExplanation').textContent = target.explanation;
-  $('#feedbackExampleHanzi').textContent = target.example.hanzi;
-  $('#feedbackExamplePinyin').textContent = target.example.pinyin;
-  $('#feedbackExampleEnglish').textContent = target.example.en;
-  $('#nextExercise').textContent = exerciseSession.index === exerciseSession.queue.length - 1 ? 'Finish session →' : 'Next →';
-  $('#nextExercise').focus({ preventScroll: true });
-  feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+function answerExercise(button){
+  if(!exerciseSession||!exerciseQuestion||!$('#feedbackPanel').hidden)return; const q=exerciseQuestion, chosenN=+button.dataset.n, target=q.target, correct=chosenN===target.n;
+  exerciseSession.attempts+=1;if(correct)exerciseSession.correct+=1;recordPracticeAnswer(target.n,q.skill,correct);
+  $$('.exerciseOption').forEach(btn=>{btn.disabled=true;if(+btn.dataset.n===target.n)btn.classList.add('correct');});if(!correct)button.classList.add('wrong');
+  const feedback=$('#feedbackPanel');feedback.hidden=false;feedback.className=`feedbackPanel lessonFeedback ${correct?'isCorrect':'isWrong'}`;$('#feedbackStatus').textContent=resultHeadlineFor(q,correct);$('#feedbackAnswerLine').innerHTML=feedbackAnswerHtml(target,correct,q);$('#feedbackCompare').hidden=true;$('#feedbackCompare').innerHTML='';populateFeedbackDetails(target);$('#nextExercise').textContent=exerciseSession.index===exerciseSession.queue.length-1?'Finish session →':'Continue →';showLearningFeedback(correct);$('#nextExercise').focus({preventScroll:true});feedback.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
 function renderSessionComplete() {
@@ -1656,48 +2080,22 @@ function renderSessionComplete() {
       <p class="eyebrow">SESSION COMPLETE</p>
       <h2>${escapeHtml(block.title)}</h2>
       <div class="sessionScore">${pct}%</div>
-      <p>${session.correct} correct out of ${session.attempts}. Nothing advances automatically: use the feedback, then choose when you are ready for another session.</p>
+      <p>${session.correct} correct out of ${session.attempts}. Review your result, then choose when you want to practice again.</p>
       <div class="sessionActions">
         <button id="repeatSession" class="primaryButton" type="button">Practice again</button>
-        <button id="completeBack" class="secondaryButton" type="button">Back to block</button>
+        <button id="completeBack" class="secondaryButton" type="button">Back to practice</button>
       </div>
     </div>`;
   $('#repeatSession').addEventListener('click', () => { restoreExerciseCardShell(); startExercise(session.skill); });
   $('#completeBack').addEventListener('click', () => {
     restoreExerciseCardShell();
-    renderBlockView();
+    renderPracticeHome();
   });
 }
 
-function restoreExerciseCardShell() {
-  const card = $('.exerciseCard');
-  if (!card || $('#questionPrompt')) return;
-  card.innerHTML = `
-    <div id="questionType" class="questionType">MEANING</div>
-    <div id="questionPrompt" class="questionPrompt"></div>
-    <div id="questionSub" class="questionSub"></div>
-    <button id="questionAudio" class="exerciseAudio" type="button" hidden>🔊 Listen</button>
-    <div id="exerciseOptions" class="exerciseOptions"></div>
-    <div id="feedbackPanel" class="feedbackPanel" hidden>
-      <div class="feedbackStatus" id="feedbackStatus"></div>
-      <div class="feedbackCompare" id="feedbackCompare"></div>
-      <div class="feedbackTarget">
-        <div><div id="feedbackHanzi" class="feedbackHanzi"></div><div id="feedbackPinyin" class="feedbackPinyin"></div><div id="feedbackEnglish" class="feedbackEnglish"></div></div>
-        <button id="feedbackAudio" class="miniSound" type="button" aria-label="Listen to the correct word">🔊</button>
-      </div>
-      <p id="feedbackExplanation" class="feedbackExplanation"></p>
-      <div class="feedbackExampleCard">
-        <div class="feedbackExampleHead">
-          <div class="feedbackExampleLabel">Example sentence</div>
-          <button id="feedbackExampleAudio" class="miniSound" type="button" aria-label="Listen to example sentence">🔊</button>
-        </div>
-        <div id="feedbackExampleHanzi" class="feedbackExampleHanzi"></div>
-        <div id="feedbackExamplePinyin" class="feedbackExamplePinyin"></div>
-        <div id="feedbackExampleEnglish" class="feedbackExampleEnglish"></div>
-      </div>
-      <button id="nextExercise" class="primaryButton feedbackNext" type="button">Next →</button>
-    </div>`;
-  bindExerciseStaticActions();
+function restoreExerciseCardShell(){
+  const card=$('.exerciseCard');if(!card||$('#questionPrompt'))return;card.id='exerciseLessonCard';card.className='exerciseCard exerciseLessonCard';
+  card.innerHTML=`<div class="exerciseLessonDecor" aria-hidden="true"></div><div class="exerciseModeLine"><span class="exerciseBookIcon">▣</span><span id="exerciseModeName">Practice</span></div><h2 id="exerciseQuestionTitle" class="exerciseQuestionTitle">Practice</h2><div id="questionType" class="questionType" hidden></div><div id="questionPrompt" class="questionPrompt"></div><div id="questionSub" class="questionSub"></div><button id="questionAudio" class="exerciseAudio lessonAudioButton" type="button" hidden><span class="lessonAudioIcon">🔊</span><span class="lessonAudioText">Listen</span></button><div id="exerciseOptions" class="exerciseOptions"></div><div id="feedbackPanel" class="feedbackPanel lessonFeedback" hidden><div class="lessonFeedbackScene"><div class="lessonFeedbackCopy"><div class="feedbackStatus" id="feedbackStatus"></div><div id="feedbackAnswerLine" class="feedbackAnswerLine"></div></div></div><div class="feedbackSummary feedbackSummaryCompact"><div class="feedbackTarget"><div><div id="feedbackHanzi" class="feedbackHanzi"></div><div id="feedbackPinyin" class="feedbackPinyin"></div><div id="feedbackEnglish" class="feedbackEnglish"></div></div><button id="feedbackAudio" class="miniSound" type="button">🔊</button></div><div class="feedbackExampleCard"><div class="feedbackExampleHead"><div class="feedbackExampleLabel">Example</div><button id="feedbackExampleAudio" class="miniSound" type="button">🔊</button></div><div id="feedbackExampleHanzi" class="feedbackExampleHanzi"></div><div id="feedbackExamplePinyin" class="feedbackExamplePinyin"></div><div id="feedbackExampleEnglish" class="feedbackExampleEnglish"></div></div></div><div id="feedbackCompare" class="feedbackCompare" hidden></div><p id="feedbackExplanation" class="feedbackExplanation"></p><button id="nextExercise" class="primaryButton feedbackNext lessonContinueButton" type="button">Continue →</button></div>`;bindExerciseStaticActions();
 }
 
 function bindExerciseStaticActions() {
@@ -1722,19 +2120,31 @@ $('#openBlockCards').addEventListener('click', () => {
   openCardFromBlock(block.words[0]);
 });
 $('#practiceMistakes').addEventListener('click', () => startExercise('mistakes'));
+$('#practiceReviewMistakes')?.addEventListener('click', () => startExercise('mistakes'));
 $('#startSelectedPractice').addEventListener('click', () => startExercise(selectedPracticeMode));
 $('#exitExercise').addEventListener('click', () => {
   restoreExerciseCardShell();
-  renderBlockView();
+  renderPracticeHome();
 });
+
 bindExerciseStaticActions();
+
+$('#homeOpenCards')?.addEventListener('click', openCardsExplorerHome);
+$('#homeOpenPractice')?.addEventListener('click', () => {
+  switchPage('practice');
+  renderPracticeHome();
+});
+
+$('#homeOpenWrite')?.addEventListener('click', () => switchPage('write'));
+$('#homeOpenSituations')?.addEventListener('click', () => switchPage('situations'));
+$('#homeContinueButton')?.addEventListener('click', () => openPracticeBlockHome(selectedBlockId || 1));
+
 
 renderLearningCard();
 renderWriter();
 renderPracticeHome();
-updateStats();
 
-// Default landing view: Cards → All words.
+// Keep Cards ready in explorer mode when the user opens that section.
 cardScope = { type: 'all' };
 explorerMode = { type: 'all' };
 explorerQuery = '';
@@ -1742,3 +2152,5 @@ $('#cardSearch').value = '';
 $('#cardView').hidden = true;
 $('#cardExplorer').hidden = false;
 renderCardExplorer();
+updateStats();
+switchPage('home');
