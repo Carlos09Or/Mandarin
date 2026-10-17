@@ -50,6 +50,18 @@ Practice accuracy is stored locally in the browser and tracked separately by wor
 
 The existing Hanzi Writer trainer remains available with stroke-order validation, immediate feedback, hints, and local writing progress.
 
+### Worksheets
+
+A sheet is dedicated to **one Hanzi**, repeated 10, 20, 30 or 50 times (20 by default) in a single large writing box:
+
+- The first 3 boxes **trace** the model (outline + highlighted next stroke); the rest are written **from memory** (hint only after 3 misses).
+- If a memory box finishes with 3+ mistakes, the next box shows the model again.
+- A mini-sheet shows every repetition (green = written, orange = finished with mistakes); tap a box to write it again.
+- Characters come from the 10 thematic blocks; a ✓ marks characters with a completed sheet.
+- The current sheet and per-character progress are saved locally (`hsk1WorksheetV1`), so a sheet resumes after reload.
+
+Open it from the **Worksheets** tab (sidebar, “Sheets” on the phone dock, or the Home card), from **Write Hanzi** (“Worksheet” button for the current character), or from a card’s **Character Explorer** (“Worksheet of …” for each character).
+
 ## Language
 
 All learner-facing explanations and interface text are in **English**. Mandarin content is shown in simplified Hanzi with pinyin.
@@ -63,6 +75,7 @@ All learner-facing explanations and interface text are in **English**. Mandarin 
 - `js/practice-data.js` — 10 thematic practice blocks
 - `js/app.js` — cards, audio, practice engine, progress, feedback, and writing logic
 - `js/situations.js` — branching real-life scenario engine for the Situations tab
+- `js/worksheets.js` + `css/worksheets.css` — Worksheets section (one Hanzi per sheet); uses globals from `js/app-v13-19.js`
 - `assets/favicon.svg` — favicon
 
 ## Run locally

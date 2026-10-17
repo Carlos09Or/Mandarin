@@ -1,0 +1,83 @@
+/* Worksheets — one sheet = many repetitions of one Hanzi in a single large box. */
+.wsLayout{max-width:760px;margin:0 auto}
+.wsPanel{padding:0;border-radius:28px;overflow:hidden}
+
+.wsPicker{display:flex;gap:10px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+.wsChips{display:flex;gap:8px;overflow-x:auto;flex:1;padding:3px;scrollbar-width:thin}
+.wsChip{flex:0 0 auto;position:relative;width:50px;height:50px;border:1px solid var(--line);border-radius:14px;background:#fff;font-family:"Noto Serif SC","Songti SC","STSong","Noto Sans SC","PingFang SC",serif;font-size:26px;color:#4e1217;cursor:pointer}
+.wsChip.active{border-color:var(--red);background:var(--red-faint);box-shadow:inset 0 0 0 1px var(--red)}
+.wsChip.done::after{content:"✓";position:absolute;right:-4px;top:-6px;width:17px;height:17px;border-radius:99px;background:var(--green);color:#fff;font:800 11px/17px Inter,system-ui,sans-serif}
+.wsBlockSelect{min-height:46px;max-width:200px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);padding:0 10px;font-weight:650}
+
+.wsTop{display:flex;align-items:center;gap:14px;padding:16px 20px 0}
+.wsTop .bigWord{font-size:48px;line-height:1;color:#5a141a}
+.wsMeta{display:grid;gap:3px;min-width:0}
+.wsMeta .writerPinyin{font-size:19px}
+.wsMeta .writerMeaning{font-size:14px;color:var(--muted);line-height:1.4}
+.wsTop .writeMiniNavBtn{margin-left:auto;flex:0 0 auto}
+
+.wsStage{display:grid;justify-items:center;gap:12px;padding:12px 18px 20px}
+.wsStep{display:flex;align-items:center;gap:10px;height:28px;font-size:14px;font-weight:750;color:#5a3a3d}
+.wsPill{padding:5px 12px;border-radius:99px;background:var(--red-faint);color:var(--red-dark);font-size:12px;font-weight:850;letter-spacing:.02em}
+.wsPill.memory{background:var(--jade-soft);color:var(--green)}
+.wsBig{position:relative;width:min(100%,380px);aspect-ratio:1;border:2px solid #e3a8ab;border-radius:10px;background:#fffdfb;touch-action:none;-webkit-user-select:none;user-select:none}
+.wsBig::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(to right,transparent calc(50% - .5px),#efc7c4 calc(50% - .5px),#efc7c4 calc(50% + .5px),transparent calc(50% + .5px)),
+  linear-gradient(to bottom,transparent calc(50% - .5px),#efc7c4 calc(50% - .5px),#efc7c4 calc(50% + .5px),transparent calc(50% + .5px))}
+.wsWriter{position:absolute;inset:0}
+.wsWriter svg{display:block}
+/* Fixed height: nothing above or around the box may change size while the learner writes. */
+.wsStatus{height:20px;line-height:20px;font-size:14px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+
+.wsControls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.wsBtn{min-height:46px;padding:0 18px;border-radius:999px;border:1.5px solid #ead7d4;background:#fff;color:#9d2731;font-weight:800;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform .16s ease}
+.wsBtn:hover{transform:translateY(-1px)}
+.wsBtn.order{background:linear-gradient(180deg,#fbf7ef,#f7f0e2);color:#8c5a14;border-color:#eddcc0}
+.wsBtn.primary{background:linear-gradient(135deg,#f36d67,#e13f46);color:#fff;border-color:transparent;box-shadow:0 12px 24px rgba(213,66,72,.18)}
+
+.wsSheet{padding:14px 18px 18px;border-top:1px solid var(--line);background:var(--surface-soft)}
+.wsSheetHead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.wsSheetTitle{font-size:12px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;color:#9a6b6e}
+.wsSheetTitle b{font-family:"Noto Serif SC","Songti SC",serif;font-size:15px;letter-spacing:0;color:#4e1217}
+.wsSizes{display:flex;gap:6px}
+.wsSizes button{min-width:46px;min-height:38px;border:1px solid var(--line);border-radius:12px;background:#fff;color:#5a3a3d;font-weight:750;cursor:pointer}
+.wsSizes button.active{background:var(--red-faint);border-color:#e3a8ab;color:var(--red-dark);box-shadow:inset 0 0 0 1px #e3a8ab}
+.wsMinis{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px;margin-top:10px}
+.wsMini{aspect-ratio:1;padding:0;border:1px solid #efc7c4;border-radius:4px;background:#fffdfb;display:grid;place-items:center;font-family:"KaiTi","STKaiti","Kaiti SC","Noto Serif SC",serif;font-size:clamp(11px,3.6vw,22px);color:var(--green);cursor:pointer}
+.wsMini.trace{border-style:dashed;background:var(--red-faint)}
+.wsMini.current{border-color:var(--red);box-shadow:0 0 0 2px rgba(183,45,54,.22)}
+.wsMini.mistakes{color:#c27a2c}
+.wsMini.skipped{color:#bbb}
+.wsLegend{margin:10px 0 0;font-size:12px;color:var(--muted);line-height:1.5}
+
+.wsSummary{display:grid;justify-items:center;gap:12px;text-align:center;padding:22px 18px}
+.wsSummary h2{margin:0;font-size:22px}
+.wsSummaryHanzi{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-size:72px;line-height:1;color:#4e1217}
+.wsStats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.wsStat{min-width:120px;padding:10px 14px;border:1px solid var(--jade-line);border-radius:16px;background:var(--surface-soft);font-size:13px;color:#5a3a3d}
+.wsStat b{display:block;font-size:22px;color:var(--ink)}
+
+/* Bottom navigation on phones: room for the extra Worksheets tab. */
+.bottomDockNav{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+@media (max-width:720px){
+  .wsPicker{padding:12px;flex-wrap:wrap}
+  .wsBlockSelect{order:-1;max-width:none;width:100%}
+  .wsChips{flex-basis:100%}
+  .wsTop{padding:14px 14px 0}
+  .wsTop .bigWord{font-size:42px}
+  .wsStage{padding:10px 12px 16px}
+  .wsSheet{padding:12px}
+  .bottomDockItem{font-size:10px!important;padding:9px 2px 8px!important}
+}
+
+/* Home: Worksheets module card (full width, CSS-drawn mini sheet instead of an image). */
+.moduleWorksheets{grid-column:1/-1;background:linear-gradient(180deg,#fff8f8,#fff3f1)}
+.wsHomeArt{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:16px;align-content:center;background:#fffdfb;min-height:170px}
+.wsHomeArt span{aspect-ratio:1;display:grid;place-items:center;border:1px solid #efc7c4;border-radius:4px;background:
+  linear-gradient(to right,transparent calc(50% - .5px),#f6dedb calc(50% - .5px),#f6dedb calc(50% + .5px),transparent calc(50% + .5px)),
+  linear-gradient(to bottom,transparent calc(50% - .5px),#f6dedb calc(50% - .5px),#f6dedb calc(50% + .5px),transparent calc(50% + .5px)),#fff;
+  font-family:"KaiTi","STKaiti","Kaiti SC","Noto Serif SC",serif;font-size:clamp(16px,2.6vw,30px);color:var(--green)}
+.wsHomeArt .model{background-color:var(--red-faint);color:#4e1217;border-color:#d99ba0}
+.wsHomeArt .trace{border-style:dashed;color:#d9b3b0}
+.wsHomeArt .faint{color:#ecd6d3}
+.wsExplorerBtn{margin-top:10px;min-height:40px;font-size:14px}

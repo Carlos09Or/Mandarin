@@ -8,12 +8,14 @@
   <title>Mandarin Cards · HSK 1</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/styles-v13-19.css">
+  <link rel="stylesheet" href="css/worksheets.css">
   <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7.3/dist/hanzi-writer.min.js" defer></script>
   <script src="js/data.js" defer></script>
   <script src="js/learning-data.js" defer></script>
   <script src="js/character-data.js" defer></script>
   <script src="js/practice-data.js" defer></script>
   <script src="js/app-v13-19.js" defer></script>
+  <script src="js/worksheets.js" defer></script>
   <script src="js/situations.js" defer></script>
 </head>
 <body data-page="home">
@@ -33,6 +35,7 @@
       <button class="tab sideNavItem" data-page="vocab" type="button"><span class="sideIcon">▣</span><span>Cards</span></button>
       <button class="tab sideNavItem" data-page="practice" type="button"><span class="sideIcon">▤</span><span>Practice</span></button>
       <button class="tab sideNavItem" data-page="write" type="button"><span class="sideIcon">✎</span><span>Write Hanzi</span></button>
+      <button class="tab sideNavItem" data-page="worksheets" type="button"><span class="sideIcon">▦</span><span>Worksheets</span></button>
       <button class="tab sideNavItem" data-page="situations" type="button"><span class="sideIcon">◔</span><span>Situations</span></button>
 
       <div class="sideDivider"></div>
@@ -146,6 +149,18 @@
           <h3>Situations</h3>
           <p>Use your Chinese in guided real-life scenarios like restaurants and daily life.</p>
           <button id="homeOpenSituations" class="homeActionButton blue" type="button">Open →</button>
+        </div>
+      </article>
+
+      <article class="homeModuleCard moduleWorksheets">
+        <div class="moduleArtWrap wsHomeArt" aria-hidden="true">
+          <span class="model">我</span><span class="trace">我</span><span class="trace">我</span><span class="trace faint">我</span><span>我</span><span>我</span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="moduleBody">
+          <div class="moduleBadge write">▦</div>
+          <h3>Worksheets</h3>
+          <p>Fill a whole sheet with one character: trace it, then write it again and again from memory.</p>
+          <button id="homeOpenWorksheets" class="homeActionButton" type="button">Open →</button>
         </div>
       </article>
     </div>
@@ -277,6 +292,7 @@
             <button id="resetQuiz" class="writeActionBtn actionRestart" type="button">↻ <span>Restart</span></button>
             <button id="animateChar" class="writeActionBtn actionOrder" type="button">▶ <span>Show order</span></button>
             <button id="toggleGuide" class="writeActionBtn actionGuide" type="button">◌ <span>Hide guide</span></button>
+            <button id="wsFromWrite" class="writeActionBtn actionGuide" type="button">▦ <span>Worksheet</span></button>
           </div>
 
           <div class="writeNavBarBottom">
@@ -292,6 +308,54 @@
           <div id="miniList" class="listMini"></div>
           <div class="progressbar"><div id="writeProgress"></div></div>
           <b id="writeProgressText">0/150</b>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="worksheets" class="page">
+    <div class="wsLayout">
+      <div class="panel wsPanel">
+        <div class="wsPicker">
+          <div id="wsChips" class="wsChips" role="tablist" aria-label="Character for this sheet"></div>
+          <select id="wsBlock" class="wsBlockSelect" aria-label="Practice block"></select>
+        </div>
+
+        <div id="wsWork">
+          <div class="wsTop">
+            <span class="bigWord" id="wsHanzi"></span>
+            <span class="wsMeta">
+              <span class="writerPinyin" id="wsPinyin"></span>
+              <span class="writerMeaning" id="wsMeaning"></span>
+            </span>
+            <button id="wsSpeak" class="writeMiniNavBtn sound" type="button" aria-label="Listen">🔊</button>
+          </div>
+          <div class="wsStage">
+            <div class="wsStep"><span id="wsPhase" class="wsPill"></span><span id="wsBoxInfo"></span></div>
+            <div id="wsBig" class="wsBig"><div id="wsWriter" class="wsWriter" aria-label="Writing box"></div></div>
+            <div id="wsStatus" class="wsStatus" aria-live="polite"></div>
+            <div class="wsControls">
+              <button id="wsOrder" class="wsBtn order" type="button">▶ Show order</button>
+              <button id="wsHint" class="wsBtn" type="button">💡 Hint</button>
+              <button id="wsSkip" class="wsBtn" type="button">Skip box →</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="wsSummary" class="wsSummary" hidden></div>
+
+        <div class="wsSheet">
+          <div class="wsSheetHead">
+            <span class="wsSheetTitle">Sheet of <b id="wsSheetChar"></b> · <span id="wsCount"></span></span>
+            <div id="wsSizes" class="wsSizes" role="group" aria-label="Boxes per sheet">
+              <button type="button" data-size="10">10</button>
+              <button type="button" data-size="20">20</button>
+              <button type="button" data-size="30">30</button>
+              <button type="button" data-size="50">50</button>
+            </div>
+          </div>
+          <div id="wsMinis" class="wsMinis"></div>
+          <p class="wsLegend">Pink dashed boxes trace the model; the rest are from memory. Green = written, orange = finished with mistakes. Tap a box to write it again.</p>
         </div>
       </div>
     </div>
@@ -583,6 +647,7 @@
     <button class="tab bottomDockItem" data-page="vocab" type="button"><span class="dockIcon">▣</span><span>Cards</span></button>
     <button class="tab bottomDockItem" data-page="practice" type="button"><span class="dockIcon">▤</span><span>Practice</span></button>
     <button class="tab bottomDockItem" data-page="write" type="button"><span class="dockIcon">✎</span><span>Write</span></button>
+    <button class="tab bottomDockItem" data-page="worksheets" type="button"><span class="dockIcon">▦</span><span>Sheets</span></button>
     <button class="tab bottomDockItem" data-page="situations" type="button"><span class="dockIcon">◔</span><span>Situations</span></button>
   </nav>
 
