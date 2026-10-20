@@ -7,19 +7,22 @@
   <meta name="theme-color" content="#b72d36">
   <title>Mandarin Cards · HSK 1</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles-v13-19.css?v=304">
-  <link rel="stylesheet" href="css/worksheets.css?v=304">
-  <link rel="stylesheet" href="css/listen.css?v=304">
+  <link rel="stylesheet" href="css/styles-v13-19.css?v=308">
+  <link rel="stylesheet" href="css/worksheets.css?v=308">
+  <link rel="stylesheet" href="css/listen.css?v=308">
+  <link rel="stylesheet" href="css/content.css?v=308">
   <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7.3/dist/hanzi-writer.min.js" defer></script>
-  <script src="js/data.js?v=304" defer></script>
-  <script src="js/learning-data.js?v=304" defer></script>
-  <script src="js/character-data.js?v=304" defer></script>
-  <script src="js/practice-data.js?v=304" defer></script>
-  <script src="js/app-v13-19.js?v=304" defer></script>
-  <script src="js/free-order-quiz.js?v=304" defer></script>
-  <script src="js/worksheets.js?v=304" defer></script>
-  <script src="js/listen.js?v=304" defer></script>
-  <script src="js/situations.js?v=304" defer></script>
+  <script src="js/data.js?v=308" defer></script>
+  <script src="js/learning-data.js?v=308" defer></script>
+  <script src="js/character-data.js?v=308" defer></script>
+  <script src="js/practice-data.js?v=308" defer></script>
+  <script src="js/app-v13-19.js?v=308" defer></script>
+  <script src="js/free-order-quiz.js?v=308" defer></script>
+  <script src="js/worksheets.js?v=308" defer></script>
+  <script src="js/listen.js?v=308" defer></script>
+  <script src="js/content-data.js?v=308" defer></script>
+  <script src="js/content.js?v=308" defer></script>
+  <script src="js/situations.js?v=308" defer></script>
 </head>
 <body data-page="home">
 
@@ -40,6 +43,7 @@
       <button class="tab sideNavItem" data-page="write" type="button"><span class="sideIcon">✎</span><span>Write Hanzi</span></button>
       <button class="tab sideNavItem" data-page="worksheets" type="button"><span class="sideIcon">▦</span><span>Worksheets</span></button>
       <button class="tab sideNavItem" data-page="listen" type="button"><span class="sideIcon">♪</span><span>Listen</span></button>
+      <button class="tab sideNavItem" data-page="content" type="button"><span class="sideIcon">▶</span><span>Content</span></button>
       <button class="tab sideNavItem" data-page="situations" type="button"><span class="sideIcon">◔</span><span>Situations</span></button>
 
       <div class="sideDivider"></div>
@@ -179,6 +183,19 @@
           <h3>Listen</h3>
           <p>Hands-free review for walks: hear each word, guess, then hear the English meaning.</p>
           <button id="homeOpenListen" class="homeActionButton" type="button">Open →</button>
+        </div>
+      </article>
+
+      <article class="homeModuleCard moduleContent">
+        <div class="moduleArtWrap ctHomeArt" aria-hidden="true">
+          <span class="ctHomeScreen"><b>你好</b><i>nǐ hǎo · hello</i><span class="ctHomePlay">▶</span></span>
+          <span class="ctHomeSpeeds"><em>1×</em><em class="on">1.5×</em><em>1.75×</em><em>2×</em><em>🔁</em></span>
+        </div>
+        <div class="moduleBody">
+          <div class="moduleBadge write">▶</div>
+          <h3>Content</h3>
+          <p>16 video units covering all 300 words. Loop them and speed them up to 2×.</p>
+          <button id="homeOpenContent" class="homeActionButton" type="button">Open →</button>
         </div>
       </article>
     </div>
@@ -429,6 +446,41 @@
         <p id="lsNote" class="lsNote"></p>
 
         <ol id="lsList" class="lsList" aria-label="Words in this block"></ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="content" class="page">
+    <div class="ctLayout">
+      <aside class="panel ctSide" aria-label="Units">
+        <p class="eyebrow">Content</p>
+        <h2>Video units</h2>
+        <div id="ctUnits" class="ctUnits"></div>
+      </aside>
+
+      <div class="panel ctMain">
+        <select id="ctUnitSelect" class="wsBlockSelect ctUnitSelect" aria-label="Unit"></select>
+        <div class="ctHead">
+          <div>
+            <h2 id="ctTitle"></h2>
+            <p id="ctTitleZh" class="ctTitleZh"></p>
+          </div>
+          <div class="ctNav">
+            <button id="ctPrev" class="ctRound" type="button" aria-label="Previous unit">‹</button>
+            <button id="ctNext" class="ctRound" type="button" aria-label="Next unit">›</button>
+          </div>
+        </div>
+        <div id="ctPlayer" class="ctPlayer">
+          <video id="ctVideo" controls playsinline preload="metadata"></video>
+        </div>
+        <div class="ctControls">
+          <div class="ctOption"><span class="wsGroupLabel">Speed</span>
+            <div id="ctSpeeds" class="wsSizes"><button type="button" data-speed="1">1×</button><button type="button" data-speed="1.5">1.5×</button><button type="button" data-speed="1.75">1.75×</button><button type="button" data-speed="2">2×</button></div></div>
+          <div class="ctOption"><span class="wsGroupLabel">Repeat</span>
+            <div class="wsSizes"><button id="ctLoop" type="button" aria-pressed="false">🔁 Loop</button></div></div>
+        </div>
+        <p class="ctHint">Tap a word to jump to it in the video.</p>
+        <ol id="ctWords" class="ctWords" aria-label="Words in this unit"></ol>
       </div>
     </div>
   </section>
@@ -721,6 +773,7 @@
     <button class="tab bottomDockItem" data-page="write" type="button"><span class="dockIcon">✎</span><span>Write</span></button>
     <button class="tab bottomDockItem" data-page="worksheets" type="button"><span class="dockIcon">▦</span><span>Sheets</span></button>
     <button class="tab bottomDockItem" data-page="listen" type="button"><span class="dockIcon">♪</span><span>Listen</span></button>
+    <button class="tab bottomDockItem" data-page="content" type="button"><span class="dockIcon">▶</span><span>Videos</span></button>
     <button class="tab bottomDockItem" data-page="situations" type="button"><span class="dockIcon">◔</span><span>Situations</span></button>
   </nav>
 

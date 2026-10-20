@@ -282,7 +282,14 @@
     document.querySelectorAll('#lsPhases [data-phase]').forEach((el) => el.classList.toggle('active', el.dataset.phase === p));
     if (p !== 'think') { $('#lsTimerBar').style.width = '0%'; $('#lsTimerText').textContent = ''; }
     document.querySelectorAll('#lsList li').forEach((li) => li.classList.toggle('current', +li.dataset.i === st.index));
-    $('#lsList li.current')?.scrollIntoView({ block: 'nearest' });
+    // Keep the current word visible by scrolling the list itself, never the page (the learner
+    // is looking at the Hanzi above).
+    const list = $('#lsList'), li = $('#lsList li.current');
+    if (li) {
+      const lr = list.getBoundingClientRect(), ir = li.getBoundingClientRect();
+      if (ir.top < lr.top) list.scrollTop -= lr.top - ir.top;
+      else if (ir.bottom > lr.bottom) list.scrollTop += ir.bottom - lr.bottom;
+    }
   }
 
   function renderControls() {

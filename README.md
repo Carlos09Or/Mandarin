@@ -75,6 +75,15 @@ Hands-free review for walks (**Listen** in the menu, or the Listen card on Home)
 - **Pocket** plays a recorded track per block (`assets/audio/listen/block-N.m4a`), so it keeps playing with the screen locked and shows play/pause/next on the lock screen. The screen stays in sync with the track. Fixed order and pause.
 - The tracks are built on a Mac with `python3 tools/build-listen-audio.py` (it picks the best installed voices, Premium first — currently Lili (Premium) for Chinese and Ava (Premium) for English; options `--zh-voice`, `--en-voice`, `--pause 3`, `--repeat 2`, `--blocks 1,2`). Run it again after changing the word list or the English meanings.
 
+## Content (video units)
+
+**Content** in the menu (**Videos** in the phone dock, or the Content card on Home) plays 16 video units (`assets/videos/unit-NN.mp4`) that together cover all 300 words, one slide per word.
+
+- Pick a unit from the list (a drop-down on narrow screens); ‹ › move between units.
+- **Speed:** 1×, 1.5×, 1.75×, 2× (kept when changing units). **Loop** repeats the current video.
+- The unit's words are listed under the video; the current one is highlighted and tapping a word jumps to its slide. The jump times in `js/content-data.js` were detected from the narration (each slide starts about 0.45 s before its word is spoken).
+- Position per unit and watched units (✓) are saved in the browser. Each video is loaded whole (1–3 MB) so jumping works on any static server and on iPhone Safari.
+
 ## Language
 
 All learner-facing explanations and interface text are in **English**. Mandarin content is shown in simplified Hanzi with pinyin.
@@ -89,6 +98,7 @@ All learner-facing explanations and interface text are in **English**. Mandarin 
 - `js/app.js` — cards, audio, practice engine, progress, feedback, and writing logic
 - `js/situations.js` — branching real-life scenario engine for the Situations tab
 - `js/worksheets.js` + `css/worksheets.css` — Worksheets section (one Hanzi per sheet); uses globals from `js/app-v13-19.js`
+- `js/content.js` + `js/content-data.js` + `css/content.css` — Content section (video units in `assets/videos/`)
 - `js/listen.js` + `css/listen.css` — Listen section; `tools/build-listen-audio.py` builds the Pocket tracks in `assets/audio/listen/`
 - `js/free-order-quiz.js` — stroke recognizer for the Worksheets *Free* stroke-order mode
 - `assets/favicon.svg` — favicon

@@ -1,0 +1,64 @@
+/* Content — video units with loop, speed, and a word list that jumps into the video. */
+.ctLayout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:18px;max-width:1120px;margin:0 auto;align-items:start}
+.ctSide{padding:16px;border-radius:24px;position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto}
+.ctSide .eyebrow{margin:0 0 2px}
+.ctSide h2{margin:0 0 10px;font-size:20px}
+.ctUnits{display:grid;gap:4px}
+.ctUnit{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:1px solid transparent;border-radius:14px;background:none;text-align:left;cursor:pointer;color:var(--ink)}
+.ctUnit:hover{background:var(--surface-soft)}
+.ctUnit.active{background:var(--red-faint);border-color:#e3a8ab}
+.ctUnitNum{flex:0 0 30px;height:30px;border-radius:99px;display:grid;place-items:center;background:#fff;border:1px solid var(--line);font-weight:800;font-size:13px;color:var(--red-dark)}
+.ctUnit.done .ctUnitNum{background:var(--green);border-color:var(--green);color:#fff}
+.ctUnitText{display:grid;min-width:0}
+.ctUnitText b{font-size:14px;line-height:1.25}
+.ctUnitText small{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.ctMain{padding:0;border-radius:28px;overflow:hidden}
+.ctUnitSelect{display:none}
+.ctHead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px 12px}
+.ctHead h2{margin:0;font-size:20px}
+.ctTitleZh{margin:2px 0 0;color:var(--muted);font-size:14px}
+.ctNav{display:flex;gap:8px}
+.ctRound{width:42px;height:42px;border-radius:99px;border:1.5px solid #ead7d4;background:#fff;color:#9d2731;font-size:22px;line-height:1;cursor:pointer}
+.ctRound:disabled{opacity:.4;cursor:default}
+.ctPlayer{background:#f4ede3;line-height:0}
+.ctPlayer.isLoading video{opacity:.5}
+.ctPlayer video{display:block;width:100%;aspect-ratio:16/9;background:#f4ede3}
+.ctControls{display:flex;flex-wrap:wrap;gap:12px 22px;padding:14px 20px;border-bottom:1px solid var(--line)}
+.ctOption{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ctOption .wsSizes button{padding:0 12px}
+.ctHint{margin:0;padding:12px 20px 0;font-size:13px;color:var(--muted)}
+.ctWords{list-style:none;margin:0;padding:8px 14px 16px;display:grid;gap:4px;max-height:360px;overflow-y:auto}
+.ctWords li{display:grid;grid-template-columns:minmax(64px,auto) minmax(90px,auto) 1fr;gap:10px;align-items:baseline;padding:8px 10px;border-radius:12px;cursor:pointer}
+.ctWords li:hover{background:var(--surface-soft)}
+.ctWords li.current{background:var(--red-faint);box-shadow:inset 0 0 0 1.5px #e3a8ab}
+.ctWords b{font-family:"Noto Serif SC","Songti SC",serif;font-size:20px;font-weight:600;color:#4e1217}
+.ctWords span{color:var(--red);font-weight:650}
+.ctWords em{font-style:normal;color:var(--muted);font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+@media (max-width:1180px){
+  .ctLayout{grid-template-columns:1fr}
+  .ctSide{display:none}
+  .ctUnitSelect{display:block;width:calc(100% - 28px);max-width:none;margin:14px 14px 0}
+  .ctHead{padding:12px 14px 10px}
+  .ctControls{padding:12px 14px}
+  .ctHint{padding:10px 14px 0}
+  .ctWords{padding:8px 8px 14px}
+}
+
+/* Home card: a small video frame with the speed buttons. */
+.moduleContent{grid-column:1/-1;background:linear-gradient(180deg,#fff8f8,#fff3f1)}
+.ctHomeArt{display:grid;place-items:center;align-content:center;gap:10px;min-height:170px;padding:16px;background:#fffdfb}
+.ctHomeScreen{position:relative;display:grid;place-items:center;align-content:center;width:min(100%,230px);aspect-ratio:16/9;border-radius:12px;background:#f4ede3;box-shadow:inset 0 0 0 1px #eadfce}
+.ctHomeScreen b{font-family:"Noto Sans SC","PingFang SC",sans-serif;font-size:34px;color:#2b2b2b;line-height:1}
+.ctHomeScreen i{font-style:normal;font-size:12px;color:#c0602f;margin-top:4px}
+.ctHomePlay{position:absolute;right:10px;bottom:8px;width:26px;height:26px;border-radius:99px;display:grid;place-items:center;background:var(--red);color:#fff;font-size:11px}
+.ctHomeSpeeds{display:flex;gap:5px}
+.ctHomeSpeeds em{font-style:normal;font-size:11px;font-weight:800;padding:3px 7px;border-radius:99px;border:1px solid var(--line);background:#fff;color:#5a3a3d}
+.ctHomeSpeeds em.on{background:var(--red-faint);border-color:#e3a8ab;color:var(--red-dark)}
+
+/* Bottom dock with 8 tabs on phones: smaller labels that never touch. */
+@media (max-width:720px){
+  .bottomDockItem{padding-left:0!important;padding-right:0!important;min-width:0}
+  .bottomDockItem span:last-child{display:block;max-width:100%;font-size:9px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
