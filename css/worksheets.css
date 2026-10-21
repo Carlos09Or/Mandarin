@@ -57,8 +57,8 @@
 .wsStat{min-width:120px;padding:10px 14px;border:1px solid var(--jade-line);border-radius:16px;background:var(--surface-soft);font-size:13px;color:#5a3a3d}
 .wsStat b{display:block;font-size:22px;color:var(--ink)}
 
-/* Bottom navigation on phones: room for the extra Worksheets, Listen and Content tabs. */
-.bottomDockNav{grid-template-columns:repeat(8,minmax(0,1fr))!important}
+/* Bottom navigation on phones: room for the extra Worksheets, Notebook, Listen and Content tabs. */
+.bottomDockNav{grid-template-columns:repeat(9,minmax(0,1fr))!important}
 @media (max-width:720px){
   .wsPicker{padding:12px;flex-wrap:wrap}
   .wsBlockSelect{order:-1;max-width:none;width:100%}

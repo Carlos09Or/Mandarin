@@ -7,22 +7,27 @@
   <meta name="theme-color" content="#b72d36">
   <title>Mandarin Cards · HSK 1</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles-v13-19.css?v=308">
-  <link rel="stylesheet" href="css/worksheets.css?v=308">
-  <link rel="stylesheet" href="css/listen.css?v=308">
-  <link rel="stylesheet" href="css/content.css?v=308">
+  <link rel="stylesheet" href="css/styles-v13-19.css?v=309">
+  <link rel="stylesheet" href="css/worksheets.css?v=309">
+  <link rel="stylesheet" href="css/listen.css?v=309">
+  <link rel="stylesheet" href="css/content.css?v=309">
+  <link rel="stylesheet" href="css/notebook.css?v=309">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Ma+Shan+Zheng&display=swap">
   <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7.3/dist/hanzi-writer.min.js" defer></script>
-  <script src="js/data.js?v=308" defer></script>
-  <script src="js/learning-data.js?v=308" defer></script>
-  <script src="js/character-data.js?v=308" defer></script>
-  <script src="js/practice-data.js?v=308" defer></script>
-  <script src="js/app-v13-19.js?v=308" defer></script>
-  <script src="js/free-order-quiz.js?v=308" defer></script>
-  <script src="js/worksheets.js?v=308" defer></script>
-  <script src="js/listen.js?v=308" defer></script>
-  <script src="js/content-data.js?v=308" defer></script>
-  <script src="js/content.js?v=308" defer></script>
-  <script src="js/situations.js?v=308" defer></script>
+  <script src="js/data.js?v=309" defer></script>
+  <script src="js/learning-data.js?v=309" defer></script>
+  <script src="js/character-data.js?v=309" defer></script>
+  <script src="js/practice-data.js?v=309" defer></script>
+  <script src="js/app-v13-19.js?v=309" defer></script>
+  <script src="js/free-order-quiz.js?v=309" defer></script>
+  <script src="js/worksheets.js?v=309" defer></script>
+  <script src="js/listen.js?v=309" defer></script>
+  <script src="js/content-data.js?v=309" defer></script>
+  <script src="js/content.js?v=309" defer></script>
+  <script src="js/notebook.js?v=309" defer></script>
+  <script src="js/situations.js?v=309" defer></script>
 </head>
 <body data-page="home">
 
@@ -42,6 +47,7 @@
       <button class="tab sideNavItem" data-page="practice" type="button"><span class="sideIcon">▤</span><span>Practice</span></button>
       <button class="tab sideNavItem" data-page="write" type="button"><span class="sideIcon">✎</span><span>Write Hanzi</span></button>
       <button class="tab sideNavItem" data-page="worksheets" type="button"><span class="sideIcon">▦</span><span>Worksheets</span></button>
+      <button class="tab sideNavItem" data-page="notebook" type="button"><span class="sideIcon">▥</span><span>Notebook</span></button>
       <button class="tab sideNavItem" data-page="listen" type="button"><span class="sideIcon">♪</span><span>Listen</span></button>
       <button class="tab sideNavItem" data-page="content" type="button"><span class="sideIcon">▶</span><span>Content</span></button>
       <button class="tab sideNavItem" data-page="situations" type="button"><span class="sideIcon">◔</span><span>Situations</span></button>
@@ -169,6 +175,21 @@
           <h3>Worksheets</h3>
           <p>Fill a whole sheet with one character: trace it, then write it again and again from memory.</p>
           <button id="homeOpenWorksheets" class="homeActionButton" type="button">Open →</button>
+        </div>
+      </article>
+
+      <article class="homeModuleCard moduleNotebook">
+        <div class="moduleArtWrap nbHomeArt" aria-hidden="true">
+          <div class="nbHomeRows">
+            <span class="py">hǎochī</span><span class="model">好</span><span class="model">吃</span><span>好</span><span>吃</span><span>好</span>
+            <span class="py">kàn</span><span class="model">看</span><span>看</span><span>看</span><span>看</span><span></span>
+          </div>
+        </div>
+        <div class="moduleBody">
+          <div class="moduleBadge write">▥</div>
+          <h3>Notebook</h3>
+          <p>A paper-style 练习本: pick a word for each row, get its pinyin, and write your planas by hand.</p>
+          <button id="homeOpenNotebook" class="homeActionButton" type="button">Open →</button>
         </div>
       </article>
 
@@ -397,6 +418,42 @@
           <div id="wsMinis" class="wsMinis"></div>
           <p class="wsLegend">Pink dashed boxes trace the model; the rest are from memory. Green = written, orange = finished with mistakes. Tap a box to write it again.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="notebook" class="page">
+    <div class="nbWrap">
+      <div class="nbTop">
+        <h2>练习本 <small>Notebook</small></h2>
+        <div class="nbViews" role="group" aria-label="View">
+          <button type="button" id="nbViewBook" aria-pressed="true">Notebook</button>
+          <button type="button" id="nbViewList" aria-pressed="false">My sheets <span id="nbCount"></span></button>
+        </div>
+      </div>
+      <div id="nbBookView" class="nbStage">
+        <div class="nbBar">
+          <button class="nbBtn" id="nbPrev" type="button" aria-label="Previous sheet">‹</button>
+          <span id="nbPageNum" class="nbPageNum"></span>
+          <button class="nbBtn" id="nbNext" type="button" aria-label="Next sheet">›</button>
+          <span id="nbTimer" class="nbTimer idle">⏱ 0:00</span>
+          <button class="nbBtn primary" id="nbFinish" type="button">Finish sheet ✓</button>
+          <button class="nbBtn" id="nbNew" type="button">New sheet +</button>
+        </div>
+        <div id="nbBook" class="nbBook"></div>
+      </div>
+      <div id="nbListView" hidden>
+        <div class="nbStats" id="nbStats"></div>
+        <h3 class="nbSheetsTitle">Sheets</h3>
+        <div class="nbSheets" id="nbSheets"></div>
+      </div>
+    </div>
+    <div id="nbPicker" class="nbPicker" hidden>
+      <div class="nbPick" role="dialog" aria-modal="true" aria-labelledby="nbPickTitle">
+        <header><b id="nbPickTitle">Choose a Hanzi</b><button class="nbBtn" id="nbPickClose" type="button">Close</button></header>
+        <input id="nbPickQ" type="search" placeholder="Search: 好, hao, good…" autocomplete="off">
+        <div id="nbResults" class="nbResults"></div>
+        <div class="nbCustom" id="nbCustom"></div>
       </div>
     </div>
   </section>
@@ -772,6 +829,7 @@
     <button class="tab bottomDockItem" data-page="practice" type="button"><span class="dockIcon">▤</span><span>Practice</span></button>
     <button class="tab bottomDockItem" data-page="write" type="button"><span class="dockIcon">✎</span><span>Write</span></button>
     <button class="tab bottomDockItem" data-page="worksheets" type="button"><span class="dockIcon">▦</span><span>Sheets</span></button>
+    <button class="tab bottomDockItem" data-page="notebook" type="button"><span class="dockIcon">▥</span><span>Book</span></button>
     <button class="tab bottomDockItem" data-page="listen" type="button"><span class="dockIcon">♪</span><span>Listen</span></button>
     <button class="tab bottomDockItem" data-page="content" type="button"><span class="dockIcon">▶</span><span>Videos</span></button>
     <button class="tab bottomDockItem" data-page="situations" type="button"><span class="dockIcon">◔</span><span>Situations</span></button>

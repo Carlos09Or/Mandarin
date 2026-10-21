@@ -75,6 +75,15 @@ Hands-free review for walks (**Listen** in the menu, or the Listen card on Home)
 - **Pocket** plays a recorded track per block (`assets/audio/listen/block-N.m4a`), so it keeps playing with the screen locked and shows play/pause/next on the lock screen. The screen stays in sync with the track. Fixed order and pause.
 - The tracks are built on a Mac with `python3 tools/build-listen-audio.py` (it picks the best installed voices, Premium first — currently Lili (Premium) for Chinese and Ava (Premium) for English; options `--zh-voice`, `--en-voice`, `--pause 3`, `--repeat 2`, `--blocks 1,2`). Run it again after changing the word list or the English meanings.
 
+## Notebook (练习本)
+
+**Notebook** in the menu (**Book** in the phone dock, or the Notebook card on Home) is a paper-style practice notebook with page-turn animation.
+
+- Each row of a sheet holds one word you choose: tap **+ Hanzi**, search by Hanzi, pinyin without tones (`hao`) or English, and the row's pinyin is filled in. Any Hanzi outside HSK 1 works too; you type its pinyin. The first squares show a grey model; the remaining squares of the row are your plana, written freely by hand (no stroke checking). 8 squares per row.
+- Landscape tablets show an open book: the left page is the card of the word you are writing (big Hanzi, pinyin, meaning, and the words on this sheet). Portrait screens show only the practice page, as wide as possible, with as many rows as fit (7–14; a sheet keeps its row count).
+- The timer counts only while you write (pauses over a minute don't count). **Finish sheet ✓** stamps the sheet with its writing time and planas (rows with a word and ink). **My sheets** lists every sheet with its date, time, planas and a thumbnail, plus totals.
+- Sheets and their ink are stored in the browser's IndexedDB, per device.
+
 ## Content (video units)
 
 **Content** in the menu (**Videos** in the phone dock, or the Content card on Home) plays 16 video units (`assets/videos/unit-NN.mp4`) that together cover all 300 words, one slide per word.
@@ -98,6 +107,7 @@ All learner-facing explanations and interface text are in **English**. Mandarin 
 - `js/app.js` — cards, audio, practice engine, progress, feedback, and writing logic
 - `js/situations.js` — branching real-life scenario engine for the Situations tab
 - `js/worksheets.js` + `css/worksheets.css` — Worksheets section (one Hanzi per sheet); uses globals from `js/app-v13-19.js`
+- `js/notebook.js` + `css/notebook.css` — Notebook section (sheets stored in IndexedDB)
 - `js/content.js` + `js/content-data.js` + `css/content.css` — Content section (video units in `assets/videos/`)
 - `js/listen.js` + `css/listen.css` — Listen section; `tools/build-listen-audio.py` builds the Pocket tracks in `assets/audio/listen/`
 - `js/free-order-quiz.js` — stroke recognizer for the Worksheets *Free* stroke-order mode
