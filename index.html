@@ -7,27 +7,27 @@
   <meta name="theme-color" content="#b72d36">
   <title>Mandarin Cards · HSK 1</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles-v13-19.css?v=309">
-  <link rel="stylesheet" href="css/worksheets.css?v=309">
-  <link rel="stylesheet" href="css/listen.css?v=309">
-  <link rel="stylesheet" href="css/content.css?v=309">
-  <link rel="stylesheet" href="css/notebook.css?v=309">
+  <link rel="stylesheet" href="css/styles-v13-19.css?v=311">
+  <link rel="stylesheet" href="css/worksheets.css?v=311">
+  <link rel="stylesheet" href="css/listen.css?v=311">
+  <link rel="stylesheet" href="css/content.css?v=311">
+  <link rel="stylesheet" href="css/notebook.css?v=311">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Ma+Shan+Zheng&display=swap">
   <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7.3/dist/hanzi-writer.min.js" defer></script>
-  <script src="js/data.js?v=309" defer></script>
-  <script src="js/learning-data.js?v=309" defer></script>
-  <script src="js/character-data.js?v=309" defer></script>
-  <script src="js/practice-data.js?v=309" defer></script>
-  <script src="js/app-v13-19.js?v=309" defer></script>
-  <script src="js/free-order-quiz.js?v=309" defer></script>
-  <script src="js/worksheets.js?v=309" defer></script>
-  <script src="js/listen.js?v=309" defer></script>
-  <script src="js/content-data.js?v=309" defer></script>
-  <script src="js/content.js?v=309" defer></script>
-  <script src="js/notebook.js?v=309" defer></script>
-  <script src="js/situations.js?v=309" defer></script>
+  <script src="js/data.js?v=311" defer></script>
+  <script src="js/learning-data.js?v=311" defer></script>
+  <script src="js/character-data.js?v=311" defer></script>
+  <script src="js/practice-data.js?v=311" defer></script>
+  <script src="js/app-v13-19.js?v=311" defer></script>
+  <script src="js/free-order-quiz.js?v=311" defer></script>
+  <script src="js/worksheets.js?v=311" defer></script>
+  <script src="js/listen.js?v=311" defer></script>
+  <script src="js/content-data.js?v=311" defer></script>
+  <script src="js/content.js?v=311" defer></script>
+  <script src="js/notebook.js?v=311" defer></script>
+  <script src="js/situations.js?v=311" defer></script>
 </head>
 <body data-page="home">
 
@@ -426,21 +426,43 @@
     <div class="nbWrap">
       <div class="nbTop">
         <h2>练习本 <small>Notebook</small></h2>
-        <div class="nbViews" role="group" aria-label="View">
-          <button type="button" id="nbViewBook" aria-pressed="true">Notebook</button>
-          <button type="button" id="nbViewList" aria-pressed="false">My sheets <span id="nbCount"></span></button>
+        <div class="nbTopRight">
+          <button class="nbBtn" id="nbFocus" type="button" aria-pressed="true">☰ Show menu</button>
+          <div class="nbViews" role="group" aria-label="View">
+            <button type="button" id="nbViewBook" aria-pressed="true">Notebook</button>
+            <button type="button" id="nbViewList" aria-pressed="false">My sheets <span id="nbCount"></span></button>
+          </div>
         </div>
       </div>
       <div id="nbBookView" class="nbStage">
         <div class="nbBar">
-          <button class="nbBtn" id="nbPrev" type="button" aria-label="Previous sheet">‹</button>
-          <span id="nbPageNum" class="nbPageNum"></span>
-          <button class="nbBtn" id="nbNext" type="button" aria-label="Next sheet">›</button>
-          <span id="nbTimer" class="nbTimer idle">⏱ 0:00</span>
-          <button class="nbBtn primary" id="nbFinish" type="button">Finish sheet ✓</button>
-          <button class="nbBtn" id="nbNew" type="button">New sheet +</button>
+          <div class="nbGroup">
+            <button class="nbBtn" id="nbPrev" type="button" aria-label="Previous sheet">‹</button>
+            <span id="nbPageNum" class="nbPageNum"></span>
+            <button class="nbBtn" id="nbNext" type="button" aria-label="Next sheet">›</button>
+            <span id="nbTimer" class="nbTimer idle">⏱ 0:00</span>
+          </div>
+          <div class="nbGroup" id="nbTools" role="group" aria-label="Tools">
+            <button class="nbBtn nbTool" type="button" data-tool="pen" aria-pressed="true">✎ Pen</button>
+            <button class="nbBtn nbTool" type="button" data-tool="eraser" aria-pressed="false">⌫ Eraser</button>
+            <button class="nbBtn nbTool" type="button" data-tool="move" aria-pressed="false">✋ Move</button>
+            <button class="nbBtn" id="nbUndo" type="button" aria-label="Undo">↶</button>
+            <button class="nbBtn nbTool" id="nbShadow" type="button" aria-pressed="false" title="Grey Hanzi in every square of the selected row">◐ Shadow</button>
+            <button class="nbBtn nbTool" id="nbPenOnly" type="button" aria-pressed="false" title="Only the pen writes; fingers move the page">✍ Pen only</button>
+          </div>
+          <div class="nbGroup" aria-label="Zoom">
+            <button class="nbBtn" id="nbZoomOut" type="button" aria-label="Zoom out">−</button>
+            <span id="nbZoomLabel" class="nbZoomLabel">100%</span>
+            <button class="nbBtn" id="nbZoomIn" type="button" aria-label="Zoom in">+</button>
+            <button class="nbBtn" id="nbZoomFit" type="button">Fit</button>
+          </div>
+          <div class="nbGroup">
+            <button class="nbBtn primary" id="nbFinish" type="button">Finish sheet ✓</button>
+            <button class="nbBtn" id="nbNew" type="button">New sheet +</button>
+          </div>
         </div>
-        <div id="nbBook" class="nbBook"></div>
+        <p id="nbFlash" class="nbFlash" hidden></p>
+        <div id="nbViewport" class="nbViewport"><div id="nbBook" class="nbBook"></div></div>
       </div>
       <div id="nbListView" hidden>
         <div class="nbStats" id="nbStats"></div>
@@ -454,6 +476,16 @@
         <input id="nbPickQ" type="search" placeholder="Search: 好, hao, good…" autocomplete="off">
         <div id="nbResults" class="nbResults"></div>
         <div class="nbCustom" id="nbCustom"></div>
+      </div>
+    </div>
+    <div id="nbCoverEditor" class="nbPicker" hidden>
+      <div class="nbPick nbCoverForm" role="dialog" aria-modal="true" aria-labelledby="nbCoverTitleLabel">
+        <header><b id="nbCoverTitleLabel">Your cover</b><button class="nbBtn primary" id="nbCoverDone" type="button">Done</button></header>
+        <label>Name<input id="nbCoverName" maxlength="28" placeholder="Your name" autocomplete="off"></label>
+        <label>Title<input id="nbCoverTitle" maxlength="8" placeholder="练习本" autocomplete="off"></label>
+        <label>Subtitle<input id="nbCoverSub" maxlength="40" placeholder="HSK 1 · Practice book" autocomplete="off"></label>
+        <label>Seal (one character)<input id="nbCoverSeal" maxlength="2" placeholder="学" autocomplete="off"></label>
+        <div class="nbSwatchRow"><span>Color</span><div id="nbSwatches" class="nbSwatches"></div></div>
       </div>
     </div>
   </section>

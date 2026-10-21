@@ -79,10 +79,13 @@ Hands-free review for walks (**Listen** in the menu, or the Listen card on Home)
 
 **Notebook** in the menu (**Book** in the phone dock, or the Notebook card on Home) is a paper-style practice notebook with page-turn animation.
 
-- Each row of a sheet holds one word you choose: tap **+ Hanzi**, search by Hanzi, pinyin without tones (`hao`) or English, and the row's pinyin is filled in. Any Hanzi outside HSK 1 works too; you type its pinyin. The first squares show a grey model; the remaining squares of the row are your plana, written freely by hand (no stroke checking). 8 squares per row.
-- Landscape tablets show an open book: the left page is the card of the word you are writing (big Hanzi, pinyin, meaning, and the words on this sheet). Portrait screens show only the practice page, as wide as possible, with as many rows as fit (7–14; a sheet keeps its row count).
-- The timer counts only while you write (pauses over a minute don't count). **Finish sheet ✓** stamps the sheet with its writing time and planas (rows with a word and ink). **My sheets** lists every sheet with its date, time, planas and a thumbnail, plus totals.
-- Sheets and their ink are stored in the browser's IndexedDB, per device.
+- **Cover:** cloth cover with your name, title, subtitle, color and a seal character (**✎ Customize cover**).
+- **Rows:** each row holds one word you choose: tap **+ Hanzi**, search by Hanzi, pinyin without tones (`hao`) or English, and the row's pinyin is filled in. Any Hanzi outside HSK 1 works too; you type its pinyin. The first squares show a grey model; **◐ Shadow** fills the whole selected row with grey Hanzi to trace (also in the row's word picker). 8 squares per row, written freely by hand (no stroke checking).
+- **Pages:** in landscape the left page is the previous sheet and the right page is the one you write on; portrait shows only the right page. A new sheet gets as many rows as fit the screen (6–14) and keeps them.
+- **Tools:** ✎ Pen, ⌫ Eraser (removes the strokes it touches), ↶ Undo (also Ctrl/⌘+Z), ✋ Move. **Zoom** − / + / Fit (100–300%), two-finger pinch and Ctrl/⌘+wheel. Two fingers never write. When a pen/stylus is detected, **✍ Pen only** turns on: only the pen writes and a finger moves the page.
+- **Focus:** the app's sidebar is hidden on the Notebook to give the sheet the full width (**☰ Show menu** brings it back).
+- **Time and history:** the timer counts only while you write (pauses over a minute don't count). **Finish sheet ✓** stamps the sheet with its writing time and planas (rows with a word and ink). **My sheets** lists every sheet with its date, time, planas and a thumbnail, plus totals.
+- Sheets and their ink are stored in the browser's IndexedDB, per device; settings (tool, zoom, cover) in localStorage.
 
 ## Content (video units)
 
